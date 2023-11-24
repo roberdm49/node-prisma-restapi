@@ -20,6 +20,7 @@ model User {
   // auth_strategy String?
   products Product[]
   productCompanies ProductCompany[]
+  dailySales DailySale[]
 }
 
 model Product {
@@ -30,7 +31,9 @@ model Product {
   company ProductCompany? @relation(fields: [companyId], references: [id])
   name String
   price Float
-  // currencyId
+  purchasedItems PurchasedItem[]
+  currencyId Int
+  currency Currency @relation(fields: [currencyId], references: [id])
 }
 
 model ProductCompany {
@@ -40,4 +43,51 @@ model ProductCompany {
   products Product[]
   userId Int
   user User @relation(fields: [userId], references: [id])
+}
+
+model DailySale {
+  id Int @id @default(autoincrement())
+  saleDate DateTime @default(now())
+  closed Boolean @default(false)
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  purchases Purchase[]
+}
+
+model Purchase {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  dailySaleId Int
+  dailySale DailySale @relation(fields: [dailySaleId], references: [id])
+  purchasedItems PurchasedItem[]
+}
+
+model PurchasedItem {
+  id Int @id @default(autoincrement())
+  quantity Int
+  unitPrice Float
+  purchaseId Int
+  purchase Purchase @relation(fields: [purchaseId], references: [id])
+  productId Int
+  product Product @relation(fields: [productId], references: [id])
+  currencySnapshotId Int
+  currencySnapshot DailyExchangeRate @relation(fields: [currencySnapshotId], references: [id])
+}
+
+model Currency {
+  id Int @id @default(autoincrement())
+  name String
+  isoCode String?
+  isoNum String?
+  products Product[]
+  dailyExchangeRates DailyExchangeRate[]
+}
+
+model DailyExchangeRate {
+  id Int @id @default(autoincrement())
+  currencyValueUsd Float
+  timestamp DateTime // should be a timestamp
+  currencySourceId Int
+  currencySource Currency @relation(fields: [currencySourceId], references: [id])
+  purchasedItems PurchasedItem[]
 }

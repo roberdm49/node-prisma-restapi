@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Currency" ALTER COLUMN "isoNum" SET DATA TYPE TEXT;
