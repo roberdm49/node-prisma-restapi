@@ -25,15 +25,15 @@ model User {
 
 model Product {
   id Int @id @default(autoincrement())
+  name String
+  price Float
   userId Int
   user User @relation(fields: [userId], references: [id])
   companyId Int?
   company ProductCompany? @relation(fields: [companyId], references: [id])
-  name String
-  price Float
-  purchasedItems PurchasedItem[]
   currencyId Int
   currency Currency @relation(fields: [currencyId], references: [id])
+  purchasedItems PurchasedItem[]
 }
 
 model ProductCompany {

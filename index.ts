@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function populateDB () {
+  
   await prisma.user.create({
     data: {
       firstname: 'Roberto',
@@ -63,6 +64,11 @@ async function populateDB () {
           id: company.id
         }
       },
+      currency: {
+        connect: {
+          id: currency.id
+        }
+      }
     }
   })
 
@@ -73,6 +79,11 @@ async function populateDB () {
       user: {
         connect: {
           id: userMica.id
+        }
+      },
+      currency: {
+        connect: {
+          id: currency.id
         }
       }
     }
