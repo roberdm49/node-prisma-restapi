@@ -10,6 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Tenant {
+  id Int @id @default(autoincrement())
+  name String
+  createdAt DateTime @default(now())
+  users User[]
+  products Product[]
+  productCompanies ProductCompany[]
+  dailySales DailySale[]
+}
+
 model User {
   id Int @id @default(autoincrement())
   username String @unique
@@ -17,18 +27,17 @@ model User {
   firstname String
   lastname String
   createdAt DateTime @default(now())
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id])
   // auth_strategy String?
-  products Product[]
-  productCompanies ProductCompany[]
-  dailySales DailySale[]
 }
 
 model Product {
   id Int @id @default(autoincrement())
   name String
   price Float
-  userId Int
-  user User @relation(fields: [userId], references: [id])
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id])
   companyId Int?
   company ProductCompany? @relation(fields: [companyId], references: [id])
   currencyId Int
@@ -41,16 +50,16 @@ model ProductCompany {
   name String
   createdAt DateTime @default(now())
   products Product[]
-  userId Int
-  user User @relation(fields: [userId], references: [id])
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id])
 }
 
 model DailySale {
   id Int @id @default(autoincrement())
   saleDate DateTime @default(now())
   closed Boolean @default(false)
-  userId Int
-  user User @relation(fields: [userId], references: [id])
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id])
   purchases Purchase[]
 }
 
