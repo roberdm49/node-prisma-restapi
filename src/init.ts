@@ -1,58 +1,43 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
 export const populateDB = async () => {
-  console.log("Initialized!")
+  console.log('Initialized!')
+
   const tenant1 = await prisma.tenant.create({
     data: {
-      name: 'Dani\'s'
+      name: 'Dani\'s',
+      users: {
+        createMany: {
+          data: [
+            {
+              firstname: 'Roberto',
+              lastname: 'Marcos',
+              username: 'roberdmarcos',
+              password: 'superhashedpassword'
+            },
+            {
+              firstname: 'Micaela',
+              lastname: 'Vanzato',
+              username: 'micavanzato',
+              password: 'superhashedandsecretpassword'
+            }
+          ]
+        }
+      }
     }
   })
 
   const tenant2 = await prisma.tenant.create({
     data: {
-      name: 'Gonza LLC'
-    }
-  })
-
-  await prisma.user.create({
-    data: {
-      firstname: 'Roberto',
-      lastname: 'Marcos',
-      username: 'roberdmarcos',
-      password: 'superhashedpassword',
-      tenant: {
-        connect: {
-          id: tenant1.id
-        }
-      }
-    }
-  })
-
-  await prisma.user.create({
-    data: {
-      firstname: 'Micaela',
-      lastname: 'Vanzato',
-      username: 'micavanzato',
-      password: 'superhashedandsecretpassword',
-      tenant: {
-        connect: {
-          id: tenant1.id
-        }
-      }
-    }
-  })
-
-  await prisma.user.create({
-    data: {
-      firstname: 'Gonzalo',
-      lastname: 'Vanzato',
-      username: 'gvanzato123',
-      password: 'superhashedpasswordthethird',
-      tenant: {
-        connect: {
-          id: tenant2.id
+      name: 'Gonza LLC',
+      users: {
+        create: {
+          firstname: 'Gonzalo',
+          lastname: 'Vanzato',
+          username: 'gvanzato123',
+          password: 'superhashedpasswordthethird'
         }
       }
     }
