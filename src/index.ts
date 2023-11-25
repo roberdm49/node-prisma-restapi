@@ -25,6 +25,7 @@ const app = express()
 const prisma = new PrismaClient()
 const port = process.env.APP_PORT
 
+app.use(express.json()) // search why is this
 app.use(morgan('dev'))
 
 app.get('/', (request, response) => {
@@ -65,7 +66,7 @@ app.post('/sign-up', async (request, response) => {
       }
     }
   })
-  
+
   response.send(JSON.stringify(tenantAndUser))
 })
 
