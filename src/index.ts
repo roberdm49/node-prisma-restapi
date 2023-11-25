@@ -3,31 +3,58 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function populateDB () {
-  
+  console.log("Initialized!")
+  const tenant1 = await prisma.tenant.create({
+    data: {
+      name: 'Dani\'s'
+    }
+  })
+
+  const tenant2 = await prisma.tenant.create({
+    data: {
+      name: 'Gonza LLC'
+    }
+  })
+
   await prisma.user.create({
     data: {
       firstname: 'Roberto',
       lastname: 'Marcos',
       username: 'roberdmarcos',
       password: 'superhashedpassword',
+      tenant: {
+        connect: {
+          id: tenant1.id
+        }
+      }
     }
   })
 
-  const userMica = await prisma.user.create({
+  await prisma.user.create({
     data: {
       firstname: 'Micaela',
       lastname: 'Vanzato',
       username: 'micavanzato',
       password: 'superhashedandsecretpassword',
+      tenant: {
+        connect: {
+          id: tenant1.id
+        }
+      }
     }
   })
 
-  const userGonza = await prisma.user.create({
+  await prisma.user.create({
     data: {
       firstname: 'Gonzalo',
       lastname: 'Vanzato',
       username: 'gvanzato123',
       password: 'superhashedpasswordthethird',
+      tenant: {
+        connect: {
+          id: tenant2.id
+        }
+      }
     }
   })
 
@@ -42,9 +69,9 @@ async function populateDB () {
   const company = await prisma.productCompany.create({
     data: {
       name: 'Arcor',
-      user: {
+      tenant: {
         connect: {
-          id: userGonza.id
+          id: tenant2.id
         }
       }
     }
@@ -54,9 +81,9 @@ async function populateDB () {
     data: {
       name: 'Block 38g',
       price: 320,
-      user: {
+      tenant: {
         connect: {
-          id: userGonza.id
+          id: tenant2.id
         }
       },
       company: {
@@ -76,9 +103,9 @@ async function populateDB () {
     data: {
       name: 'Kinder Maxi',
       price: 250,
-      user: {
+      tenant: {
         connect: {
-          id: userMica.id
+          id: tenant1.id
         }
       },
       currency: {
