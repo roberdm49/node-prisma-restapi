@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export const populateDB = async () => {
+export const populateDB = async (): Promise<void> => {
   console.log('Initialized!')
 
   const tenant1 = await prisma.tenant.create({

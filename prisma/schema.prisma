@@ -36,6 +36,8 @@ model Product {
   id Int @id @default(autoincrement())
   name String
   price Float
+  stock Int @default(0)
+  barCode String?
   tenantId Int
   tenant Tenant @relation(fields: [tenantId], references: [id])
   companyId Int?
