@@ -1,7 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
-
 import usersRoutes from '@/routes/users.routes'
 import authRoutes from '@/routes/auth.routes'
 
