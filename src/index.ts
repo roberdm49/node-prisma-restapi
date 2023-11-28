@@ -25,8 +25,9 @@ const app = express()
 const prisma = new PrismaClient()
 const port = process.env.APP_PORT ?? 3000
 
-app.use(express.json()) // search why is this
 app.use(morgan('dev'))
+app.use(express.json()) // http://expressjs.com/en/api.html#express.json
+app.use(express.urlencoded({ extended: false })) // http://expressjs.com/en/5x/api.html#express.urlencoded
 
 app.get('/', (request, response) => {
   response.send('Hello world')
