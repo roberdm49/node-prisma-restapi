@@ -4,11 +4,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const test: RequestHandler = async (request, response) => {
-  response.send('auth test working!')
-}
-
-const createTenantAndUser: RequestHandler = async (request, response) => {
+const createTenantAndUser: RequestHandler = async (request, response, next) => {
   try {
     const { tenantName, username, firstname, lastname, password }: SignUpInterface = request.body
     const tenant = await prisma.tenant.create({
@@ -27,10 +23,10 @@ const createTenantAndUser: RequestHandler = async (request, response) => {
 
     return tenant
   } catch (error) {
-    console.log(error)
+    next()
   }
 }
 
 export default {
-  createTenantAndUser, test
+  createTenantAndUser
 }

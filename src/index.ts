@@ -1,8 +1,8 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
-import usersRoutes from '@/routes/users.routes'
-import authRoutes from '@/routes/auth.routes'
+import usersRoutes from '@/core/users/users.routes'
+import authRoutes from '@/core/auth/auth.routes'
 
 dotenv.config()
 

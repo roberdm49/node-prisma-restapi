@@ -4,7 +4,7 @@ import { UserInterface } from '@/interfaces'
 
 const prisma = new PrismaClient()
 
-const createUser: RequestHandler = async (request, response) => {
+const createUser: RequestHandler = async (request, response, next) => {
   try {
     const { firstname, lastname, username, password, tenantId }: UserInterface = request.body
     const user = await prisma.user.create({
@@ -23,7 +23,7 @@ const createUser: RequestHandler = async (request, response) => {
 
     return user
   } catch (error) {
-    console.log(error)
+    next()
   }
 }
 
