@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
-    "prisma:studio": "prisma studio"
+    "prisma:ui": "prisma studio"
   },
   "keywords": [],
   "author": "",
