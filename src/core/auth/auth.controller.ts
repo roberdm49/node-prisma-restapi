@@ -10,6 +10,15 @@ const signUp: RequestHandler = async (request, response, next) => {
   }
 }
 
+const logIn: RequestHandler = async (request, response, next) => {
+  try {
+    //
+  } catch (error) {
+    next()
+  }
+}
+
 export default {
-  signUp
+  signUp,
+  logIn
 }

@@ -26,6 +26,11 @@ const signUp = async (tenantAndUser: SignUpInterface): Promise<TenantInterface> 
   return tenant
 }
 
+const logIn = async () => {
+
+}
+
 export default {
-  signUp
+  signUp,
+  logIn
 }
