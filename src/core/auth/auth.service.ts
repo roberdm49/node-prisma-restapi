@@ -1,36 +1,28 @@
-import { PrismaClient } from '@prisma/client'
-import { SignUpInterface } from '@/interfaces'
 import { hashPassword } from '@/utils/hash'
-import { TenantInterface } from '@/interfaces/Tenant'
+import { validateUser } from '@/utils/validateUser'
+import { IAuthModel, IAuthService } from './auth.interfaces'
+import { TAuthServiceLogIn, TAuthServiceSignUp } from './auth.types'
 
-const prisma = new PrismaClient()
+export default class AuthService implements IAuthService {
+  private readonly authModel: IAuthModel
 
-const signUp = async (tenantAndUser: SignUpInterface): Promise<TenantInterface> => {
-  const { tenantName, username, firstname, lastname, password } = tenantAndUser
-  const hashedPassword = hashPassword(password)
+  constructor ({ authModel }: { authModel: IAuthModel }) {
+    this.authModel = authModel
+  }
 
-  const tenant = await prisma.tenant.create({
-    data: {
-      name: tenantName,
-      users: {
-        create: {
-          username,
-          firstname,
-          lastname,
-          password: hashedPassword
-        }
-      }
-    }
-  })
+  signUp: TAuthServiceSignUp = async (tenantAndUser) => {
+    const hashedPassword = hashPassword(tenantAndUser.password)
 
-  return tenant
-}
+    const tenant = await this.authModel.create({
+      ...tenantAndUser,
+      password: hashedPassword
+    })
 
-const logIn = async () => {
+    return tenant
+  }
 
-}
-
-export default {
-  signUp,
-  logIn
+  logIn: TAuthServiceLogIn = async (loginData) => {
+    const loginSuccessfully = validateUser(loginData)
+    return loginSuccessfully
+  }
 }

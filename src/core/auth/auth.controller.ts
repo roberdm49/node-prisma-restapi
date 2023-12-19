@@ -1,24 +1,32 @@
-import authService from './auth.service'
+import { HttpStatus } from '@/enums/httpStatus'
 import { RequestHandler } from '@/types/RequestHandler'
+import { IAuthController, IAuthService } from './auth.interfaces'
 
-const signUp: RequestHandler = async (request, response, next) => {
-  try {
-    const tenant = await authService.signUp(request.body)
-    return response.json(tenant)
-  } catch (error) {
-    next()
+export default class AuthController implements IAuthController {
+  private readonly authService: IAuthService
+
+  constructor ({ authService }: { authService: IAuthService }) {
+    this.authService = authService
   }
-}
 
-const logIn: RequestHandler = async (request, response, next) => {
-  try {
-    //
-  } catch (error) {
-    next()
+  signUp: RequestHandler = async (request, response, next) => {
+    try {
+      const tenant = await this.authService.signUp(request.body)
+      return response.status(HttpStatus.Created).json(tenant)
+    } catch (error) {
+      next()
+    }
   }
-}
 
-export default {
-  signUp,
-  logIn
+  logIn: RequestHandler = async (request, response, next) => {
+    try {
+      const loginSuccessfully = await this.authService.logIn(request.body)
+      const codeStatus = loginSuccessfully
+        ? HttpStatus.OK
+        : HttpStatus.BadRequest
+      return response.status(codeStatus)
+    } catch (error) {
+      next()
+    }
+  }
 }

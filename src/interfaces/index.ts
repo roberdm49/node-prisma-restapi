@@ -1,2 +1,2 @@
-export * from './SignUp'
+export * from './Product'
 export * from './User'

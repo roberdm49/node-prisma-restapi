@@ -1,22 +1,18 @@
-import { Prisma, PrismaClient } from '@prisma/client'
-import { ProductInterface } from '@/interfaces/Product'
+import { IProductModel, IProductService } from './products.interfaces'
+import { TProductsServiceCreate, TProductsServiceGetAll } from './products.types'
 
-const prisma = new PrismaClient()
+export default class ProductsService implements IProductService {
+  private readonly productsModel: IProductModel
 
-const createProducts = async (productsToCreate: ProductInterface[]): Promise<Prisma.BatchPayload> => {
-  const products = await prisma.product.createMany({
-    data: productsToCreate
-  })
+  constructor ({ productsModel }: { productsModel: IProductModel }) {
+    this.productsModel = productsModel
+  }
 
-  return products
-}
+  createProducts: TProductsServiceCreate = async (productsToCreate) => {
+    return await this.productsModel.create(productsToCreate)
+  }
 
-const getProducts = async () => {
-  const products = await prisma.product.findMany()
-  return products
-}
-
-export default {
-  createProducts,
-  getProducts
+  getProducts: TProductsServiceGetAll = async () => {
+    return await this.productsModel.getAll()
+  }
 }

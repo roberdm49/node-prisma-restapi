@@ -1,25 +1,28 @@
-import productsService from './products.service'
 import { RequestHandler } from '@/types/RequestHandler'
+import { IProductController, IProductService } from './products.interfaces'
 
-const createProducts: RequestHandler = async (request, response, next) => {
-  try {
-    const products = await productsService.createProducts(request.body)
-    return response.json(products)
-  } catch (error) {
-    next()
+export default class ProductsController implements IProductController {
+  private readonly productsService: IProductService
+
+  constructor ({ productsService }: { productsService: IProductService }) {
+    this.productsService = productsService
   }
-}
 
-const getProducts: RequestHandler = async (request, response, next) => {
-  try {
-    const products = await productsService.getProducts()
-    return response.json(products)
-  } catch (error) {
-    next()
+  createProducts: RequestHandler = async (request, response, next) => {
+    try {
+      const products = await this.productsService.createProducts(request.body)
+      return response.json(products)
+    } catch (error) {
+      next()
+    }
   }
-}
 
-export default {
-  createProducts,
-  getProducts
+  getProducts: RequestHandler = async (request, response, next) => {
+    try {
+      const products = await this.productsService.getProducts()
+      return response.json(products)
+    } catch (error) {
+      next()
+    }
+  }
 }

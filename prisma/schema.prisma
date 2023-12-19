@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Tenant {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   name String
   createdAt DateTime @default(now())
   users User[]
@@ -21,72 +21,72 @@ model Tenant {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   username String @unique
   password String
   firstname String
   lastname String
   createdAt DateTime @default(now())
-  tenantId Int
+  tenantId String
   tenant Tenant @relation(fields: [tenantId], references: [id])
   // auth_strategy String?
 }
 
 model Product {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   name String
   price Float
   stock Int? @default(0)
   barCode String?
-  tenantId Int
+  tenantId String
   tenant Tenant @relation(fields: [tenantId], references: [id])
-  companyId Int?
+  companyId String?
   company ProductCompany? @relation(fields: [companyId], references: [id])
-  currencyId Int
+  currencyId String
   currency Currency @relation(fields: [currencyId], references: [id])
   purchasedItems PurchasedItem[]
 }
 
 model ProductCompany {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   name String
   createdAt DateTime @default(now())
   products Product[]
-  tenantId Int
+  tenantId String
   tenant Tenant @relation(fields: [tenantId], references: [id])
 }
 
 model DailySale {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   saleDate DateTime @default(now())
   closed Boolean @default(false)
-  tenantId Int
+  tenantId String
   tenant Tenant @relation(fields: [tenantId], references: [id])
   purchases Purchase[]
 }
 
 model Purchase {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   createdAt DateTime @default(now())
-  dailySaleId Int
+  dailySaleId String
   dailySale DailySale @relation(fields: [dailySaleId], references: [id])
   purchasedItems PurchasedItem[]
 }
 
 model PurchasedItem {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   quantity Int
   unitPrice Float
-  purchaseId Int
+  purchaseId String
   purchase Purchase @relation(fields: [purchaseId], references: [id])
-  productId Int
+  productId String
   product Product @relation(fields: [productId], references: [id])
-  currencySnapshotId Int
+  currencySnapshotId String
   currencySnapshot DailyExchangeRate @relation(fields: [currencySnapshotId], references: [id])
 }
 
 model Currency {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   name String
   isoCode String?
   isoNum String?
@@ -95,10 +95,10 @@ model Currency {
 }
 
 model DailyExchangeRate {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   currencyValueUsd Float
   timestamp DateTime // should be a timestamp
-  currencySourceId Int
+  currencySourceId String
   currencySource Currency @relation(fields: [currencySourceId], references: [id])
   purchasedItems PurchasedItem[]
 }
