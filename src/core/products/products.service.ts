@@ -20,7 +20,7 @@ export default class ProductsService implements IProductService {
     return await this.productsModel.updateMany(products)
   }
 
-  delete: TProductsServiceDelete = async (id) => {
-    return await this.productsModel.delete(id)
+  deleteMany: TProductsServiceDelete = async (ids) => {
+    return await this.productsModel.deleteMany(ids)
   }
 }

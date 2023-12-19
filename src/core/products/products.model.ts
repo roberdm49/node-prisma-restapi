@@ -38,11 +38,19 @@ export default class ProductsModel implements IProductModel {
     return await prisma.$transaction(productsToUpdate)
   }
 
-  delete: TProductsModelDelete = async (id) => {
-    return await prisma.product.delete({
-      where: {
-        id
-      }
-    })
+  deleteMany: TProductsModelDelete = async (ids) => {
+    const productsToDelete = []
+
+    for (const id of ids) {
+      productsToDelete.push(
+        prisma.product.delete({
+          where: {
+            id
+          }
+        })
+      )
+    }
+
+    return await prisma.$transaction(productsToDelete)
   }
 }

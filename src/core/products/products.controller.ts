@@ -36,10 +36,10 @@ export default class ProductsController implements IProductController {
     }
   }
 
-  delete: RequestHandler = async (request, response, next) => {
+  deleteMany: RequestHandler = async (request, response, next) => {
     try {
-      const id: string = request.params.id
-      const removedProduct = await this.productsService.delete(id)
+      const ids: string[] = request.body
+      const removedProduct = await this.productsService.deleteMany(ids)
       return removedProduct
     } catch (error) {
       next()

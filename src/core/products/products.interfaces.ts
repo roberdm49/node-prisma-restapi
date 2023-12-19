@@ -14,21 +14,21 @@ export interface IProductModel {
   create: TProductsModelCreate
   getAll: TProductsModelGetAll
   updateMany: TProductsModelUpdateMany
-  delete: TProductsModelDelete
+  deleteMany: TProductsModelDelete
 }
 
 export interface IProductService {
   createProducts: TProductsServiceCreate
   getProducts: TProductsServiceGetAll
   updateMany: TProductsServiceUpdateMany
-  delete: TProductsServiceDelete
+  deleteMany: TProductsServiceDelete
 }
 
 export interface IProductController {
   createProducts: RequestHandler
   getProducts: RequestHandler
   updateMany: RequestHandler
-  delete: RequestHandler
+  deleteMany: RequestHandler
 }
 
 // TODO: issues related with null vs undefined (the id is optional but it doesn't have the null option, because ts throw a warning)
