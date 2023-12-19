@@ -18,15 +18,15 @@ export interface IProductModel {
 }
 
 export interface IProductService {
-  createProducts: TProductsServiceCreate
-  getProducts: TProductsServiceGetAll
+  create: TProductsServiceCreate
+  getAll: TProductsServiceGetAll
   updateMany: TProductsServiceUpdateMany
   deleteMany: TProductsServiceDelete
 }
 
 export interface IProductController {
-  createProducts: RequestHandler
-  getProducts: RequestHandler
+  create: RequestHandler
+  getAll: RequestHandler
   updateMany: RequestHandler
   deleteMany: RequestHandler
 }

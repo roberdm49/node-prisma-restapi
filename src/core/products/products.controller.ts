@@ -8,18 +8,18 @@ export default class ProductsController implements IProductController {
     this.productsService = productsService
   }
 
-  createProducts: RequestHandler = async (request, response, next) => {
+  create: RequestHandler = async (request, response, next) => {
     try {
-      const products = await this.productsService.createProducts(request.body)
+      const products = await this.productsService.create(request.body)
       return response.json(products)
     } catch (error) {
       next()
     }
   }
 
-  getProducts: RequestHandler = async (request, response, next) => {
+  getAll: RequestHandler = async (request, response, next) => {
     try {
-      const products = await this.productsService.getProducts()
+      const products = await this.productsService.getAll()
       return response.json(products)
     } catch (error) {
       next()

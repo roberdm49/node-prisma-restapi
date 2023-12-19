@@ -8,11 +8,11 @@ export default class ProductsService implements IProductService {
     this.productsModel = productsModel
   }
 
-  createProducts: TProductsServiceCreate = async (productsToCreate) => {
+  create: TProductsServiceCreate = async (productsToCreate) => {
     return await this.productsModel.create(productsToCreate)
   }
 
-  getProducts: TProductsServiceGetAll = async () => {
+  getAll: TProductsServiceGetAll = async () => {
     return await this.productsModel.getAll()
   }
 
