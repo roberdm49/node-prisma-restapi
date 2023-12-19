@@ -9,6 +9,7 @@ export const createAuthRoutes = ({ authModel }: { authModel: IAuthModel }): Rout
   const authController = new AuthController({ authService })
 
   router.post('/sign-up', authController.signUp)
+  router.post('/log-in', authController.logIn)
 
   return router
 }
