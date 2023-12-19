@@ -1,3 +1,4 @@
+import { HttpStatus } from '@/enums/httpStatus'
 import { RequestHandler } from '@/types/RequestHandler'
 import { IUser, IUsersController, IUsersService } from './users.interfaces'
 
@@ -12,7 +13,7 @@ export default class UsersController implements IUsersController {
     try {
       const userData: IUser = request.body
       const something = await this.usersService.create(userData)
-      return response.json(something)
+      return response.status(HttpStatus.Created).json(something)
     } catch (error) {
       next()
     }

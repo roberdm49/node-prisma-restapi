@@ -1,3 +1,4 @@
+import { HttpStatus } from '@/enums/httpStatus'
 import { RequestHandler } from '@/types/RequestHandler'
 import { IProduct, IProductController, IProductService } from './products.interfaces'
 
@@ -11,7 +12,7 @@ export default class ProductsController implements IProductController {
   create: RequestHandler = async (request, response, next) => {
     try {
       const products = await this.productsService.create(request.body)
-      return response.json(products)
+      return response.status(HttpStatus.Created).json(products)
     } catch (error) {
       next()
     }
@@ -20,7 +21,7 @@ export default class ProductsController implements IProductController {
   getAll: RequestHandler = async (request, response, next) => {
     try {
       const products = await this.productsService.getAll()
-      return response.json(products)
+      return response.status(HttpStatus.OK).json(products)
     } catch (error) {
       next()
     }
@@ -30,7 +31,7 @@ export default class ProductsController implements IProductController {
     try {
       const products: IProduct[] = request.body
       const updatedProducts = await this.productsService.updateMany(products)
-      return response.json(updatedProducts)
+      return response.status(HttpStatus.OK).json(updatedProducts)
     } catch (error) {
       next()
     }
@@ -40,7 +41,7 @@ export default class ProductsController implements IProductController {
     try {
       const ids: string[] = request.body
       const removedProduct = await this.productsService.deleteMany(ids)
-      return removedProduct
+      return response.status(HttpStatus.OK).json(removedProduct)
     } catch (error) {
       next()
     }
