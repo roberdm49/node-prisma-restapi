@@ -1,8 +1,14 @@
-import express from 'express'
-import userController from './users.controller'
+import express, { Router } from 'express'
+import { IUsersModel } from './users.interfaces'
+import UsersService from './users.service'
+import UsersController from './users.controller'
 
-const router = express.Router()
+export const createProductRoutes = ({ usersModel }: { usersModel: IUsersModel }): Router => {
+  const router = express.Router()
+  const usersService = new UsersService({ usersModel })
+  const usersController = new UsersController({ usersService })
 
-router.post('/user', userController.createUser)
+  router.post('/user', usersController.create)
 
-export default router
+  return router
+}

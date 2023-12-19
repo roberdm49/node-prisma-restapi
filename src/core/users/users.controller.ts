@@ -1,30 +1,20 @@
-import { PrismaClient } from '@prisma/client'
 import { RequestHandler } from '@/types/RequestHandler'
-import { UserInterface } from '@/interfaces'
+import { IUser, IUsersController, IUsersService } from './users.interfaces'
 
-const prisma = new PrismaClient()
+export default class UsersController implements IUsersController {
+  private readonly usersService: IUsersService
 
-const createUser: RequestHandler = async (request, response, next) => {
-  try {
-    const { firstname, lastname, username, password, tenantId }: UserInterface = request.body
-    const user = await prisma.user.create({
-      data: {
-        firstname,
-        lastname,
-        username,
-        password,
-        tenant: {
-          connect: {
-            id: tenantId
-          }
-        }
-      }
-    })
+  constructor ({ usersService }: { usersService: IUsersService }) {
+    this.usersService = usersService
+  }
 
-    return user
-  } catch (error) {
-    next()
+  create: RequestHandler = async (request, response, next) => {
+    try {
+      const userData: IUser = request.body
+      const something = await this.usersService.create(userData)
+      return response.json(something)
+    } catch (error) {
+      next()
+    }
   }
 }
-
-export default { createUser }
