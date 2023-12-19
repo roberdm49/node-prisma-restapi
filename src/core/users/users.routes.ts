@@ -3,7 +3,7 @@ import { IUsersModel } from './users.interfaces'
 import UsersService from './users.service'
 import UsersController from './users.controller'
 
-export const createProductRoutes = ({ usersModel }: { usersModel: IUsersModel }): Router => {
+export const createUsersRoutes = ({ usersModel }: { usersModel: IUsersModel }): Router => {
   const router = express.Router()
   const usersService = new UsersService({ usersModel })
   const usersController = new UsersController({ usersService })
