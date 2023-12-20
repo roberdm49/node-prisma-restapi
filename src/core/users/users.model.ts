@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { IUsersModel } from './users.interfaces'
-import { TUsersModelCreate } from './users.types'
+import { TUsersModelCreate, TUsersModelUpdate } from './users.types'
 
 const prisma = new PrismaClient()
 
@@ -18,6 +18,19 @@ export default class UsersModel implements IUsersModel {
             id: tenantId
           }
         }
+      }
+    })
+
+    return user
+  }
+
+  update: TUsersModelUpdate = async (userData) => {
+    const user = await prisma.user.update({
+      where: {
+        id: userData.id
+      },
+      data: {
+        ...userData
       }
     })
 
