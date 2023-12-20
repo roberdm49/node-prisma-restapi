@@ -1,4 +1,4 @@
-import { RequestHandler } from '@/types/RequestHandler'
+import { TRequestHandler } from '@/types/TRequestHandler'
 import {
   TUsersModelCreate,
   TUsersModelUpdate,
@@ -17,8 +17,8 @@ export interface IUsersService {
 }
 
 export interface IUsersController {
-  create: RequestHandler
-  update: RequestHandler
+  create: TRequestHandler
+  update: TRequestHandler
 }
 
 export interface IUser {

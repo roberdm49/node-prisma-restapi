@@ -1,5 +1,5 @@
 import { HttpStatus } from '@/enums/httpStatus'
-import { RequestHandler } from '@/types/RequestHandler'
+import { TRequestHandler } from '@/types/TRequestHandler'
 import { IUser, IUsersController, IUsersService } from './users.interfaces'
 
 export default class UsersController implements IUsersController {
@@ -9,7 +9,7 @@ export default class UsersController implements IUsersController {
     this.usersService = usersService
   }
 
-  create: RequestHandler = async (request, response, next) => {
+  create: TRequestHandler = async (request, response, next) => {
     try {
       const userData: IUser = request.body
       const user = await this.usersService.create(userData)
@@ -19,7 +19,7 @@ export default class UsersController implements IUsersController {
     }
   }
 
-  update: RequestHandler = async (request, response, next) => {
+  update: TRequestHandler = async (request, response, next) => {
     try {
       const newUserData: IUser = request.body
       const user = await this.usersService.update(newUserData)
