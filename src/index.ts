@@ -4,11 +4,13 @@ import morgan from 'morgan'
 import { createAuthRoutes } from '@/core/auth/auth.routes'
 import { createProductsRoutes } from '@/core/products/products.routes'
 import { createUsersRoutes } from '@/core/users/users.routes'
+import { createCompanyRoutes } from './core/company/company.routes'
+import { createDailySaleRoutes } from './core/daily-sale/daily-sale.routes'
 import AuthModel from './core/auth/auth.model'
 import ProductsModel from './core/products/products.model'
 import UsersModel from './core/users/users.model'
 import CompanyModel from './core/company/company.model'
-import { createCompanyRoutes } from './core/company/company.routes'
+import DailySaleModel from './core/daily-sale/daily-sale.model'
 
 dotenv.config()
 
@@ -23,11 +25,13 @@ const authModel = new AuthModel()
 const productsModel = new ProductsModel()
 const usersModel = new UsersModel()
 const companyModel = new CompanyModel()
+const dailySaleModel = new DailySaleModel()
 
 app.use('/auth', createAuthRoutes({ authModel }))
 app.use('/products', createProductsRoutes({ productsModel }))
 app.use('/users', createUsersRoutes({ usersModel }))
 app.use('/company', createCompanyRoutes({ companyModel }))
+app.use('/daily-sale', createDailySaleRoutes({ dailySaleModel }))
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
