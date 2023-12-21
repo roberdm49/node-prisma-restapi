@@ -1,4 +1,4 @@
-import { TRequestHandler } from '@/types/TRequestHandler'
+import { RequestHandler } from 'express'
 import {
   TUsersModelCreate,
   TUsersModelUpdate,
@@ -17,8 +17,8 @@ export interface IUsersService {
 }
 
 export interface IUsersController {
-  create: TRequestHandler
-  update: TRequestHandler
+  create: RequestHandler
+  update: RequestHandler
 }
 
 export interface IUser {

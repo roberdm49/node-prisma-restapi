@@ -1,5 +1,5 @@
 import { HttpStatus } from '@/enums/httpStatus'
-import { TRequestHandler } from '@/types/TRequestHandler'
+import { RequestHandler } from 'express'
 import { IProduct, IProductController, IProductService } from './products.interfaces'
 
 export default class ProductsController implements IProductController {
@@ -9,7 +9,7 @@ export default class ProductsController implements IProductController {
     this.productsService = productsService
   }
 
-  create: TRequestHandler = async (request, response, next) => {
+  create: RequestHandler = async (request, response, next) => {
     try {
       const products = await this.productsService.create(request.body)
       return response.status(HttpStatus.Created).json(products)
@@ -18,7 +18,7 @@ export default class ProductsController implements IProductController {
     }
   }
 
-  getAll: TRequestHandler = async (request, response, next) => {
+  getAll: RequestHandler = async (request, response, next) => {
     try {
       const products = await this.productsService.getAll()
       return response.status(HttpStatus.OK).json(products)
@@ -27,7 +27,7 @@ export default class ProductsController implements IProductController {
     }
   }
 
-  updateMany: TRequestHandler = async (request, response, next) => {
+  updateMany: RequestHandler = async (request, response, next) => {
     try {
       const products: IProduct[] = request.body
       const updatedProducts = await this.productsService.updateMany(products)
@@ -37,7 +37,7 @@ export default class ProductsController implements IProductController {
     }
   }
 
-  deleteMany: TRequestHandler = async (request, response, next) => {
+  deleteMany: RequestHandler = async (request, response, next) => {
     try {
       const ids: string[] = request.body
       const removedProduct = await this.productsService.deleteMany(ids)

@@ -1,4 +1,4 @@
-import { TRequestHandler } from '@/types/TRequestHandler'
+import { RequestHandler } from 'express'
 import { TAuthModelCreate, TAuthServiceLogIn, TAuthServiceSignUp } from './auth.types'
 
 export interface IAuthModel {
@@ -11,8 +11,8 @@ export interface IAuthService {
 }
 
 export interface IAuthController {
-  signUp: TRequestHandler
-  logIn: TRequestHandler
+  signUp: RequestHandler
+  logIn: RequestHandler
 }
 
 export interface ITenant {

@@ -1,4 +1,4 @@
-import { TRequestHandler } from '@/types/TRequestHandler'
+import { RequestHandler } from 'express'
 import {
   TProductsModelCreate,
   TProductsModelDelete,
@@ -25,10 +25,10 @@ export interface IProductService {
 }
 
 export interface IProductController {
-  create: TRequestHandler
-  getAll: TRequestHandler
-  updateMany: TRequestHandler
-  deleteMany: TRequestHandler
+  create: RequestHandler
+  getAll: RequestHandler
+  updateMany: RequestHandler
+  deleteMany: RequestHandler
 }
 
 // TODO: issues related with null vs undefined (the id is optional but it doesn't have the null option, because ts throw a warning)

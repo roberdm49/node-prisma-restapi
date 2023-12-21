@@ -1,5 +1,5 @@
+import { RequestHandler } from 'express'
 import { HttpStatus } from '@/enums/httpStatus'
-import { TRequestHandler } from '@/types/TRequestHandler'
 import { IUser, IUsersController, IUsersService } from './users.interfaces'
 
 export default class UsersController implements IUsersController {
@@ -9,7 +9,7 @@ export default class UsersController implements IUsersController {
     this.usersService = usersService
   }
 
-  create: TRequestHandler = async (request, response, next) => {
+  create: RequestHandler = async (request, response, next) => {
     try {
       const userData: IUser = request.body
       const user = await this.usersService.create(userData)
@@ -19,7 +19,7 @@ export default class UsersController implements IUsersController {
     }
   }
 
-  update: TRequestHandler = async (request, response, next) => {
+  update: RequestHandler = async (request, response, next) => {
     try {
       const newUserData: IUser = request.body
       const user = await this.usersService.update(newUserData)
