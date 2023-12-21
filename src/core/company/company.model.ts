@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 export default class CompanyModel {
   getAll: TCompanyModelGetAll = async () => {
-    // TODO: replace "productCompany" for "company"
-    return await prisma.productCompany.findMany()
+    const companies = await prisma.company.findMany()
+    return companies
   }
 }
