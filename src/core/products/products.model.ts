@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/db'
 import { IProductModel } from './products.interfaces'
 import { TProductsModelCreate, TProductsModelDelete, TProductsModelGetAll, TProductsModelUpdateMany } from './products.types'
-
-const prisma = new PrismaClient()
 
 export default class ProductsModel implements IProductModel {
   create: TProductsModelCreate = async (productsToCreate) => {

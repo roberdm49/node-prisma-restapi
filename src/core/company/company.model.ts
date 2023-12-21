@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/db'
 import { TCompanyModelGetAll } from './company.types'
-
-const prisma = new PrismaClient()
 
 export default class CompanyModel {
   getAll: TCompanyModelGetAll = async () => {

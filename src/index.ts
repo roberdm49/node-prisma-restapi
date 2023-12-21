@@ -7,6 +7,8 @@ import { createUsersRoutes } from '@/core/users/users.routes'
 import AuthModel from './core/auth/auth.model'
 import ProductsModel from './core/products/products.model'
 import UsersModel from './core/users/users.model'
+import CompanyModel from './core/company/company.model'
+import { createCompanyRoutes } from './core/company/company.routes'
 
 dotenv.config()
 
@@ -20,10 +22,12 @@ app.use(express.urlencoded({ extended: false })) // http://expressjs.com/en/5x/a
 const authModel = new AuthModel()
 const productsModel = new ProductsModel()
 const usersModel = new UsersModel()
+const companyModel = new CompanyModel()
 
 app.use('/auth', createAuthRoutes({ authModel }))
 app.use('/products', createProductsRoutes({ productsModel }))
 app.use('/users', createUsersRoutes({ usersModel }))
+app.use('/company', createCompanyRoutes({ companyModel }))
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)

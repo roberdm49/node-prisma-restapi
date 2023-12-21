@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import prisma from '@/db'
 
 export const populateDB = async (): Promise<void> => {
   console.log('Initialized!')
@@ -51,7 +49,7 @@ export const populateDB = async (): Promise<void> => {
     }
   })
 
-  const company = await prisma.productCompany.create({
+  const company = await prisma.company.create({
     data: {
       name: 'Arcor',
       tenant: {

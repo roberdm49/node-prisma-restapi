@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/db'
 import { IAuthModel } from './auth.interfaces'
 import { TAuthModelCreate } from './auth.types'
-
-const prisma = new PrismaClient()
 
 export default class AuthModel implements IAuthModel {
   create: TAuthModelCreate = async (signUpData) => {
