@@ -16,5 +16,6 @@ app.use(express.urlencoded({ extended: false })) // http://expressjs.com/en/5x/a
 app.use(configureRoutes())
 
 app.listen(port, () => {
+  // TODO: restrict this message only for dev environment
   console.log(`✅ App listening on ${chalk.cyan.bold(`http://localhost:${port}`)}`)
 })
