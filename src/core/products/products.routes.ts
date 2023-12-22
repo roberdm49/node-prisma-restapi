@@ -8,8 +8,8 @@ export const createProductsRoutes = ({ productsModel }: { productsModel: IProduc
   const productsService = new ProductsService({ productsModel })
   const productsController = new ProductsController({ productsService })
 
-  router.get('/get', productsController.getProducts)
-  router.post('/create', productsController.createProducts)
+  router.get('/get', productsController.getAll)
+  router.post('/create', productsController.create)
 
   return router
 }

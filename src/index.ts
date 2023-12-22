@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
+import chalk from 'chalk'
 import { configureRoutes } from './routes'
 
 dotenv.config()
@@ -15,5 +16,5 @@ app.use(express.urlencoded({ extended: false })) // http://expressjs.com/en/5x/a
 app.use(configureRoutes())
 
 app.listen(port, () => {
-  console.log(`App listening on port ${port}`)
+  console.log(`✅ App listening on ${chalk.cyan.bold(`http://localhost:${port}`)}`)
 })
