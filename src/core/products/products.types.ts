@@ -1,4 +1,5 @@
-import { IProduct } from './products.interfaces'
+import { Router } from 'express'
+import { IProduct, IProductModel } from './products.interfaces'
 
 export type TProductsModelCreate = (productsData: IProduct[]) => Promise<number>
 export type TProductsModelGetAll = () => Promise<IProduct[]>
@@ -9,3 +10,5 @@ export type TProductsServiceCreate = (productsData: IProduct[]) => Promise<numbe
 export type TProductsServiceGetAll = () => Promise<IProduct[]>
 export type TProductsServiceUpdateMany = (products: IProduct[]) => Promise<IProduct[]>
 export type TProductsServiceDelete = (ids: string[]) => Promise<IProduct[]>
+
+export type TProductsCreateRoutes = ({ productsModel }: { productsModel: IProductModel }) => Router

@@ -1,9 +1,9 @@
-import express, { Router } from 'express'
+import express from 'express'
 import CurrencyService from './currency.service'
 import CurrencyController from './currency.controller'
-import { ICurrencyModel } from './currency.interfaces'
+import { TCurrencyCreateRoutes } from './currency.types'
 
-export const createCurrencyRoutes = ({ currencyModel }: { currencyModel: ICurrencyModel }): Router => {
+export const createCurrencyRoutes: TCurrencyCreateRoutes = ({ currencyModel }) => {
   const router = express.Router()
   const currencyService = new CurrencyService({ currencyModel })
   const currencyController = new CurrencyController({ currencyService })

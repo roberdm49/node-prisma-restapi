@@ -1,9 +1,9 @@
-import express, { Router } from 'express'
+import express from 'express'
 import ProductsService from './products.service'
 import ProductsController from './products.controller'
-import { IProductModel } from './products.interfaces'
+import { TProductsCreateRoutes } from './products.types'
 
-export const createProductsRoutes = ({ productsModel }: { productsModel: IProductModel }): Router => {
+export const createProductsRoutes: TProductsCreateRoutes = ({ productsModel }) => {
   const router = express.Router()
   const productsService = new ProductsService({ productsModel })
   const productsController = new ProductsController({ productsService })

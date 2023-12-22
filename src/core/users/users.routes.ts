@@ -1,9 +1,9 @@
-import express, { Router } from 'express'
-import { IUsersModel } from './users.interfaces'
+import express from 'express'
 import UsersService from './users.service'
 import UsersController from './users.controller'
+import { TUsersCreateRoutes } from './users.types'
 
-export const createUsersRoutes = ({ usersModel }: { usersModel: IUsersModel }): Router => {
+export const createUsersRoutes: TUsersCreateRoutes = ({ usersModel }) => {
   const router = express.Router()
   const usersService = new UsersService({ usersModel })
   const usersController = new UsersController({ usersService })
