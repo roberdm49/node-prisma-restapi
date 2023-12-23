@@ -1,11 +1,11 @@
 import { RequestHandler } from 'express'
 import { HttpStatus } from '@/enums/httpStatus'
-import { IAuthController, IAuthService } from './auth.interfaces'
+import { IAuthController, IAuthControllerConstructor, IAuthService } from './auth.interfaces'
 
 export default class AuthController implements IAuthController {
   private readonly authService: IAuthService
 
-  constructor ({ authService }: { authService: IAuthService }) {
+  constructor ({ authService }: IAuthControllerConstructor) {
     this.authService = authService
   }
 

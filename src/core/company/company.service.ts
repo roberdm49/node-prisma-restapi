@@ -1,10 +1,10 @@
-import { ICompanyModel, ICompanyService } from './company.interface'
+import { ICompanyModel, ICompanyService, ICompanyServiceConstructor } from './company.interface'
 import { TCompanyModelGetAll } from './company.types'
 
 export default class CompanyService implements ICompanyService {
   private readonly companyModel: ICompanyModel
 
-  constructor ({ companyModel }: { companyModel: ICompanyModel }) {
+  constructor ({ companyModel }: ICompanyServiceConstructor) {
     this.companyModel = companyModel
   }
 

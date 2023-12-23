@@ -1,11 +1,11 @@
 import { HttpStatus } from '@/enums/httpStatus'
 import { RequestHandler } from 'express'
-import { IProduct, IProductController, IProductService } from './products.interfaces'
+import { IProduct, IProductController, IProductControllerConstructor, IProductService } from './products.interfaces'
 
 export default class ProductsController implements IProductController {
   private readonly productsService: IProductService
 
-  constructor ({ productsService }: { productsService: IProductService }) {
+  constructor ({ productsService }: IProductControllerConstructor) {
     this.productsService = productsService
   }
 

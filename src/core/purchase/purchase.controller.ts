@@ -1,11 +1,11 @@
 import { RequestHandler } from 'express'
-import { IPurchaseController, IPurchaseService } from './purchase.interfaces'
+import { IPurchaseController, IPurchaseControllerConstructor, IPurchaseService } from './purchase.interfaces'
 import { HttpStatus } from '@/enums/httpStatus'
 
 export default class PurchaseController implements IPurchaseController {
   private readonly purchaseService: IPurchaseService
 
-  constructor ({ purchaseService }: { purchaseService: IPurchaseService }) {
+  constructor ({ purchaseService }: IPurchaseControllerConstructor) {
     this.purchaseService = purchaseService
   }
 

@@ -1,10 +1,10 @@
-import { IProductModel, IProductService } from './products.interfaces'
+import { IProductModel, IProductService, IProductServiceConstructor } from './products.interfaces'
 import { TProductsServiceCreate, TProductsServiceDelete, TProductsServiceGetAll, TProductsServiceUpdateMany } from './products.types'
 
 export default class ProductsService implements IProductService {
   private readonly productsModel: IProductModel
 
-  constructor ({ productsModel }: { productsModel: IProductModel }) {
+  constructor ({ productsModel }: IProductServiceConstructor) {
     this.productsModel = productsModel
   }
 

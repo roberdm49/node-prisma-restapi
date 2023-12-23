@@ -9,8 +9,16 @@ export interface ICompanyService {
   getAll: TCompanyServiceGetAll
 }
 
+export interface ICompanyServiceConstructor {
+  companyModel: ICompanyModel
+}
+
 export interface ICompanyController {
   getAll: RequestHandler
+}
+
+export interface ICompanyControllerConstructor {
+  companyService: ICompanyService
 }
 
 export interface ICompany {

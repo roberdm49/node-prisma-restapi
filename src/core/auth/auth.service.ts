@@ -1,12 +1,12 @@
 import { hashPassword } from '@/utils/hash'
 import { validateUser } from '@/utils/validateUser'
-import { IAuthModel, IAuthService } from './auth.interfaces'
+import { IAuthModel, IAuthService, IAuthServiceConstructor } from './auth.interfaces'
 import { TAuthServiceLogIn, TAuthServiceSignUp } from './auth.types'
 
 export default class AuthService implements IAuthService {
   private readonly authModel: IAuthModel
 
-  constructor ({ authModel }: { authModel: IAuthModel }) {
+  constructor ({ authModel }: IAuthServiceConstructor) {
     this.authModel = authModel
   }
 

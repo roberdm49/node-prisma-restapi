@@ -1,11 +1,11 @@
 import { RequestHandler } from 'express'
 import { HttpStatus } from '@/enums/httpStatus'
-import { IUser, IUsersController, IUsersService } from './users.interfaces'
+import { IUser, IUsersController, IUsersControllerConstructor, IUsersService } from './users.interfaces'
 
 export default class UsersController implements IUsersController {
   private readonly usersService: IUsersService
 
-  constructor ({ usersService }: { usersService: IUsersService }) {
+  constructor ({ usersService }: IUsersControllerConstructor) {
     this.usersService = usersService
   }
 

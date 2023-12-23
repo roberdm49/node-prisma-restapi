@@ -16,9 +16,17 @@ export interface IUsersService {
   update: TUsersServiceUpdate
 }
 
+export interface IUsersServiceConstructor {
+  usersModel: IUsersModel
+}
+
 export interface IUsersController {
   create: RequestHandler
   update: RequestHandler
+}
+
+export interface IUsersControllerConstructor {
+  usersService: IUsersService
 }
 
 export interface IUser {

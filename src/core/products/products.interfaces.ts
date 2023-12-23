@@ -24,11 +24,19 @@ export interface IProductService {
   deleteMany: TProductsServiceDelete
 }
 
+export interface IProductServiceConstructor {
+  productsModel: IProductModel
+}
+
 export interface IProductController {
   create: RequestHandler
   getAll: RequestHandler
   updateMany: RequestHandler
   deleteMany: RequestHandler
+}
+
+export interface IProductControllerConstructor {
+  productsService: IProductService
 }
 
 // TODO: issues related with null vs undefined (the id is optional but it doesn't have the null option, because ts throw a warning)

@@ -9,8 +9,16 @@ export interface ICurrencyService {
   getAll: TCurrencyServiceGetAll
 }
 
+export interface ICurrencyServiceConstructor {
+  currencyModel: ICurrencyModel
+}
+
 export interface ICurrencyController {
   getAll: RequestHandler
+}
+
+export interface ICurrencyControllerConstructor {
+  currencyService: ICurrencyService
 }
 
 export interface ICurrency {

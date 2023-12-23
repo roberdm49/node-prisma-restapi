@@ -12,8 +12,16 @@ export interface IDailySaleService {
   getAll: TDailySaleServiceGetAll
 }
 
+export interface IDailySaleServiceContructor {
+  dailySaleModel: IDailySaleModel
+}
+
 export interface IDailySaleController {
   getAll: RequestHandler
+}
+
+export interface IDailySaleControllerConstructor {
+  dailySaleService: IDailySaleService
 }
 
 export interface IDailySale {

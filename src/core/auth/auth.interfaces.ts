@@ -10,9 +10,17 @@ export interface IAuthService {
   logIn: TAuthServiceLogIn
 }
 
+export interface IAuthServiceConstructor {
+  authModel: IAuthModel
+}
+
 export interface IAuthController {
   signUp: RequestHandler
   logIn: RequestHandler
+}
+
+export interface IAuthControllerConstructor {
+  authService: IAuthService
 }
 
 export interface ITenant {

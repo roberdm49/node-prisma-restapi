@@ -12,8 +12,16 @@ export interface IPurchaseService {
   getAll: TPurchaseServiceGetAll
 }
 
+export interface IPurchaseServiceConstructor {
+  purchaseModel: IPurchaseModel
+}
+
 export interface IPurchaseController {
   getAll: RequestHandler
+}
+
+export interface IPurchaseControllerConstructor {
+  purchaseService: IPurchaseService
 }
 
 export interface IPurchase {

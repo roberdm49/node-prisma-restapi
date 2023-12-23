@@ -1,10 +1,10 @@
-import { IPurchaseModel, IPurchaseService } from './purchase.interfaces'
+import { IPurchaseModel, IPurchaseService, IPurchaseServiceConstructor } from './purchase.interfaces'
 import { TPurchaseServiceGetAll } from './purchase.types'
 
 export default class PurchaseService implements IPurchaseService {
   private readonly purchaseModel: IPurchaseModel
 
-  constructor ({ purchaseModel }: { purchaseModel: IPurchaseModel }) {
+  constructor ({ purchaseModel }: IPurchaseServiceConstructor) {
     this.purchaseModel = purchaseModel
   }
 
