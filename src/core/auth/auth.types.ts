@@ -1,9 +1,20 @@
 import { Router } from 'express'
-import { IAuthModel, ILogIn, ISignUp, ITenant } from './auth.interfaces'
+// Internal
+import { IAuthModel, ILogIn, ISignUp, ITenant, IUserTokens } from './auth.interfaces'
+// External
+import { IUsersModel } from '../users/users.interfaces'
 
 export type TAuthModelCreate = (signUpData: ISignUp) => Promise<ITenant>
 
 export type TAuthServiceSignUp = (signUpData: ISignUp) => Promise<ITenant>
-export type TAuthServiceLogIn = (logInData: ILogIn) => Promise<boolean>
+export type TAuthServiceLogIn = (logInData: ILogIn) => Promise<IUserTokens>
 
-export type TAuthCreateRoutes = ({ authModel }: { authModel: IAuthModel }) => Router
+export type TAuthCreateRoutes =
+({
+  authModel,
+  usersModel
+}:
+{
+  authModel: IAuthModel
+  usersModel: IUsersModel
+}) => Router

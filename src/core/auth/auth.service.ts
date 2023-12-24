@@ -1,20 +1,24 @@
-import { hashPassword } from '@/utils/hash'
-import { validateUser } from '@/utils/validateUser'
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 import { IAuthModel, IAuthService, IAuthServiceConstructor } from './auth.interfaces'
 import { TAuthServiceLogIn, TAuthServiceSignUp } from './auth.types'
+import { IUsersModel } from '../users/users.interfaces'
 
 export default class AuthService implements IAuthService {
   private readonly authModel: IAuthModel
+  private readonly usersModel: IUsersModel
 
-  constructor ({ authModel }: IAuthServiceConstructor) {
+  constructor ({ authModel, usersModel }: IAuthServiceConstructor) {
     this.authModel = authModel
+    this.usersModel = usersModel
   }
 
-  signUp: TAuthServiceSignUp = async (tenantAndUser) => {
-    const hashedPassword = hashPassword(tenantAndUser.password)
+  signUp: TAuthServiceSignUp = async (signUpData) => {
+    const rounds = 10
+    const hashedPassword = await bcrypt.hash(signUpData.password, rounds)
 
     const tenant = await this.authModel.create({
-      ...tenantAndUser,
+      ...signUpData,
       password: hashedPassword
     })
 
@@ -22,7 +26,21 @@ export default class AuthService implements IAuthService {
   }
 
   logIn: TAuthServiceLogIn = async (loginData) => {
-    const loginSuccessfully = validateUser(loginData)
-    return loginSuccessfully
+    const foundUser = await this.usersModel.getOneByUsername(loginData.username)
+    const validPassword: boolean = await bcrypt.compare(loginData.password, foundUser.password)
+
+    if (!validPassword) throw new Error('Wrong credentials')
+
+    const userForToken = {
+      id: foundUser.id,
+      username: foundUser.username
+    }
+
+    const accessToken = jwt.sign(userForToken, String(process.env.JWT_SECRET), { expiresIn: '30m' })
+    // const refreshToken = jwt.sign(userForToken, String(process.env.JWT_SECRET), { expiresIn: '2h' })
+
+    return {
+      accessToken
+    }
   }
 }

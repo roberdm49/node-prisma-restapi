@@ -27,7 +27,7 @@ export const configureRoutes = (): Router => {
   const purchaseModel = new PurchaseModel()
   const currencyModel = new CurrencyModel()
 
-  router.use('/auth', createAuthRoutes({ authModel }))
+  router.use('/auth', createAuthRoutes({ authModel, usersModel }))
   router.use('/products', createProductsRoutes({ productsModel }))
   router.use('/users', createUsersRoutes({ usersModel }))
   router.use('/company', createCompanyRoutes({ companyModel }))

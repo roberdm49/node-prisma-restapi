@@ -1,5 +1,8 @@
 import { RequestHandler } from 'express'
+// Internal
 import { TAuthModelCreate, TAuthServiceLogIn, TAuthServiceSignUp } from './auth.types'
+// External
+import { IUsersModel } from '../users/users.interfaces'
 
 export interface IAuthModel {
   create: TAuthModelCreate
@@ -12,6 +15,7 @@ export interface IAuthService {
 
 export interface IAuthServiceConstructor {
   authModel: IAuthModel
+  usersModel: IUsersModel
 }
 
 export interface IAuthController {
@@ -40,4 +44,9 @@ export interface ISignUp {
   firstname: string
   lastname: string
   password: string
+}
+
+export interface IUserTokens {
+  accessToken: string
+  refreshToken?: string
 }

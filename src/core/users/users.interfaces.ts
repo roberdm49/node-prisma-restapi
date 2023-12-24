@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express'
 import {
   TUsersModelCreate,
+  TUsersModelGetOneByUsername,
   TUsersModelUpdate,
   TUsersServiceCreate,
   TUsersServiceUpdate
@@ -9,6 +10,7 @@ import {
 export interface IUsersModel {
   create: TUsersModelCreate
   update: TUsersModelUpdate
+  getOneByUsername: TUsersModelGetOneByUsername
 }
 
 export interface IUsersService {

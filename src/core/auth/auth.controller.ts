@@ -20,11 +20,8 @@ export default class AuthController implements IAuthController {
 
   logIn: RequestHandler = async (request, response, next) => {
     try {
-      const loginSuccessfully = await this.authService.logIn(request.body)
-      const codeStatus = loginSuccessfully
-        ? HttpStatus.OK
-        : HttpStatus.BadRequest
-      return response.status(codeStatus)
+      const tokens = await this.authService.logIn(request.body)
+      return response.status(HttpStatus.OK).json(tokens)
     } catch (error) {
       next()
     }
