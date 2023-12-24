@@ -26,10 +26,13 @@ export default class AuthService implements IAuthService {
   }
 
   logIn: TAuthServiceLogIn = async (loginData) => {
-    const foundUser = await this.usersModel.getOneByUsername(loginData.username)
-    const validPassword: boolean = await bcrypt.compare(loginData.password, foundUser.password)
+    const wrongCredentialsError = new Error('Wrong credentials')
 
-    if (!validPassword) throw new Error('Wrong credentials')
+    const foundUser = await this.usersModel.getOneByUsername(loginData.username)
+    if (foundUser === null) throw wrongCredentialsError
+
+    const validPassword: boolean = await bcrypt.compare(loginData.password, foundUser.password)
+    if (!validPassword) throw wrongCredentialsError
 
     const userForToken = {
       id: foundUser.id,

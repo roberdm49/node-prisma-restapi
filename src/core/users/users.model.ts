@@ -36,7 +36,7 @@ export default class UsersModel implements IUsersModel {
   }
 
   getOneByUsername: TUsersModelGetOneByUsername = async (username) => {
-    const user = await prisma.user.findUniqueOrThrow({
+    const user = await prisma.user.findUnique({
       where: {
         username
       }
