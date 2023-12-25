@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import { JwtExpireTime } from '@/enums/expireTime'
 import { IAuthModel, IAuthService, IAuthServiceConstructor } from './auth.interfaces'
 import { TAuthServiceLogIn, TAuthServiceSignUp } from './auth.types'
 import { IUsersModel } from '../users/users.interfaces'
@@ -39,8 +40,8 @@ export default class AuthService implements IAuthService {
       username: foundUser.username
     }
 
-    const accessToken = jwt.sign(userForToken, String(process.env.JWT_SECRET), { expiresIn: '30m' })
-    const refreshToken = jwt.sign(userForToken, String(process.env.JWT_SECRET), { expiresIn: '2h' })
+    const accessToken = jwt.sign(userForToken, String(process.env.JWT_SECRET), { expiresIn: JwtExpireTime.AccessToken })
+    const refreshToken = jwt.sign(userForToken, String(process.env.JWT_SECRET), { expiresIn: JwtExpireTime.RefreshToken })
 
     return {
       accessToken,

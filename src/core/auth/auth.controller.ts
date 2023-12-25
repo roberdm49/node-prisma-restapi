@@ -1,7 +1,8 @@
 import { RequestHandler } from 'express'
 import { HttpStatus } from '@/enums/httpStatus'
-import { IAuthController, IAuthControllerConstructor, IAuthService } from './auth.interfaces'
 import { createSecureCookie } from '@/utils/createSecureCookie'
+import { CookieExpireTime } from '@/enums/expireTime'
+import { IAuthController, IAuthControllerConstructor, IAuthService } from './auth.interfaces'
 
 export default class AuthController implements IAuthController {
   private readonly authService: IAuthService
@@ -23,8 +24,8 @@ export default class AuthController implements IAuthController {
     try {
       const { accessToken, refreshToken } = await this.authService.logIn(request.body)
       response.setHeader('Set-Cookie', [
-        createSecureCookie('accessToken', accessToken),
-        createSecureCookie('refreshToken', refreshToken)
+        createSecureCookie('accessToken', accessToken, CookieExpireTime.AccessToken),
+        createSecureCookie('refreshToken', refreshToken, CookieExpireTime.RefreshToken)
       ])
       return response.status(HttpStatus.OK)
     } catch (error) {
