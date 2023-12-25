@@ -48,5 +48,5 @@ export interface ISignUp {
 
 export interface IUserTokens {
   accessToken: string
-  refreshToken?: string
+  refreshToken: string
 }

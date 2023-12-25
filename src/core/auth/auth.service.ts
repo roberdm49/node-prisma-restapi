@@ -40,10 +40,11 @@ export default class AuthService implements IAuthService {
     }
 
     const accessToken = jwt.sign(userForToken, String(process.env.JWT_SECRET), { expiresIn: '30m' })
-    // const refreshToken = jwt.sign(userForToken, String(process.env.JWT_SECRET), { expiresIn: '2h' })
+    const refreshToken = jwt.sign(userForToken, String(process.env.JWT_SECRET), { expiresIn: '2h' })
 
     return {
-      accessToken
+      accessToken,
+      refreshToken
     }
   }
 }
