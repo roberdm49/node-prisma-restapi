@@ -3,7 +3,7 @@ import { HttpStatus } from '@/enums/httpStatus'
 import { createSecureCookie } from '@/utils/createSecureCookie'
 import { CookieExpireTime } from '@/enums/expireTime'
 import { CookieNames } from '@/enums/cookies'
-import { IAuthController, IAuthControllerConstructor, IAuthService } from './auth.interfaces'
+import { IAuthController, IAuthControllerConstructor, IAuthService, ILogIn } from './auth.interfaces'
 
 export default class AuthController implements IAuthController {
   private readonly authService: IAuthService
@@ -23,7 +23,8 @@ export default class AuthController implements IAuthController {
 
   logIn: RequestHandler = async (request, response, next) => {
     try {
-      const { accessToken, refreshToken } = await this.authService.logIn(request.body)
+      const loginData: ILogIn = request.body
+      const { accessToken, refreshToken } = await this.authService.logIn(loginData)
       response.setHeader('Set-Cookie', [
         createSecureCookie(CookieNames.AccessToken, accessToken, CookieExpireTime.AccessToken),
         createSecureCookie(CookieNames.RefreshToken, refreshToken, CookieExpireTime.RefreshToken)
