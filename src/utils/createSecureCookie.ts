@@ -1,7 +1,7 @@
 import cookie from 'cookie'
 
-export const createSecureCookie = (key: string, value: string, maxAgeInSeconds?: number): string => {
-  const DEFAULT_MAX_AGE = 60 * 60 * 24 // A day
+export const createSecureCookie = (cookieName: string, cookieValue: string, maxAgeInSeconds?: number): string => {
+  const DEFAULT_MAX_AGE = 60 * 60 * 24 // A day (the value is in seconds)
 
   const cookieOptions = {
     httpOnly: true,
@@ -9,7 +9,7 @@ export const createSecureCookie = (key: string, value: string, maxAgeInSeconds?:
     maxAge: maxAgeInSeconds ?? DEFAULT_MAX_AGE
   }
 
-  const setCookie = cookie.serialize(key, value, cookieOptions)
+  const setCookie = cookie.serialize(cookieName, cookieValue, cookieOptions)
 
   return setCookie
 }
