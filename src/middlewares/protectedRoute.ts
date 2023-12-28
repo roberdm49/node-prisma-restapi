@@ -6,8 +6,11 @@ export const protectedRoute: RequestHandler = (request, response, next) => {
   const accessTokenExists = Boolean(accessToken)
   if (!accessTokenExists) {
     // verify this error handler
-    return next(new Error())
+    return next(new Error('JWT is missing'))
   }
+
+  // decode and check jwt using jsonwebtoken lib
+  // continue with the correct flow if the jwt is a valid one
 
   next()
 }
