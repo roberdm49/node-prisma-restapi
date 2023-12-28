@@ -8,7 +8,9 @@ import { configureRoutes } from './routes'
 dotenv.config()
 
 const app = express()
-const port = GlobalEnv.APP_PORT ?? 3000
+const port = !isNaN(GlobalEnv.APP_PORT)
+  ? GlobalEnv.APP_PORT
+  : 3000
 
 app.use(morgan('dev'))
 app.use(express.json()) // http://expressjs.com/en/api.html#express.json
