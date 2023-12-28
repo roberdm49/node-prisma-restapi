@@ -2,12 +2,13 @@ import express from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
 import chalk from 'chalk'
+import { GlobalEnv } from './constants'
 import { configureRoutes } from './routes'
 
 dotenv.config()
 
 const app = express()
-const port = process.env.APP_PORT ?? 3000
+const port = GlobalEnv.APP_PORT ?? 3000
 
 app.use(morgan('dev'))
 app.use(express.json()) // http://expressjs.com/en/api.html#express.json
