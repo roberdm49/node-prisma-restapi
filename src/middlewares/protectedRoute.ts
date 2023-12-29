@@ -11,10 +11,8 @@ export const protectedRoute: RequestHandler = (request, response, next) => {
     return next(new Error('JWT is missing'))
   }
 
-  const decodedAccessToken = jwt.verify(accessToken, GlobalEnv.ACCESS_TOKEN_SECRET)
-
-  // decode and check jwt using jsonwebtoken lib
-  // continue with the correct flow if the jwt is a valid one
+  const decoded = jwt.verify(accessToken, GlobalEnv.ACCESS_TOKEN_SECRET)
+  request.user = decoded
 
   next()
 }
