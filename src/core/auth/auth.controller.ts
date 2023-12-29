@@ -17,7 +17,8 @@ export default class AuthController implements IAuthController {
       const tenant = await this.authService.signUp(request.body)
       return response.status(HttpStatus.Created).json(tenant)
     } catch (error) {
-      next()
+      console.log(error)
+      next(error)
     }
   }
 
@@ -31,7 +32,7 @@ export default class AuthController implements IAuthController {
       ])
       return response.status(HttpStatus.OK)
     } catch (error) {
-      next()
+      next(error)
     }
   }
 }

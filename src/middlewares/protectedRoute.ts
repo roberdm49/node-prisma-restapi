@@ -1,9 +1,11 @@
 import { RequestHandler } from 'express'
 import jwt from 'jsonwebtoken'
+import chalk from 'chalk'
 import { GlobalEnv } from '@/constants'
 import { CookieNames } from '@/enums/cookies'
 
-export const protectedRoute: RequestHandler = (request, response, next) => {
+export const protectedRouteMiddleware: RequestHandler = (request, response, next) => {
+  console.log(chalk.cyan.bold.underline('Executing protected route middleware'))
   const accessToken: string = request.cookies[CookieNames.AccessToken]
   const accessTokenExists = Boolean(accessToken)
   if (!accessTokenExists) {

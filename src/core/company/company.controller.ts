@@ -14,7 +14,7 @@ export default class CompanyController implements ICompanyController {
       const companies = await this.companyService.getAll()
       return response.status(HttpStatus.OK).json(companies)
     } catch (error) {
-      next()
+      next(error)
     }
   }
 }

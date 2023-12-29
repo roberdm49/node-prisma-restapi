@@ -15,7 +15,7 @@ export default class UsersController implements IUsersController {
       const user = await this.usersService.create(userData)
       return response.status(HttpStatus.Created).json(user)
     } catch (error) {
-      next()
+      next(error)
     }
   }
 
@@ -25,7 +25,7 @@ export default class UsersController implements IUsersController {
       const user = await this.usersService.update(newUserData)
       return response.status(HttpStatus.OK).json(user)
     } catch (error) {
-      next()
+      next(error)
     }
   }
 }

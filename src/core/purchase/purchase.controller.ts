@@ -14,7 +14,7 @@ export default class PurchaseController implements IPurchaseController {
       const purchases = await this.purchaseService.getAll()
       return response.status(HttpStatus.OK).json(purchases)
     } catch (error) {
-      next()
+      next(error)
     }
   }
 }

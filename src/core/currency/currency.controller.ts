@@ -14,7 +14,7 @@ export default class CurrencyController implements ICurrencyController {
       const currencies = await this.currencyService.getAll()
       return response.status(HttpStatus.OK).json(currencies)
     } catch (error) {
-      next()
+      next(error)
     }
   }
 }

@@ -14,7 +14,7 @@ export default class DailySaleController implements IDailySaleController {
       const dailySales = await this.dailySaleService.getAll()
       return response.status(HttpStatus.OK).json(dailySales)
     } catch (error) {
-      next()
+      next(error)
     }
   }
 }

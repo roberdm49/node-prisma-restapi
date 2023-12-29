@@ -14,7 +14,7 @@ export default class ProductsController implements IProductController {
       const products = await this.productsService.create(request.body)
       return response.status(HttpStatus.Created).json(products)
     } catch (error) {
-      next()
+      next(error)
     }
   }
 
@@ -23,7 +23,7 @@ export default class ProductsController implements IProductController {
       const products = await this.productsService.getAll()
       return response.status(HttpStatus.OK).json(products)
     } catch (error) {
-      next()
+      next(error)
     }
   }
 
@@ -33,7 +33,7 @@ export default class ProductsController implements IProductController {
       const updatedProducts = await this.productsService.updateMany(products)
       return response.status(HttpStatus.OK).json(updatedProducts)
     } catch (error) {
-      next()
+      next(error)
     }
   }
 
@@ -43,7 +43,7 @@ export default class ProductsController implements IProductController {
       const removedProduct = await this.productsService.deleteMany(ids)
       return response.status(HttpStatus.OK).json(removedProduct)
     } catch (error) {
-      next()
+      next(error)
     }
   }
 }
