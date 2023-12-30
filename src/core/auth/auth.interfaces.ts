@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
 // Internal
-import { TAuthModelCreate, TAuthServiceLogIn, TAuthServiceSignUp } from './auth.types'
+import { TAuthModelCreate, TAuthServiceIsRefreshTokenExpired, TAuthServiceLogIn, TAuthServiceSignUp } from './auth.types'
 // External
 import { IUsersModel } from '../users/users.interfaces'
 
@@ -11,6 +11,7 @@ export interface IAuthModel {
 export interface IAuthService {
   signUp: TAuthServiceSignUp
   logIn: TAuthServiceLogIn
+  isRefreshTokenExpired: TAuthServiceIsRefreshTokenExpired
 }
 
 export interface IAuthServiceConstructor {

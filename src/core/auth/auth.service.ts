@@ -2,8 +2,10 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { GlobalEnv } from '@/constants'
 import { JwtExpireTime } from '@/enums/expireTime'
+import { ErrorMessages } from '@/enums/errors'
+import { WrongCredentialsError } from '@/errors/WrongCredentials'
 import { IAuthModel, IAuthService, IAuthServiceConstructor } from './auth.interfaces'
-import { TAuthServiceLogIn, TAuthServiceSignUp } from './auth.types'
+import { TAuthServiceIsRefreshTokenExpired, TAuthServiceLogIn, TAuthServiceSignUp } from './auth.types'
 import { IUsersModel } from '../users/users.interfaces'
 
 export default class AuthService implements IAuthService {
@@ -28,13 +30,11 @@ export default class AuthService implements IAuthService {
   }
 
   logIn: TAuthServiceLogIn = async (loginData) => {
-    const wrongCredentialsError = new Error('Wrong credentials')
-
     const foundUser = await this.usersModel.getOneByUsername(loginData.username)
-    if (foundUser === null) throw wrongCredentialsError
+    if (foundUser === null) throw new WrongCredentialsError(ErrorMessages.WrongCredentials)
 
     const validPassword: boolean = await bcrypt.compare(loginData.password, foundUser.password)
-    if (!validPassword) throw wrongCredentialsError
+    if (!validPassword) throw new WrongCredentialsError(ErrorMessages.WrongCredentials)
 
     const userForToken = {
       id: foundUser.id,
@@ -48,5 +48,10 @@ export default class AuthService implements IAuthService {
       accessToken,
       refreshToken
     }
+  }
+
+  isRefreshTokenExpired: TAuthServiceIsRefreshTokenExpired = async (refreshToken) => {
+    const decodedToken = jwt.verify(refreshToken, GlobalEnv.REFRESH_TOKEN_SECRET)
+    return Boolean(decodedToken)
   }
 }

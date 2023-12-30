@@ -4,6 +4,8 @@ import { createSecureCookie } from '@/utils/createSecureCookie'
 import { CookieExpireTime } from '@/enums/expireTime'
 import { CookieNames } from '@/enums/cookies'
 import { IAuthController, IAuthControllerConstructor, IAuthService, ILogIn } from './auth.interfaces'
+import { UnauthorizedError } from '@/errors/Unauthorized'
+import { ErrorMessages } from '@/enums/errors'
 
 export default class AuthController implements IAuthController {
   private readonly authService: IAuthService
@@ -31,6 +33,24 @@ export default class AuthController implements IAuthController {
         createSecureCookie(CookieNames.RefreshToken, refreshToken, CookieExpireTime.RefreshToken)
       ])
       return response.status(HttpStatus.OK)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  refreshToken: RequestHandler = async (request, response, next) => {
+    try {
+      const refreshToken: string = request.cookies[CookieNames.RefreshToken]
+
+      if (!refreshToken) {
+        throw new UnauthorizedError(ErrorMessages.RefreshTokenNotProvided)
+      }
+
+      const isTokenExpired = await this.authService.isRefreshTokenExpired(refreshToken)
+
+      if (isTokenExpired) {
+        throw new UnauthorizedError(ErrorMessages.RefreshTokenNotProvided)
+      }
     } catch (error) {
       next(error)
     }

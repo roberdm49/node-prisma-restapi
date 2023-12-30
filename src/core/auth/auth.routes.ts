@@ -10,6 +10,7 @@ export const createAuthRoutes: TAuthCreateRoutes = ({ authModel, usersModel }) =
 
   router.post('/sign-up', authController.signUp)
   router.post('/log-in', authController.logIn)
+  router.get('/refresh-token', authController.refreshToken)
 
   return router
 }
