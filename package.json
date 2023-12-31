@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "predev": "ts-node src/check-env.ts",
     "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
     "prisma:ui": "prisma studio"
   },
