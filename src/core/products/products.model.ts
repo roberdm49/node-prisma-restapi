@@ -1,9 +1,9 @@
 import prisma from '@/db'
 import { IProductModel } from './products.interfaces'
-import { TProductsModelCreate, TProductsModelDelete, TProductsModelGetAll, TProductsModelUpdateMany } from './products.types'
+import { ProductsModelCreate, ProductsModelDelete, ProductsModelGetAll, ProductsModelUpdateMany } from './products.types'
 
 export default class ProductsModel implements IProductModel {
-  create: TProductsModelCreate = async (productsToCreate) => {
+  create: ProductsModelCreate = async (productsToCreate) => {
     const products = await prisma.product.createMany({
       data: productsToCreate
     })
@@ -11,13 +11,13 @@ export default class ProductsModel implements IProductModel {
     return products.count
   }
 
-  getAll: TProductsModelGetAll = async () => {
+  getAll: ProductsModelGetAll = async () => {
     const products = await prisma.product.findMany()
 
     return products
   }
 
-  updateMany: TProductsModelUpdateMany = async (products) => {
+  updateMany: ProductsModelUpdateMany = async (products) => {
     const productsToUpdate = []
 
     for (const product of products) {
@@ -36,7 +36,7 @@ export default class ProductsModel implements IProductModel {
     return await prisma.$transaction(productsToUpdate)
   }
 
-  deleteMany: TProductsModelDelete = async (ids) => {
+  deleteMany: ProductsModelDelete = async (ids) => {
     const productsToDelete = []
 
     for (const id of ids) {

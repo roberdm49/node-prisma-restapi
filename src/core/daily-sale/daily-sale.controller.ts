@@ -1,11 +1,12 @@
 import { RequestHandler } from 'express'
 import { HttpStatus } from '@/enums/httpStatus'
-import { IDailySaleController, IDailySaleControllerConstructor, IDailySaleService } from './daily-sale.interfaces'
+import { IDailySaleController, IDailySaleService } from './daily-sale.interfaces'
+import { DailySaleControllerConstructor } from './daily-sale.types'
 
 export default class DailySaleController implements IDailySaleController {
   private readonly dailySaleService: IDailySaleService
 
-  constructor ({ dailySaleService }: IDailySaleControllerConstructor) {
+  constructor ({ dailySaleService }: DailySaleControllerConstructor) {
     this.dailySaleService = dailySaleService
   }
 

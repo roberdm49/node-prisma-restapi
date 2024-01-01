@@ -1,29 +1,14 @@
 import { RequestHandler } from 'express'
-import { TCompanyModelGetAll, TCompanyServiceGetAll } from './company.types'
+import { CompanyModelGetAll, CompanyServiceGetAll } from './company.types'
 
 export interface ICompanyModel {
-  getAll: TCompanyModelGetAll
+  getAll: CompanyModelGetAll
 }
 
 export interface ICompanyService {
-  getAll: TCompanyServiceGetAll
-}
-
-export interface ICompanyServiceConstructor {
-  companyModel: ICompanyModel
+  getAll: CompanyServiceGetAll
 }
 
 export interface ICompanyController {
   getAll: RequestHandler
-}
-
-export interface ICompanyControllerConstructor {
-  companyService: ICompanyService
-}
-
-export interface ICompany {
-  id?: string
-  name: string
-  createdAt: Date
-  tenantId: string
 }

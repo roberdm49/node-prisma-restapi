@@ -1,9 +1,9 @@
 import prisma from '@/db'
 import { ICurrencyModel } from './currency.interfaces'
-import { TCurrencyModelGetAll } from './currency.types'
+import { CurrencyModelGetAll } from './currency.types'
 
 export default class CurrencyModel implements ICurrencyModel {
-  getAll: TCurrencyModelGetAll = async () => {
+  getAll: CurrencyModelGetAll = async () => {
     return await prisma.currency.findMany()
   }
 }

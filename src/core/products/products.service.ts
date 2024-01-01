@@ -1,26 +1,32 @@
-import { IProductModel, IProductService, IProductServiceConstructor } from './products.interfaces'
-import { TProductsServiceCreate, TProductsServiceDelete, TProductsServiceGetAll, TProductsServiceUpdateMany } from './products.types'
+import { IProductModel, IProductService } from './products.interfaces'
+import {
+  ProductServiceConstructor,
+  ProductsServiceCreate,
+  ProductsServiceDelete,
+  ProductsServiceGetAll,
+  ProductsServiceUpdateMany
+} from './products.types'
 
 export default class ProductsService implements IProductService {
   private readonly productsModel: IProductModel
 
-  constructor ({ productsModel }: IProductServiceConstructor) {
+  constructor ({ productsModel }: ProductServiceConstructor) {
     this.productsModel = productsModel
   }
 
-  create: TProductsServiceCreate = async (productsToCreate) => {
+  create: ProductsServiceCreate = async (productsToCreate) => {
     return await this.productsModel.create(productsToCreate)
   }
 
-  getAll: TProductsServiceGetAll = async () => {
+  getAll: ProductsServiceGetAll = async () => {
     return await this.productsModel.getAll()
   }
 
-  updateMany: TProductsServiceUpdateMany = async (products) => {
+  updateMany: ProductsServiceUpdateMany = async (products) => {
     return await this.productsModel.updateMany(products)
   }
 
-  deleteMany: TProductsServiceDelete = async (ids) => {
+  deleteMany: ProductsServiceDelete = async (ids) => {
     return await this.productsModel.deleteMany(ids)
   }
 }

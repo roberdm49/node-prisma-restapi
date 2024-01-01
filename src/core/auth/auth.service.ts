@@ -4,20 +4,20 @@ import { GlobalEnv } from '@/constants'
 import { JwtExpireTime } from '@/enums/expireTime'
 import { ErrorMessages } from '@/enums/errors'
 import { WrongCredentialsError } from '@/errors/WrongCredentials'
-import { IAuthModel, IAuthService, IAuthServiceConstructor } from './auth.interfaces'
-import { TAuthServiceIsRefreshTokenExpired, TAuthServiceLogIn, TAuthServiceSignUp } from './auth.types'
+import { IAuthModel, IAuthService } from './auth.interfaces'
+import { AuthServiceConstructor, AuthServiceIsRefreshTokenExpired, AuthServiceLogIn, AuthServiceSignUp } from './auth.types'
 import { IUsersModel } from '../users/users.interfaces'
 
 export default class AuthService implements IAuthService {
   private readonly authModel: IAuthModel
   private readonly usersModel: IUsersModel
 
-  constructor ({ authModel, usersModel }: IAuthServiceConstructor) {
+  constructor ({ authModel, usersModel }: AuthServiceConstructor) {
     this.authModel = authModel
     this.usersModel = usersModel
   }
 
-  signUp: TAuthServiceSignUp = async (signUpData) => {
+  signUp: AuthServiceSignUp = async (signUpData) => {
     const rounds = 10
     const hashedPassword = await bcrypt.hash(signUpData.password, rounds)
 
@@ -29,7 +29,7 @@ export default class AuthService implements IAuthService {
     return tenant
   }
 
-  logIn: TAuthServiceLogIn = async (loginData) => {
+  logIn: AuthServiceLogIn = async (loginData) => {
     const foundUser = await this.usersModel.getOneByUsername(loginData.username)
     if (foundUser === null) throw new WrongCredentialsError(ErrorMessages.WrongCredentials)
 
@@ -50,7 +50,7 @@ export default class AuthService implements IAuthService {
     }
   }
 
-  isRefreshTokenExpired: TAuthServiceIsRefreshTokenExpired = async (refreshToken) => {
+  isRefreshTokenExpired: AuthServiceIsRefreshTokenExpired = async (refreshToken) => {
     const decodedToken = jwt.verify(refreshToken, GlobalEnv.REFRESH_TOKEN_SECRET)
     return Boolean(decodedToken)
   }

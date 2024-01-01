@@ -1,5 +1,23 @@
-import { IDailySale } from './daily-sale.interfaces'
+import { Router } from 'express'
+import { IDailySaleModel, IDailySaleService } from './daily-sale.interfaces'
 
-export type TDailySaleModelGetAll = () => Promise<IDailySale[]>
+export type DailySaleModelGetAll = () => Promise<DailySale[]>
 
-export type TDailySaleServiceGetAll = () => Promise<IDailySale[]>
+export type DailySaleServiceGetAll = () => Promise<DailySale[]>
+
+export type DailySaleCreateRoutes = ({ dailySaleModel }: { dailySaleModel: IDailySaleModel }) => Router
+
+export type DailySaleServiceContructor = {
+  dailySaleModel: IDailySaleModel
+}
+
+export type DailySaleControllerConstructor = {
+  dailySaleService: IDailySaleService
+}
+
+export type DailySale = {
+  id?: string
+  saleDate: Date
+  closed: boolean
+  tenantId: string
+}

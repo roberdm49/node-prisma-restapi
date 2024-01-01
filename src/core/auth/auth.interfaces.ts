@@ -1,54 +1,19 @@
 import { RequestHandler } from 'express'
 // Internal
-import { TAuthModelCreate, TAuthServiceIsRefreshTokenExpired, TAuthServiceLogIn, TAuthServiceSignUp } from './auth.types'
-// External
-import { IUsersModel } from '../users/users.interfaces'
+import { AuthModelCreate, AuthServiceIsRefreshTokenExpired, AuthServiceLogIn, AuthServiceSignUp } from './auth.types'
 
 export interface IAuthModel {
-  create: TAuthModelCreate
+  create: AuthModelCreate
 }
 
 export interface IAuthService {
-  signUp: TAuthServiceSignUp
-  logIn: TAuthServiceLogIn
-  isRefreshTokenExpired: TAuthServiceIsRefreshTokenExpired
-}
-
-export interface IAuthServiceConstructor {
-  authModel: IAuthModel
-  usersModel: IUsersModel
+  signUp: AuthServiceSignUp
+  logIn: AuthServiceLogIn
+  isRefreshTokenExpired: AuthServiceIsRefreshTokenExpired
 }
 
 export interface IAuthController {
   signUp: RequestHandler
   logIn: RequestHandler
   refreshToken: RequestHandler
-}
-
-export interface IAuthControllerConstructor {
-  authService: IAuthService
-}
-
-export interface ITenant {
-  id?: string
-  name: string
-  createdAt: Date
-}
-
-export interface ILogIn {
-  username: string
-  password: string
-}
-
-export interface ISignUp {
-  tenantName: string
-  username: string
-  firstname: string
-  lastname: string
-  password: string
-}
-
-export interface IUserTokens {
-  accessToken: string
-  refreshToken: string
 }

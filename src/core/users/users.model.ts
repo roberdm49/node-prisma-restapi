@@ -1,9 +1,9 @@
 import prisma from '@/db'
 import { IUsersModel } from './users.interfaces'
-import { TUsersModelCreate, TUsersModelGetOneByUsername, TUsersModelUpdate } from './users.types'
+import { UsersModelCreate, UsersModelGetOneByUsername, UsersModelUpdate } from './users.types'
 
 export default class UsersModel implements IUsersModel {
-  create: TUsersModelCreate = async (userData) => {
+  create: UsersModelCreate = async (userData) => {
     const { firstname, lastname, username, password, tenantId } = userData
     const user = await prisma.user.create({
       data: {
@@ -22,7 +22,7 @@ export default class UsersModel implements IUsersModel {
     return user
   }
 
-  update: TUsersModelUpdate = async (userData) => {
+  update: UsersModelUpdate = async (userData) => {
     const user = await prisma.user.update({
       where: {
         id: userData.id
@@ -35,7 +35,7 @@ export default class UsersModel implements IUsersModel {
     return user
   }
 
-  getOneByUsername: TUsersModelGetOneByUsername = async (username) => {
+  getOneByUsername: UsersModelGetOneByUsername = async (username) => {
     const user = await prisma.user.findUnique({
       where: {
         username

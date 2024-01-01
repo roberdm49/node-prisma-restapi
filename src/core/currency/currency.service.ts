@@ -1,14 +1,14 @@
-import { ICurrencyModel, ICurrencyService, ICurrencyServiceConstructor } from './currency.interfaces'
-import { TCurrencyServiceGetAll } from './currency.types'
+import { ICurrencyModel, ICurrencyService } from './currency.interfaces'
+import { CurrencyServiceConstructor, CurrencyServiceGetAll } from './currency.types'
 
 export default class CurrencyService implements ICurrencyService {
   private readonly currencyModel: ICurrencyModel
 
-  constructor ({ currencyModel }: ICurrencyServiceConstructor) {
+  constructor ({ currencyModel }: CurrencyServiceConstructor) {
     this.currencyModel = currencyModel
   }
 
-  getAll: TCurrencyServiceGetAll = async () => {
+  getAll: CurrencyServiceGetAll = async () => {
     return await this.currencyModel.getAll()
   }
 }

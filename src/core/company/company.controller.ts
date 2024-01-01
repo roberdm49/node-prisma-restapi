@@ -1,11 +1,12 @@
 import { RequestHandler } from 'express'
 import { HttpStatus } from '@/enums/httpStatus'
-import { ICompanyController, ICompanyControllerConstructor, ICompanyService } from './company.interface'
+import { ICompanyController, ICompanyService } from './company.interface'
+import { CompanyControllerConstructor } from './company.types'
 
 export default class CompanyController implements ICompanyController {
   private readonly companyService: ICompanyService
 
-  constructor ({ companyService }: ICompanyControllerConstructor) {
+  constructor ({ companyService }: CompanyControllerConstructor) {
     this.companyService = companyService
   }
 

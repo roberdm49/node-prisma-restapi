@@ -1,11 +1,12 @@
 import { RequestHandler } from 'express'
 import { HttpStatus } from '@/enums/httpStatus'
-import { ICurrencyController, ICurrencyControllerConstructor, ICurrencyService } from './currency.interfaces'
+import { ICurrencyController, ICurrencyService } from './currency.interfaces'
+import { CurrencyControllerConstructor } from './currency.types'
 
 export default class CurrencyController implements ICurrencyController {
   private readonly currencyService: ICurrencyService
 
-  constructor ({ currencyService }: ICurrencyControllerConstructor) {
+  constructor ({ currencyService }: CurrencyControllerConstructor) {
     this.currencyService = currencyService
   }
 

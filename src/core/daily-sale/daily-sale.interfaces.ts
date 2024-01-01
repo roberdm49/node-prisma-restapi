@@ -1,32 +1,17 @@
 import { RequestHandler } from 'express'
 import {
-  TDailySaleModelGetAll,
-  TDailySaleServiceGetAll
+  DailySaleModelGetAll,
+  DailySaleServiceGetAll
 } from './daily-sale.types'
 
 export interface IDailySaleModel {
-  getAll: TDailySaleModelGetAll
+  getAll: DailySaleModelGetAll
 }
 
 export interface IDailySaleService {
-  getAll: TDailySaleServiceGetAll
-}
-
-export interface IDailySaleServiceContructor {
-  dailySaleModel: IDailySaleModel
+  getAll: DailySaleServiceGetAll
 }
 
 export interface IDailySaleController {
   getAll: RequestHandler
-}
-
-export interface IDailySaleControllerConstructor {
-  dailySaleService: IDailySaleService
-}
-
-export interface IDailySale {
-  id?: string
-  saleDate: Date
-  closed: boolean
-  tenantId: string
 }

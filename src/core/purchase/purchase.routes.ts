@@ -1,9 +1,9 @@
 import express from 'express'
 import PurchaseService from './purchase.service'
 import PurchaseController from './purchase.controller'
-import { TPurchaseCreateRoutes } from './purchase.types'
+import { PurchaseCreateRoutes } from './purchase.types'
 
-export const createPurchaseRoutes: TPurchaseCreateRoutes = ({ purchaseModel }) => {
+export const createPurchaseRoutes: PurchaseCreateRoutes = ({ purchaseModel }) => {
   const router = express.Router()
 
   const purchaseService = new PurchaseService({ purchaseModel })

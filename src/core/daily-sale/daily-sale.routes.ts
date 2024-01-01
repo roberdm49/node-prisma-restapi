@@ -1,9 +1,9 @@
-import express, { Router } from 'express'
+import express from 'express'
 import DailySaleService from './daily-sale.service'
 import DailySaleController from './daily-sale.controller'
-import { IDailySaleModel } from './daily-sale.interfaces'
+import { DailySaleCreateRoutes } from './daily-sale.types'
 
-export const createDailySaleRoutes = ({ dailySaleModel }: { dailySaleModel: IDailySaleModel }): Router => {
+export const createDailySaleRoutes: DailySaleCreateRoutes = ({ dailySaleModel }) => {
   const router = express.Router()
   const dailySaleService = new DailySaleService({ dailySaleModel })
   const dailySaleController = new DailySaleController({ dailySaleService })

@@ -1,9 +1,9 @@
 import express from 'express'
 import AuthController from './auth.controller'
 import AuthService from './auth.service'
-import { TAuthCreateRoutes } from './auth.types'
+import { AuthCreateRoutes } from './auth.types'
 
-export const createAuthRoutes: TAuthCreateRoutes = ({ authModel, usersModel }) => {
+export const createAuthRoutes: AuthCreateRoutes = ({ authModel, usersModel }) => {
   const router = express.Router()
   const authService = new AuthService({ authModel, usersModel })
   const authController = new AuthController({ authService })

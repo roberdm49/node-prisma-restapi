@@ -1,31 +1,27 @@
 import { RequestHandler } from 'express'
 import {
-  TProductsModelCreate,
-  TProductsModelDelete,
-  TProductsModelGetAll,
-  TProductsModelUpdateMany,
-  TProductsServiceCreate,
-  TProductsServiceDelete,
-  TProductsServiceGetAll,
-  TProductsServiceUpdateMany
+  ProductsModelCreate,
+  ProductsModelDelete,
+  ProductsModelGetAll,
+  ProductsModelUpdateMany,
+  ProductsServiceCreate,
+  ProductsServiceDelete,
+  ProductsServiceGetAll,
+  ProductsServiceUpdateMany
 } from './products.types'
 
 export interface IProductModel {
-  create: TProductsModelCreate
-  getAll: TProductsModelGetAll
-  updateMany: TProductsModelUpdateMany
-  deleteMany: TProductsModelDelete
+  create: ProductsModelCreate
+  getAll: ProductsModelGetAll
+  updateMany: ProductsModelUpdateMany
+  deleteMany: ProductsModelDelete
 }
 
 export interface IProductService {
-  create: TProductsServiceCreate
-  getAll: TProductsServiceGetAll
-  updateMany: TProductsServiceUpdateMany
-  deleteMany: TProductsServiceDelete
-}
-
-export interface IProductServiceConstructor {
-  productsModel: IProductModel
+  create: ProductsServiceCreate
+  getAll: ProductsServiceGetAll
+  updateMany: ProductsServiceUpdateMany
+  deleteMany: ProductsServiceDelete
 }
 
 export interface IProductController {
@@ -33,20 +29,4 @@ export interface IProductController {
   getAll: RequestHandler
   updateMany: RequestHandler
   deleteMany: RequestHandler
-}
-
-export interface IProductControllerConstructor {
-  productsService: IProductService
-}
-
-// TODO: issues related with null vs undefined (the id is optional but it doesn't have the null option, because ts throw a warning)
-export interface IProduct {
-  id?: string
-  name: string
-  price: number
-  stock?: number | null
-  barCode?: string | null
-  tenantId: string
-  companyId?: string | null
-  currencyId: string
 }

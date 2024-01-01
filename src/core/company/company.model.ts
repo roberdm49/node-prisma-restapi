@@ -1,9 +1,9 @@
 import prisma from '@/db'
-import { TCompanyModelGetAll } from './company.types'
+import { CompanyModelGetAll } from './company.types'
 import { ICompanyModel } from './company.interface'
 
 export default class CompanyModel implements ICompanyModel {
-  getAll: TCompanyModelGetAll = async () => {
+  getAll: CompanyModelGetAll = async () => {
     const companies = await prisma.company.findMany()
     return companies
   }

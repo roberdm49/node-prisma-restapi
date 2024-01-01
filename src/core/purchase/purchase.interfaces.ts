@@ -1,31 +1,17 @@
 import { RequestHandler } from 'express'
 import {
-  TPurchaseModelGetAll,
-  TPurchaseServiceGetAll
+  PurchaseModelGetAll,
+  PurchaseServiceGetAll
 } from './purchase.types'
 
 export interface IPurchaseModel {
-  getAll: TPurchaseModelGetAll
+  getAll: PurchaseModelGetAll
 }
 
 export interface IPurchaseService {
-  getAll: TPurchaseServiceGetAll
-}
-
-export interface IPurchaseServiceConstructor {
-  purchaseModel: IPurchaseModel
+  getAll: PurchaseServiceGetAll
 }
 
 export interface IPurchaseController {
   getAll: RequestHandler
-}
-
-export interface IPurchaseControllerConstructor {
-  purchaseService: IPurchaseService
-}
-
-export interface IPurchase {
-  id?: string
-  createdAt: Date
-  dailySaleId: string
 }

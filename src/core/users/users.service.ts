@@ -1,15 +1,15 @@
 import bcrypt from 'bcrypt'
-import { IUsersModel, IUsersService, IUsersServiceConstructor } from './users.interfaces'
-import { TUsersServiceCreate, TUsersServiceUpdate } from './users.types'
+import { IUsersModel, IUsersService } from './users.interfaces'
+import { UsersServiceConstructor, UsersServiceCreate, UsersServiceUpdate } from './users.types'
 
 export default class UsersService implements IUsersService {
   private readonly usersModel: IUsersModel
 
-  constructor ({ usersModel }: IUsersServiceConstructor) {
+  constructor ({ usersModel }: UsersServiceConstructor) {
     this.usersModel = usersModel
   }
 
-  create: TUsersServiceCreate = async (userData) => {
+  create: UsersServiceCreate = async (userData) => {
     const rounds = 10
     const hashedPassword = await bcrypt.hash(userData.password, rounds)
     return await this.usersModel.create({
@@ -18,7 +18,7 @@ export default class UsersService implements IUsersService {
     })
   }
 
-  update: TUsersServiceUpdate = async (userData) => {
+  update: UsersServiceUpdate = async (userData) => {
     return await this.usersModel.update(userData)
   }
 }

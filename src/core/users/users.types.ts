@@ -1,11 +1,28 @@
 import { Router } from 'express'
-import { IUser, IUsersModel } from './users.interfaces'
+import { IUsersModel, IUsersService } from './users.interfaces'
 
-export type TUsersModelCreate = (userData: IUser) => Promise<IUser>
-export type TUsersModelUpdate = (userData: IUser) => Promise<IUser>
-export type TUsersModelGetOneByUsername = (username: string) => Promise<IUser | null>
+export type UsersModelCreate = (userData: User) => Promise<User>
+export type UsersModelUpdate = (userData: User) => Promise<User>
+export type UsersModelGetOneByUsername = (username: string) => Promise<User | null>
 
-export type TUsersServiceCreate = (userData: IUser) => Promise<IUser>
-export type TUsersServiceUpdate = (userData: IUser) => Promise<IUser>
+export type UsersServiceCreate = (userData: User) => Promise<User>
+export type UsersServiceUpdate = (userData: User) => Promise<User>
 
-export type TUsersCreateRoutes = ({ usersModel }: { usersModel: IUsersModel }) => Router
+export type UsersCreateRoutes = ({ usersModel }: { usersModel: IUsersModel }) => Router
+
+export type UsersServiceConstructor = {
+  usersModel: IUsersModel
+}
+
+export type UsersControllerConstructor = {
+  usersService: IUsersService
+}
+
+export type User = {
+  id?: string
+  username: string
+  firstname: string
+  lastname: string
+  password: string
+  tenantId: string
+}

@@ -1,11 +1,12 @@
 import { HttpStatus } from '@/enums/httpStatus'
 import { RequestHandler } from 'express'
-import { IProduct, IProductController, IProductControllerConstructor, IProductService } from './products.interfaces'
+import { IProductController, IProductService } from './products.interfaces'
+import { Product, ProductControllerConstructor } from './products.types'
 
 export default class ProductsController implements IProductController {
   private readonly productsService: IProductService
 
-  constructor ({ productsService }: IProductControllerConstructor) {
+  constructor ({ productsService }: ProductControllerConstructor) {
     this.productsService = productsService
   }
 
@@ -29,7 +30,7 @@ export default class ProductsController implements IProductController {
 
   updateMany: RequestHandler = async (request, response, next) => {
     try {
-      const products: IProduct[] = request.body
+      const products: Product[] = request.body
       const updatedProducts = await this.productsService.updateMany(products)
       return response.status(HttpStatus.OK).json(updatedProducts)
     } catch (error) {

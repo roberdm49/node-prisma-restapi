@@ -1,29 +1,14 @@
 import { RequestHandler } from 'express'
-import { TCurrencyModelGetAll, TCurrencyServiceGetAll } from './currency.types'
+import { CurrencyModelGetAll, CurrencyServiceGetAll } from './currency.types'
 
 export interface ICurrencyModel {
-  getAll: TCurrencyModelGetAll
+  getAll: CurrencyModelGetAll
 }
 
 export interface ICurrencyService {
-  getAll: TCurrencyServiceGetAll
-}
-
-export interface ICurrencyServiceConstructor {
-  currencyModel: ICurrencyModel
+  getAll: CurrencyServiceGetAll
 }
 
 export interface ICurrencyController {
   getAll: RequestHandler
-}
-
-export interface ICurrencyControllerConstructor {
-  currencyService: ICurrencyService
-}
-
-export interface ICurrency {
-  id: string
-  name: string
-  isoCode?: string | null
-  isoNum?: string | null
 }

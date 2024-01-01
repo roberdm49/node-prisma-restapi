@@ -1,41 +1,24 @@
 import { RequestHandler } from 'express'
 import {
-  TUsersModelCreate,
-  TUsersModelGetOneByUsername,
-  TUsersModelUpdate,
-  TUsersServiceCreate,
-  TUsersServiceUpdate
+  UsersModelCreate,
+  UsersModelGetOneByUsername,
+  UsersModelUpdate,
+  UsersServiceCreate,
+  UsersServiceUpdate
 } from './users.types'
 
 export interface IUsersModel {
-  create: TUsersModelCreate
-  update: TUsersModelUpdate
-  getOneByUsername: TUsersModelGetOneByUsername
+  create: UsersModelCreate
+  update: UsersModelUpdate
+  getOneByUsername: UsersModelGetOneByUsername
 }
 
 export interface IUsersService {
-  create: TUsersServiceCreate
-  update: TUsersServiceUpdate
-}
-
-export interface IUsersServiceConstructor {
-  usersModel: IUsersModel
+  create: UsersServiceCreate
+  update: UsersServiceUpdate
 }
 
 export interface IUsersController {
   create: RequestHandler
   update: RequestHandler
-}
-
-export interface IUsersControllerConstructor {
-  usersService: IUsersService
-}
-
-export interface IUser {
-  id?: string
-  username: string
-  firstname: string
-  lastname: string
-  password: string
-  tenantId: string
 }
