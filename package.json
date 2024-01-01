@@ -6,6 +6,8 @@
   "scripts": {
     "predev": "ts-node src/check-env.ts",
     "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
+    "db:dev:reset": "prisma migrate reset --force && prisma migrate dev",
+    "db:dev:populate": "ts-node src/populate-db.ts",
     "prisma:ui": "prisma studio"
   },
   "keywords": [],

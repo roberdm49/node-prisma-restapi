@@ -1,8 +1,8 @@
-import prisma from '@/db'
+import chalk from 'chalk'
+// TODO: modify npm script to accept this format "@/db"
+import prisma from './db'
 
 export const populateDB = async (): Promise<void> => {
-  console.log('Initialized!')
-
   const tenant1 = await prisma.tenant.create({
     data: {
       name: 'Dani\'s',
@@ -99,3 +99,11 @@ export const populateDB = async (): Promise<void> => {
     }
   })
 }
+
+populateDB()
+  .then(() => {
+    console.log(chalk.cyan.bold('DB populated succesfully.'))
+  })
+  .catch(error => {
+    console.log(chalk.red.bold(error))
+  })
