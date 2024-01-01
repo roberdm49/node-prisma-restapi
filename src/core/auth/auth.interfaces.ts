@@ -22,6 +22,7 @@ export interface IAuthServiceConstructor {
 export interface IAuthController {
   signUp: RequestHandler
   logIn: RequestHandler
+  refreshToken: RequestHandler
 }
 
 export interface IAuthControllerConstructor {
