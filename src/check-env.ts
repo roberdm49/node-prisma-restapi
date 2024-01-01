@@ -1,5 +1,5 @@
-import * as fs from 'fs'
-import * as dotenv from 'dotenv'
+import fs from 'fs'
+import dotenv from 'dotenv'
 import chalk from 'chalk'
 
 const EXAMPLE_ENV_PATH = '.env.example'
