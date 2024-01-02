@@ -1,6 +1,5 @@
 import chalk from 'chalk'
-// TODO: modify npm script to accept this format "@/db"
-import prisma from './db'
+import prisma from '@/db'
 
 export const populateDB = async (): Promise<void> => {
   const tenant1 = await prisma.tenant.create({
@@ -103,7 +102,9 @@ export const populateDB = async (): Promise<void> => {
 populateDB()
   .then(() => {
     console.log(chalk.cyan.bold('DB populated succesfully.'))
+    process.exit(0)
   })
   .catch(error => {
     console.log(chalk.red.bold(error))
+    process.exit(1)
   })
