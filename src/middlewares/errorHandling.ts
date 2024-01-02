@@ -37,11 +37,5 @@ export const errorHandlerMiddleware = (
     return response.status(500).json({ error: 'Internal server error' })
   }
 
-  /*
-  if (_error instanceof CustomAppError) {
-    return response.status(400).json({ error: _error.message })
-  }
-  */
-
   return response.status(500).json({ error: 'Internal server error' })
 }
