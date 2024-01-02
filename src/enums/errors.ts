@@ -13,5 +13,5 @@ export enum ErrorServerMessages {
 export enum ErrorClientMessages {
   RefreshTokenNotProvided = 'No se ha proporcionado el refresh token',
   WrongCredentials = 'Credenciales inválidas',
-  MissingCredentials = 'Credenciales incompletas'
+  MissingCredentials = 'Credenciales faltantes'
 }
