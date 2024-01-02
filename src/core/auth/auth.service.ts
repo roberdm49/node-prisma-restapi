@@ -47,7 +47,7 @@ export default class AuthService implements IAuthService {
     }
 
     const foundUser = await this.usersModel.getOneByUsername(logInData.username)
-    if (foundUser === null) throw new WrongCredentialsError(ErrorServerMessages.WrongCredentials)
+    if (!foundUser) throw new WrongCredentialsError(ErrorServerMessages.WrongCredentials)
 
     const validPassword: boolean = await bcrypt.compare(logInData.password, foundUser.password)
     if (!validPassword) throw new WrongCredentialsError(ErrorServerMessages.WrongCredentials)
