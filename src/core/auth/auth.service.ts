@@ -4,10 +4,11 @@ import { GlobalEnv } from '@/constants'
 import { JwtExpireTime } from '@/enums/expireTime'
 import { ErrorServerMessages } from '@/enums/errors'
 import { WrongCredentialsError } from '@/errors/WrongCredentials'
+import { MissingCredentialsError } from '@/errors/MissingCredentials'
+import { getMissingCredentials } from '@/utils/getMissingsCredentials'
 import { IAuthModel, IAuthService } from './auth.interfaces'
 import { AuthServiceConstructor, AuthServiceIsRefreshTokenExpired, AuthServiceLogIn, AuthServiceSignUp } from './auth.types'
 import { IUsersModel } from '../users/users.interfaces'
-import { MissingCredentialsError } from '@/errors/MissingCredentials'
 
 export default class AuthService implements IAuthService {
   private readonly authModel: IAuthModel
@@ -19,7 +20,13 @@ export default class AuthService implements IAuthService {
   }
 
   signUp: AuthServiceSignUp = async (signUpData) => {
-    // throw si no estan todos los campos
+    const credentials: string[] = ['tenantName', 'username', 'firstname', 'lastname', 'password']
+    const missingCredentials = getMissingCredentials(credentials, signUpData)
+
+    if (missingCredentials.length > 0) {
+      throw new MissingCredentialsError(ErrorServerMessages.MissingCredentials, missingCredentials)
+    }
+
     const rounds = 10
     const hashedPassword = await bcrypt.hash(signUpData.password, rounds)
 
@@ -31,20 +38,18 @@ export default class AuthService implements IAuthService {
     return tenant
   }
 
-  logIn: AuthServiceLogIn = async (loginData) => {
-    // TODO: move this array to a fn or const
+  logIn: AuthServiceLogIn = async (logInData) => {
     const credentials: string[] = ['username', 'password']
-    const userKeysCredentials = Object.keys(loginData)
-    const missingCredentials = credentials.filter(credential => !userKeysCredentials.includes(credential))
+    const missingCredentials = getMissingCredentials(credentials, logInData)
 
     if (missingCredentials.length > 0) {
       throw new MissingCredentialsError(ErrorServerMessages.MissingCredentials, missingCredentials)
     }
 
-    const foundUser = await this.usersModel.getOneByUsername(loginData.username)
+    const foundUser = await this.usersModel.getOneByUsername(logInData.username)
     if (foundUser === null) throw new WrongCredentialsError(ErrorServerMessages.WrongCredentials)
 
-    const validPassword: boolean = await bcrypt.compare(loginData.password, foundUser.password)
+    const validPassword: boolean = await bcrypt.compare(logInData.password, foundUser.password)
     if (!validPassword) throw new WrongCredentialsError(ErrorServerMessages.WrongCredentials)
 
     const userForToken = {
