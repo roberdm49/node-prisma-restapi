@@ -2,7 +2,7 @@
 // to indicate seconds or a string with this syntax or plain numbers as string, and these
 // would be taken as milliseconds
 
-// Cookies use the expire time in seconds
+// Cookies (from cookie-parser) use the expire time in milliseconds
 
 export enum JwtExpireTime {
   AccessToken = '30m',
@@ -10,6 +10,6 @@ export enum JwtExpireTime {
 }
 
 export enum CookieExpireTime {
-  AccessToken = 60 * 30,
-  RefreshToken = 60 * 120
+  AccessToken = 1000 * 60 * 30,
+  RefreshToken = 1000 * 60 * 120
 }

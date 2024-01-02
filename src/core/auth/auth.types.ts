@@ -2,7 +2,8 @@ import { Router } from 'express'
 // Internal
 import { IAuthModel, IAuthService } from './auth.interfaces'
 // External
-import { IUsersModel, User } from '../users/users.interfaces'
+import { IUsersModel } from '../users/users.interfaces'
+import { User } from '../users/users.types'
 
 export type AuthModelCreate = (signUpData: SignUp) => Promise<Tenant>
 
