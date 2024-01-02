@@ -37,7 +37,7 @@ export default class AuthService implements IAuthService {
     const userKeysCredentials = Object.keys(loginData)
     const missingCredentials = credentials.filter(credential => !userKeysCredentials.includes(credential))
 
-    if (!loginData.username || !loginData.password) {
+    if (missingCredentials.length > 0) {
       throw new MissingCredentialsError(ErrorServerMessages.MissingCredentials, missingCredentials)
     }
 
