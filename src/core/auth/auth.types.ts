@@ -9,7 +9,8 @@ export type AuthModelCreate = (signUpData: SignUp) => Promise<Tenant>
 
 export type AuthServiceSignUp = (signUpData: SignUp) => Promise<Tenant>
 export type AuthServiceLogIn = (logInData: LogIn) => Promise<UserTokens>
-export type AuthServiceIsRefreshTokenExpired = (refreshToken: string) => Promise<boolean>
+export type AuthServiceRefreshTokens = (oldRefreshToken: string) => Promise<UserTokens>
+export type AuthServiceGetUserTokens = (user: any) => Promise<UserTokens>
 
 export type AuthCreateRoutes =
 ({

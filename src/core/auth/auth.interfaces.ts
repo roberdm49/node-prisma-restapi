@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
 // Internal
-import { AuthModelCreate, AuthServiceIsRefreshTokenExpired, AuthServiceLogIn, AuthServiceSignUp } from './auth.types'
+import { AuthModelCreate, AuthServiceLogIn, AuthServiceRefreshTokens, AuthServiceSignUp } from './auth.types'
 
 export interface IAuthModel {
   create: AuthModelCreate
@@ -9,7 +9,7 @@ export interface IAuthModel {
 export interface IAuthService {
   signUp: AuthServiceSignUp
   logIn: AuthServiceLogIn
-  isRefreshTokenExpired: AuthServiceIsRefreshTokenExpired
+  getRefreshTokens: AuthServiceRefreshTokens
 }
 
 export interface IAuthController {

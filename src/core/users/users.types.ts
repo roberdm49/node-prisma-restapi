@@ -4,6 +4,7 @@ import { IUsersModel, IUsersService } from './users.interfaces'
 export type UsersModelCreate = (userData: User) => Promise<User>
 export type UsersModelUpdate = (userData: User) => Promise<User>
 export type UsersModelGetOneByUsername = (username: string) => Promise<User | null>
+export type UsersModelGetOneById = (id: string) => Promise<User | null>
 
 export type UsersServiceCreate = (userData: User) => Promise<User>
 export type UsersServiceUpdate = (userData: User) => Promise<User>

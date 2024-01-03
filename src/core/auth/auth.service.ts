@@ -7,8 +7,13 @@ import { WrongCredentialsError } from '@/errors/WrongCredentials'
 import { MissingCredentialsError } from '@/errors/MissingCredentials'
 import { getMissingCredentials } from '@/utils/getMissingsCredentials'
 import { IAuthModel, IAuthService } from './auth.interfaces'
-import { AuthServiceConstructor, AuthServiceIsRefreshTokenExpired, AuthServiceLogIn, AuthServiceSignUp } from './auth.types'
+import { AuthServiceConstructor, AuthServiceGetUserTokens, AuthServiceLogIn, AuthServiceRefreshTokens, AuthServiceSignUp } from './auth.types'
 import { IUsersModel } from '../users/users.interfaces'
+
+type JwtPayload = {
+  id: string
+  username: string
+}
 
 export default class AuthService implements IAuthService {
   private readonly authModel: IAuthModel
@@ -52,9 +57,24 @@ export default class AuthService implements IAuthService {
     const validPassword: boolean = await bcrypt.compare(logInData.password, foundUser.password)
     if (!validPassword) throw new WrongCredentialsError(ErrorServerMessages.WrongCredentials)
 
+    const tokens = await this.getUserTokens(foundUser)
+
+    return tokens
+  }
+
+  getRefreshTokens: AuthServiceRefreshTokens = async (oldRefreshToken) => {
+    const decodedToken = jwt.verify(oldRefreshToken, GlobalEnv.REFRESH_TOKEN_SECRET)
+    const userId = (decodedToken as JwtPayload).id
+    const foundUser = this.usersModel.getOneById(userId)
+    const tokens = await this.getUserTokens(foundUser)
+
+    return tokens
+  }
+
+  getUserTokens: AuthServiceGetUserTokens = async (user) => {
     const userForToken = {
-      id: foundUser.id,
-      username: foundUser.username
+      id: user.id,
+      username: user.username
     }
 
     const accessToken = jwt.sign(userForToken, GlobalEnv.ACCESS_TOKEN_SECRET, { expiresIn: JwtExpireTime.AccessToken })
@@ -64,10 +84,5 @@ export default class AuthService implements IAuthService {
       accessToken,
       refreshToken
     }
-  }
-
-  isRefreshTokenExpired: AuthServiceIsRefreshTokenExpired = async (refreshToken) => {
-    const decodedToken = jwt.verify(refreshToken, GlobalEnv.REFRESH_TOKEN_SECRET)
-    return Boolean(decodedToken)
   }
 }
