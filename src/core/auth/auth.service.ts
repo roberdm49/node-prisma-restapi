@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import { GlobalEnv } from '@/constants'
+import { GlobalEnv } from '@/utils/constants'
 import { JwtExpireTime } from '@/enums/expireTime'
 import { ErrorServerMessages } from '@/enums/errors'
 import { WrongCredentialsError } from '@/errors/WrongCredentials'

@@ -1,4 +1,4 @@
-import prisma from '@/db'
+import prisma from '@/config/db'
 import { IProductModel } from './products.interfaces'
 import { ProductsModelCreate, ProductsModelDelete, ProductsModelGetAll, ProductsModelUpdateMany } from './products.types'
 

@@ -2,8 +2,8 @@ import express from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
 import chalk from 'chalk'
-import { GlobalEnv } from './constants'
-import { configureRoutes } from './routes'
+import { GlobalEnv } from '@/utils/constants'
+import { configureRoutes } from '@/config/routes'
 import { errorHandlerMiddleware } from './middlewares/errorHandling'
 import { routeNotFoundMiddleware } from './middlewares/routeNotFound'
 
@@ -13,6 +13,7 @@ const app = express()
 const port = !isNaN(GlobalEnv.APP_PORT)
   ? GlobalEnv.APP_PORT
   : 3000
+console.log({ GlobalEnv })
 
 app.use(morgan('dev'))
 app.use(express.json()) // http://expressjs.com/en/api.html#express.json

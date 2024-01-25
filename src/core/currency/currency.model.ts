@@ -1,4 +1,4 @@
-import prisma from '@/db'
+import prisma from '@/config/db'
 import { ICurrencyModel } from './currency.interfaces'
 import { CurrencyModelGetAll } from './currency.types'
 

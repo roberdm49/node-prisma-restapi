@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import prisma from '@/db'
+import prisma from '@/config/db'
 
 export const populateDB = async (): Promise<void> => {
   const tenant1 = await prisma.tenant.create({

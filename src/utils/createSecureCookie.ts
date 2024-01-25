@@ -1,5 +1,5 @@
 import cookie from 'cookie'
-import { GlobalEnv } from '@/constants'
+import { GlobalEnv } from '@/utils/constants'
 
 export const createSecureCookie = (cookieName: string, cookieValue: string, maxAgeInSeconds: number): string => {
   const cookieOptions = {

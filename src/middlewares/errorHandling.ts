@@ -14,9 +14,7 @@ export const errorHandlerMiddleware = (
   next: NextFunction
 ): any => {
   console.log(chalk.bold.underline.magenta('Executing error handler middleware'))
-  console.log(`${chalk.bold('Error name:')} ${chalk.green(_error.name)}`)
-  console.log(`${chalk.bold('Error message:')} ${chalk.green(_error.message)}`)
-  console.log(chalk.bold('Error stack:'), chalk.greenBright(_error.stack))
+  console.log(_error)
 
   if (_error instanceof MissingCredentialsError) {
     return response.status(HttpStatus.BadRequest).json({

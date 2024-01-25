@@ -1,6 +1,6 @@
-import prisma from '@/db'
+import prisma from '@/config/db'
 import { IUsersModel } from './users.interfaces'
-import { UsersModelCreate, UsersModelGetOneByUsername, UsersModelUpdate } from './users.types'
+import { UsersModelCreate, UsersModelGetOneById, UsersModelGetOneByUsername, UsersModelUpdate } from './users.types'
 
 export default class UsersModel implements IUsersModel {
   create: UsersModelCreate = async (userData) => {
@@ -39,6 +39,16 @@ export default class UsersModel implements IUsersModel {
     const user = await prisma.user.findUnique({
       where: {
         username
+      }
+    })
+
+    return user
+  }
+
+  getOneById: UsersModelGetOneById = async (id) => {
+    const user = await prisma.user.findUnique({
+      where: {
+        id
       }
     })
 

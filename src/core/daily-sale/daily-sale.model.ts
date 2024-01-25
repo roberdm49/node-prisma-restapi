@@ -1,4 +1,4 @@
-import prisma from '@/db'
+import prisma from '@/config/db'
 import { IDailySaleModel } from './daily-sale.interfaces'
 import { DailySaleModelGetAll } from './daily-sale.types'
 

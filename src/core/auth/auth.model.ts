@@ -1,4 +1,4 @@
-import prisma from '@/db'
+import prisma from '@/config/db'
 import { IAuthModel } from './auth.interfaces'
 import { AuthModelCreate } from './auth.types'
 

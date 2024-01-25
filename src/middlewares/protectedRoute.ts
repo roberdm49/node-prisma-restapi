@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 import jwt from 'jsonwebtoken'
 import chalk from 'chalk'
-import { GlobalEnv } from '@/constants'
+import { GlobalEnv } from '@/utils/constants'
 import { CookieNames } from '@/enums/cookies'
 
 export const protectedRouteMiddleware: RequestHandler = (request, response, next) => {
