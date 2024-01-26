@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt'
+import { GlobalEnv } from '@/utils/constants'
 import { IUsersModel, IUsersService } from './users.interfaces'
 import { UsersServiceConstructor, UsersServiceCreate, UsersServiceUpdate } from './users.types'
 
@@ -10,8 +11,7 @@ export default class UsersService implements IUsersService {
   }
 
   create: UsersServiceCreate = async (userData) => {
-    const rounds = 10
-    const hashedPassword = await bcrypt.hash(userData.password, rounds)
+    const hashedPassword = await bcrypt.hash(userData.password, GlobalEnv.HASH_ROUNDS)
     return await this.usersModel.create({
       ...userData,
       password: hashedPassword

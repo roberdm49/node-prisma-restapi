@@ -13,7 +13,6 @@ const app = express()
 const port = !isNaN(GlobalEnv.APP_PORT)
   ? GlobalEnv.APP_PORT
   : 3000
-console.log({ GlobalEnv })
 
 app.use(morgan('dev'))
 app.use(express.json()) // http://expressjs.com/en/api.html#express.json

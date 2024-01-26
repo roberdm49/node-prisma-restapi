@@ -1,7 +1,13 @@
 import chalk from 'chalk'
+import bcrypt from 'bcrypt'
 import prisma from '@/config/db'
+import { GlobalEnv } from '@/utils/constants'
 
 export const populateDB = async (): Promise<void> => {
+  const userOnePassword = await bcrypt.hash('superhashedpassword', GlobalEnv.HASH_ROUNDS)
+  const userTwoPassword = await bcrypt.hash('superhashedandsecretpassword', GlobalEnv.HASH_ROUNDS)
+  const userThreePassword = await bcrypt.hash('superhashedpasswordthethird', GlobalEnv.HASH_ROUNDS)
+
   const tenant1 = await prisma.tenant.create({
     data: {
       name: 'Dani\'s',
@@ -12,13 +18,13 @@ export const populateDB = async (): Promise<void> => {
               firstname: 'Roberto',
               lastname: 'Marcos',
               username: 'roberdmarcos',
-              password: 'superhashedpassword'
+              password: userOnePassword
             },
             {
               firstname: 'Micaela',
               lastname: 'Vanzato',
               username: 'micavanzato',
-              password: 'superhashedandsecretpassword'
+              password: userTwoPassword
             }
           ]
         }
@@ -34,7 +40,7 @@ export const populateDB = async (): Promise<void> => {
           firstname: 'Gonzalo',
           lastname: 'Vanzato',
           username: 'gvanzato123',
-          password: 'superhashedpasswordthethird'
+          password: userThreePassword
         }
       }
     }

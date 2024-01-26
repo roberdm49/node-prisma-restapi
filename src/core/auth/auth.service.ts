@@ -32,8 +32,7 @@ export default class AuthService implements IAuthService {
       throw new MissingCredentialsError(ErrorServerMessages.MissingCredentials, missingCredentials)
     }
 
-    const rounds = 10
-    const hashedPassword = await bcrypt.hash(signUpData.password, rounds)
+    const hashedPassword = await bcrypt.hash(signUpData.password, GlobalEnv.HASH_ROUNDS)
 
     const tenant = await this.authModel.create({
       ...signUpData,
