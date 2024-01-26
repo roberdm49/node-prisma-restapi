@@ -5,7 +5,8 @@ export const createSecureCookie = (cookieName: string, cookieValue: string, maxA
   const cookieOptions = {
     httpOnly: true,
     secure: GlobalEnv.NODE_ENV === 'production',
-    maxAge: maxAgeInSeconds
+    maxAge: maxAgeInSeconds,
+    path: '/'
   }
 
   const setCookie = cookie.serialize(cookieName, cookieValue, cookieOptions)
