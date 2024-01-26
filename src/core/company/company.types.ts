@@ -2,8 +2,10 @@ import { Router } from 'express'
 import { ICompanyModel, ICompanyService } from './company.interface'
 
 export type CompanyModelGetAll = () => Promise<Company[]>
+export type CompanyModelCreate = (company: Company) => Promise<Company>
 
 export type CompanyServiceGetAll = () => Promise<Company[]>
+export type CompanyServiceCreate = (company: Company) => Promise<Company>
 
 export type CompanyCreateRoutes = ({ companyModel }: { companyModel: ICompanyModel }) => Router
 
@@ -18,6 +20,6 @@ export type CompanyControllerConstructor = {
 export type Company = {
   id?: string
   name: string
-  createdAt: Date
+  createdAt?: Date
   tenantId: string
 }

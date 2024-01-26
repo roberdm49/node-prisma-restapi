@@ -10,6 +10,7 @@ export const createCompanyRoutes: CompanyCreateRoutes = ({ companyModel }) => {
   const companyController = new CompanyController({ companyService })
 
   router.get('/get', [protectedRouteMiddleware], companyController.getAll)
+  // router.get('/create', [protectedRouteMiddleware], companyController.create)
 
   return router
 }
