@@ -12,7 +12,11 @@ export default class CompanyModel implements ICompanyModel {
     const newCompany = await prisma.company.create({
       data: {
         name: company.name,
-        tenantId: company.tenantId
+        tenant: {
+          connect: {
+            id: company.tenantId
+          }
+        }
       }
     })
 
