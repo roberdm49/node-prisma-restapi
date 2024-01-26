@@ -1,11 +1,8 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 import { Request, Response, NextFunction } from 'express'
 import chalk from 'chalk'
-import { WrongCredentialsError } from '@/errors/WrongCredentials'
-import { MissingCredentialsError } from '@/errors/MissingCredentials'
-import { UnauthorizedError } from '@/errors/Unauthorized'
+import { MissingCredentialsError, UnauthorizedError, WrongCredentialsError } from '@/errors'
 import { HttpStatus } from '@/enums/httpStatus'
-import { ErrorClientMessages } from '@/enums/errors'
 
 export const errorHandlerMiddleware = (
   _error: Error,
@@ -18,17 +15,17 @@ export const errorHandlerMiddleware = (
 
   if (_error instanceof MissingCredentialsError) {
     return response.status(HttpStatus.BadRequest).json({
-      message: ErrorClientMessages.MissingCredentials,
+      message: _error.message,
       missingCredentials: _error.missingCredentials
     })
   }
 
   if (_error instanceof WrongCredentialsError) {
-    return response.status(HttpStatus.BadRequest).json({ message: ErrorClientMessages.WrongCredentials })
+    return response.status(HttpStatus.BadRequest).json({ message: _error.message })
   }
 
   if (_error instanceof UnauthorizedError) {
-    return response.status(HttpStatus.Unauthorized)
+    return response.status(HttpStatus.Unauthorized).json({ message: _error.message })
   }
 
   if (_error instanceof PrismaClientKnownRequestError) {

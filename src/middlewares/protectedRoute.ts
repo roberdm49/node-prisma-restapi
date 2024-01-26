@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import chalk from 'chalk'
 import { GlobalEnv } from '@/utils/constants'
 import { CookieNames } from '@/enums/cookies'
+import { UnauthorizedError } from '@/errors'
 
 // TODO: modify express.d.ts to make it work correctly
 export const protectedRouteMiddleware: RequestHandler = (request: any, response, next) => {
@@ -12,7 +13,7 @@ export const protectedRouteMiddleware: RequestHandler = (request: any, response,
   const accessTokenExists = Boolean(accessToken)
   if (!accessTokenExists) {
     // verify this error handler
-    return next(new Error('Access token is missing'))
+    return next(new UnauthorizedError('Access token inválido'))
   }
 
   const decoded = jwt.verify(accessToken, GlobalEnv.ACCESS_TOKEN_SECRET)

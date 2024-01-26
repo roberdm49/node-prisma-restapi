@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { GlobalEnv } from '@/utils/constants'
 import { JwtExpireTime } from '@/enums/expireTime'
-import { ErrorServerMessages } from '@/enums/errors'
+import { ErrorClientMessages } from '@/enums/errors'
 import { WrongCredentialsError } from '@/errors/WrongCredentials'
 import { MissingCredentialsError } from '@/errors/MissingCredentials'
 import { getMissingCredentials } from '@/utils/getMissingsCredentials'
@@ -29,7 +29,7 @@ export default class AuthService implements IAuthService {
     const missingCredentials = getMissingCredentials(credentials, signUpData)
 
     if (missingCredentials.length > 0) {
-      throw new MissingCredentialsError(ErrorServerMessages.MissingCredentials, missingCredentials)
+      throw new MissingCredentialsError(ErrorClientMessages.MissingCredentials, missingCredentials)
     }
 
     const hashedPassword = await bcrypt.hash(signUpData.password, GlobalEnv.HASH_ROUNDS)
@@ -47,14 +47,14 @@ export default class AuthService implements IAuthService {
     const missingCredentials = getMissingCredentials(credentials, logInData)
 
     if (missingCredentials.length > 0) {
-      throw new MissingCredentialsError(ErrorServerMessages.MissingCredentials, missingCredentials)
+      throw new MissingCredentialsError(ErrorClientMessages.MissingCredentials, missingCredentials)
     }
 
     const foundUser = await this.usersModel.getOneByUsername(logInData.username)
-    if (!foundUser) throw new WrongCredentialsError(ErrorServerMessages.WrongCredentials)
+    if (!foundUser) throw new WrongCredentialsError(ErrorClientMessages.WrongCredentials)
 
     const validPassword: boolean = await bcrypt.compare(logInData.password, foundUser.password)
-    if (!validPassword) throw new WrongCredentialsError(ErrorServerMessages.WrongCredentials)
+    if (!validPassword) throw new WrongCredentialsError(ErrorClientMessages.WrongCredentials)
 
     const tokens = await this.getUserTokens(foundUser)
 
