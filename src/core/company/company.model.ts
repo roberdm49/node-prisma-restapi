@@ -8,7 +8,19 @@ export default class CompanyModel implements ICompanyModel {
     return companies
   }
 
-  create: CompanyModelCreate = async (company) => {
+  create: CompanyModelCreate = async (company, products) => {
+    const productsToAdd = []
+
+    for (const product of products) {
+      productsToAdd.push(
+        prisma.product.create({
+          data: {
+            ...product
+          }
+        })
+      )
+    }
+
     const newCompany = await prisma.company.create({
       data: {
         name: company.name,
@@ -16,6 +28,9 @@ export default class CompanyModel implements ICompanyModel {
           connect: {
             id: company.tenantId
           }
+        },
+        products: {
+          connect: await prisma.$transaction(productsToAdd)
         }
       }
     })

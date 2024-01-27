@@ -13,6 +13,7 @@ import { IUsersModel } from '../users/users.interfaces'
 type JwtPayload = {
   id: string
   username: string
+  tenantId: string
 }
 
 export default class AuthService implements IAuthService {
@@ -73,7 +74,8 @@ export default class AuthService implements IAuthService {
   getUserTokens: AuthServiceGetUserTokens = async (user) => {
     const userForToken = {
       id: user.id,
-      username: user.username
+      username: user.username,
+      tenantId: user.tenantId
     }
 
     const accessToken = jwt.sign(userForToken, GlobalEnv.ACCESS_TOKEN_SECRET, { expiresIn: JwtExpireTime.AccessToken })

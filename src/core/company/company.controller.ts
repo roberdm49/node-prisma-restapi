@@ -18,4 +18,14 @@ export default class CompanyController implements ICompanyController {
       next(error)
     }
   }
+
+  create: RequestHandler = async (request, response, next) => {
+    try {
+      const { company, products = [] } = request.body
+      const newCompany = await this.companyService.create(company, products)
+      return response.status(HttpStatus.Created).json(newCompany)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
