@@ -2,11 +2,11 @@ import { Router } from 'express'
 import { ICompanyModel, ICompanyService } from './company.interface'
 import { Product } from '../products/products.types'
 
-export type CompanyModelGetAll = () => Promise<Company[]>
-export type CompanyModelCreate = (company: Company, products: Product[]) => Promise<Company>
+export type CompanyModelGetAll = (tenantId: string) => Promise<Company[]>
+export type CompanyModelCreate = (tenantId: string, company: Company, products: Product[]) => Promise<Company>
 
-export type CompanyServiceGetAll = () => Promise<Company[]>
-export type CompanyServiceCreate = (company: Company, products: Product[]) => Promise<Company>
+export type CompanyServiceGetAll = (tenantId: string) => Promise<Company[]>
+export type CompanyServiceCreate = (tenantId: string, company: Company, products: Product[]) => Promise<Company>
 
 export type CompanyCreateRoutes = ({ companyModel }: { companyModel: ICompanyModel }) => Router
 

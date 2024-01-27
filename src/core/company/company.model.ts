@@ -3,12 +3,16 @@ import { CompanyModelCreate, CompanyModelGetAll } from './company.types'
 import { ICompanyModel } from './company.interface'
 
 export default class CompanyModel implements ICompanyModel {
-  getAll: CompanyModelGetAll = async () => {
-    const companies = await prisma.company.findMany()
+  getAll: CompanyModelGetAll = async (tenantId) => {
+    const companies = await prisma.company.findMany({
+      where: {
+        tenantId
+      }
+    })
     return companies
   }
 
-  create: CompanyModelCreate = async (company, products) => {
+  create: CompanyModelCreate = async (tenantId, company, products) => {
     const productsToAdd = []
 
     for (const product of products) {
@@ -26,7 +30,7 @@ export default class CompanyModel implements ICompanyModel {
         name: company.name,
         tenant: {
           connect: {
-            id: company.tenantId
+            id: tenantId
           }
         },
         products: {

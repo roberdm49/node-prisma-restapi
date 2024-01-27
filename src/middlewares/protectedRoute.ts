@@ -12,7 +12,6 @@ export const protectedRouteMiddleware: RequestHandler = (request: any, response,
   const accessToken: string = request.cookies[CookieNames.AccessToken]
   const accessTokenExists = Boolean(accessToken)
   if (!accessTokenExists) {
-    // verify this error handler
     return next(new UnauthorizedError('Access token inválido'))
   }
 
