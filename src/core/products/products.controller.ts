@@ -12,7 +12,7 @@ export default class ProductsController implements IProductController {
 
   create: RequestHandler = async (request, response, next) => {
     try {
-      const { tenantId } = (request as any).user
+      const { tenantId } = request.user
       const products = await this.productsService.create(tenantId, request.body)
       return response.status(HttpStatus.Created).json(products)
     } catch (error) {
@@ -22,7 +22,7 @@ export default class ProductsController implements IProductController {
 
   getAll: RequestHandler = async (request, response, next) => {
     try {
-      const { tenantId } = (request as any).user
+      const { tenantId } = request.user
       const products = await this.productsService.getAll(tenantId)
       return response.status(HttpStatus.OK).json(products)
     } catch (error) {
@@ -32,7 +32,7 @@ export default class ProductsController implements IProductController {
 
   updateMany: RequestHandler = async (request, response, next) => {
     try {
-      const { tenantId } = (request as any).user
+      const { tenantId } = request.user
       const products: Product[] = request.body
       const updatedProducts = await this.productsService.updateMany(tenantId, products)
       return response.status(HttpStatus.OK).json(updatedProducts)
@@ -43,7 +43,7 @@ export default class ProductsController implements IProductController {
 
   deleteMany: RequestHandler = async (request, response, next) => {
     try {
-      const { tenantId } = (request as any).user
+      const { tenantId } = request.user
       const ids: string[] = request.body
       const removedProduct = await this.productsService.deleteMany(tenantId, ids)
       return response.status(HttpStatus.OK).json(removedProduct)

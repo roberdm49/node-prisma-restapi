@@ -9,12 +9,7 @@ import { getMissingCredentials } from '@/utils/getMissingsCredentials'
 import { IAuthModel, IAuthService } from './auth.interfaces'
 import { AuthServiceConstructor, AuthServiceGetUserTokens, AuthServiceLogIn, AuthServiceRefreshTokens, AuthServiceSignUp } from './auth.types'
 import { IUsersModel } from '../users/users.interfaces'
-
-type JwtPayload = {
-  id: string
-  username: string
-  tenantId: string
-}
+import { AccessTokenPayload } from '@/types/access-token'
 
 export default class AuthService implements IAuthService {
   private readonly authModel: IAuthModel
@@ -64,7 +59,7 @@ export default class AuthService implements IAuthService {
 
   getRefreshTokens: AuthServiceRefreshTokens = async (oldRefreshToken) => {
     const decodedToken = jwt.verify(oldRefreshToken, GlobalEnv.REFRESH_TOKEN_SECRET)
-    const userId = (decodedToken as JwtPayload).id
+    const userId = (decodedToken as AccessTokenPayload).id
     const foundUser = this.usersModel.getOneById(userId)
     const tokens = await this.getUserTokens(foundUser)
 

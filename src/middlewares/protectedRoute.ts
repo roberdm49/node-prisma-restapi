@@ -4,9 +4,10 @@ import chalk from 'chalk'
 import { GlobalEnv } from '@/utils/constants'
 import { CookieNames } from '@/enums/cookies'
 import { UnauthorizedError } from '@/errors'
+import { AccessTokenPayload } from '@/types/access-token'
 
 // TODO: modify express.d.ts to make it work correctly
-export const protectedRouteMiddleware: RequestHandler = (request: any, response, next) => {
+export const protectedRouteMiddleware: RequestHandler = (request, response, next) => {
   console.log(chalk.cyan.bold.underline('Executing protected route middleware'))
 
   const accessToken: string = request.cookies[CookieNames.AccessToken]
@@ -15,7 +16,8 @@ export const protectedRouteMiddleware: RequestHandler = (request: any, response,
     return next(new UnauthorizedError('Access token inválido'))
   }
 
-  const decoded = jwt.verify(accessToken, GlobalEnv.ACCESS_TOKEN_SECRET)
+  const decoded = jwt.verify(accessToken, GlobalEnv.ACCESS_TOKEN_SECRET) as AccessTokenPayload
+
   request.user = decoded
 
   next()

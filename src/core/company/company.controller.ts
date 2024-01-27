@@ -12,7 +12,7 @@ export default class CompanyController implements ICompanyController {
 
   getAll: RequestHandler = async (request, response, next) => {
     try {
-      const { tenantId } = (request as any).user
+      const { tenantId } = request.user
       const companies = await this.companyService.getAll(tenantId)
       return response.status(HttpStatus.OK).json(companies)
     } catch (error) {
@@ -22,7 +22,7 @@ export default class CompanyController implements ICompanyController {
 
   create: RequestHandler = async (request, response, next) => {
     try {
-      const { tenantId } = (request as any).user
+      const { tenantId } = request.user
       const { company, products = [] } = request.body
       const newCompany = await this.companyService.create(tenantId, company, products)
       return response.status(HttpStatus.Created).json(newCompany)
