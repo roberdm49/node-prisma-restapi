@@ -14,19 +14,22 @@ export default class ProductsService implements IProductService {
     this.productsModel = productsModel
   }
 
-  create: ProductsServiceCreate = async (productsToCreate) => {
-    return await this.productsModel.create(productsToCreate)
+  create: ProductsServiceCreate = async (tenantId, productsToCreate) => {
+    const productsToCreateWithTenantId = productsToCreate.map(productToCreate => {
+      return { ...productToCreate, tenantId }
+    })
+    return await this.productsModel.create(productsToCreateWithTenantId)
   }
 
-  getAll: ProductsServiceGetAll = async () => {
-    return await this.productsModel.getAll()
+  getAll: ProductsServiceGetAll = async (tenantId) => {
+    return await this.productsModel.getAll(tenantId)
   }
 
-  updateMany: ProductsServiceUpdateMany = async (products) => {
-    return await this.productsModel.updateMany(products)
+  updateMany: ProductsServiceUpdateMany = async (tenantId, products) => {
+    return await this.productsModel.updateMany(tenantId, products)
   }
 
-  deleteMany: ProductsServiceDelete = async (ids) => {
-    return await this.productsModel.deleteMany(ids)
+  deleteMany: ProductsServiceDelete = async (tenantId, ids) => {
+    return await this.productsModel.deleteMany(tenantId, ids)
   }
 }
