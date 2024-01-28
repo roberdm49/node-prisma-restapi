@@ -12,8 +12,19 @@ export default class DailySaleController implements IDailySaleController {
 
   getAll: RequestHandler = async (request, response, next) => {
     try {
-      const dailySales = await this.dailySaleService.getAll()
+      const { tenantId } = request.user
+      const dailySales = await this.dailySaleService.getAll(tenantId)
       return response.status(HttpStatus.OK).json(dailySales)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  create: RequestHandler = async (request, response, next) => {
+    try {
+      const { tenantId } = request.user
+      const newDailySale = await this.dailySaleService.create(tenantId)
+      return response.status(HttpStatus.Created).json(newDailySale)
     } catch (error) {
       next(error)
     }

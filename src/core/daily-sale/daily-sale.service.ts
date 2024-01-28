@@ -1,5 +1,5 @@
 import { IDailySaleModel, IDailySaleService } from './daily-sale.interfaces'
-import { DailySaleServiceContructor, DailySaleServiceGetAll } from './daily-sale.types'
+import { DailySaleServiceContructor, DailySaleServiceCreate, DailySaleServiceGetAll } from './daily-sale.types'
 
 export default class DailySaleService implements IDailySaleService {
   private readonly dailySaleModel: IDailySaleModel
@@ -8,7 +8,11 @@ export default class DailySaleService implements IDailySaleService {
     this.dailySaleModel = dailySaleModel
   }
 
-  getAll: DailySaleServiceGetAll = async () => {
-    return await this.dailySaleModel.getAll()
+  getAll: DailySaleServiceGetAll = async (tenantId) => {
+    return await this.dailySaleModel.getAll(tenantId)
+  }
+
+  create: DailySaleServiceCreate = async (tenantId) => {
+    return await this.dailySaleModel.create(tenantId)
   }
 }
