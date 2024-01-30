@@ -1,9 +1,11 @@
 import { Router } from 'express'
 import { IPurchaseModel, IPurchaseService } from './purchase.interfaces'
 
-export type PurchaseModelGetAll = () => Promise<Purchase[]>
+export type PurchaseModelGetAll = (tenantId: string) => Promise<Purchase[]>
+export type PurchaseModelCreate = (data: Purchase[]) => Promise<unknown>
 
-export type PurchaseServiceGetAll = () => Promise<Purchase[]>
+export type PurchaseServiceGetAll = (tenantId: string) => Promise<Purchase[]>
+export type PurchaseServiceCreate = (tenantId: string, data: Purchase[]) => Promise<unknown>
 
 export type PurchaseCreateRoutes = ({ purchaseModel }: { purchaseModel: IPurchaseModel }) => Router
 
