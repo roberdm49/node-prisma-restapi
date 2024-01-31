@@ -30,9 +30,37 @@ export default class PurchaseModel implements IPurchaseModel {
     return purchases
   }
 
-  create: PurchaseModelCreate = async (data) => {
-    return await prisma.purchase.createMany({
-      data
+  create: PurchaseModelCreate = async (tenantId, dailySaleId, purchases) => {
+    const tenant = await prisma.tenant.findUnique({
+      where: {
+        id: tenantId
+      }
+    })
+
+    if (!tenant) {
+      throw new BadRequestError(ErrorClientMessages.BadRequest)
+    }
+
+    const dailySale = await prisma.dailySale.findUnique({
+      where: {
+        tenantId,
+        id: dailySaleId
+      }
+    })
+
+    if (!dailySale) {
+      throw new BadRequestError(ErrorClientMessages.BadRequest)
+    }
+
+    return await prisma.purchase.create({
+      data: {
+        ...purchases,
+        dailySale: {
+          connect: {
+            id: dailySaleId
+          }
+        }
+      }
     })
   }
 }

@@ -13,10 +13,6 @@ export default class PurchaseService implements IPurchaseService {
   }
 
   create: PurchaseServiceCreate = async (tenantId, dailySaleId, purchases) => {
-    const purchasesToAddWithTenantId = purchases.map(purchase => {
-      return { ...purchase, tenantId }
-    })
-
-    return await this.purchaseModel.create(purchasesToAddWithTenantId)
+    return await this.purchaseModel.create(tenantId, dailySaleId, purchases)
   }
 }
