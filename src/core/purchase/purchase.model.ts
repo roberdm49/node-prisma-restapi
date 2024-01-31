@@ -1,15 +1,33 @@
 import prisma from '@/config/db'
+import { BadRequestError } from '@/errors'
+import { ErrorClientMessages } from '@/enums/errors'
 import { IPurchaseModel } from './purchase.interfaces'
-import { PurchaseModelCreate, PurchaseModelGetAll } from './purchase.types'
+import { Purchase, PurchaseModelCreate, PurchaseModelGetAll } from './purchase.types'
 
 export default class PurchaseModel implements IPurchaseModel {
   getAll: PurchaseModelGetAll = async (tenantId) => {
-    // TODO: tenantId isn't necessary since it depends only of the dailySaleId
-    return await prisma.purchase.findMany({
-      where: {
-        tenantId
+    const tenant = await prisma.tenant.findUnique({
+      where: { id: tenantId },
+      include: {
+        dailySales: {
+          include: {
+            purchases: true
+          }
+        }
       }
     })
+
+    if (!tenant) {
+      throw new BadRequestError(ErrorClientMessages.BadRequest)
+    }
+
+    const purchases: Purchase[] = []
+
+    tenant.dailySales.forEach((dailysale) => {
+      purchases.push(...dailysale.purchases)
+    })
+
+    return purchases
   }
 
   create: PurchaseModelCreate = async (data) => {

@@ -12,8 +12,8 @@ export default class PurchaseService implements IPurchaseService {
     return await this.purchaseModel.getAll(tenantId)
   }
 
-  create: PurchaseServiceCreate = async (tenantId, data) => {
-    const purchasesToAddWithTenantId = data.map(purchase => {
+  create: PurchaseServiceCreate = async (tenantId, dailySaleId, purchases) => {
+    const purchasesToAddWithTenantId = purchases.map(purchase => {
       return { ...purchase, tenantId }
     })
 
