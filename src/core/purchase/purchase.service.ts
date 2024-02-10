@@ -12,7 +12,7 @@ export default class PurchaseService implements IPurchaseService {
     return await this.purchaseModel.getAll(tenantId)
   }
 
-  create: PurchaseServiceCreate = async (tenantId, dailySaleId, purchases) => {
-    return await this.purchaseModel.create(tenantId, dailySaleId, purchases)
+  create: PurchaseServiceCreate = async (tenantId, dailySaleId, purchasedItems) => {
+    return await this.purchaseModel.create(tenantId, dailySaleId, purchasedItems)
   }
 }

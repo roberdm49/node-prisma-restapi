@@ -30,37 +30,57 @@ export default class PurchaseModel implements IPurchaseModel {
     return purchases
   }
 
-  create: PurchaseModelCreate = async (tenantId, dailySaleId, purchases) => {
-    const tenant = await prisma.tenant.findUnique({
-      where: {
-        id: tenantId
-      }
-    })
+  create: PurchaseModelCreate = async (tenantId, dailySaleId, purchasedItems) => {
+    // TODO: move ALL the business logic to the service layer
+    const productIds = purchasedItems.map(purchasedItem => purchasedItem.productId)
+
+    const [tenant, dailySale, products] = await Promise.all([
+      prisma.tenant.findUnique({ where: { id: tenantId } }),
+      prisma.dailySale.findUnique({ where: { tenantId, id: dailySaleId } }),
+      prisma.product.findMany({ where: { id: { in: productIds }, tenantId } })
+    ])
 
     if (!tenant) {
       throw new BadRequestError(ErrorClientMessages.BadRequest)
     }
 
-    const dailySale = await prisma.dailySale.findUnique({
-      where: {
-        tenantId,
-        id: dailySaleId
-      }
-    })
-
     if (!dailySale) {
       throw new BadRequestError(ErrorClientMessages.BadRequest)
     }
 
-    return await prisma.purchase.create({
+    const validProductIds = products.map(product => product.id)
+
+    const invalidProductIds = productIds.filter(productId => !validProductIds.includes(productId))
+
+    if (invalidProductIds.length > 0) {
+      throw new BadRequestError(ErrorClientMessages.BadRequest)
+    }
+
+    const newPurchase = await prisma.purchase.create({
       data: {
-        ...purchases,
         dailySale: {
           connect: {
             id: dailySaleId
           }
+        },
+        purchasedItems: {
+          create: purchasedItems.map(purchasedItem => ({
+            quantity: purchasedItem.quantity,
+            unitPrice: purchasedItem.unitPrice,
+            product: {
+              connect: { id: purchasedItem.productId }
+            },
+            currencySnapshot: {
+              connect: { id: purchasedItem.currencySnapshotId }
+            }
+          }))
         }
+      },
+      include: {
+        purchasedItems: true
       }
     })
+
+    return newPurchase
   }
 }

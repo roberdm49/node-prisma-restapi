@@ -23,9 +23,9 @@ export default class PurchaseController implements IPurchaseController {
   create: RequestHandler = async (request, response, next) => {
     try {
       const { tenantId } = request.user
-      const { dailySaleId, purchases } = request.body
-      const newPurchases = await this.purchaseService.create(tenantId, dailySaleId, purchases)
-      return response.status(HttpStatus.Created).json(newPurchases)
+      const { dailySaleId, purchasedItems } = request.body
+      const newPurchase = await this.purchaseService.create(tenantId, dailySaleId, purchasedItems)
+      return response.status(HttpStatus.Created).json(newPurchase)
     } catch (error) {
       next(error)
     }
