@@ -5,11 +5,14 @@ export type ProductsModelCreate = (productsDataWithTenantId: Product[]) => Promi
 export type ProductsModelGetAll = (tenantId: string) => Promise<Product[]>
 export type ProductsModelUpdateMany = (tenantId: string, products: Product[]) => Promise<Product[]>
 export type ProductsModelDelete = (tenantId: string, ids: string[]) => Promise<Product[]>
+export type ProductsModelGetManyById = (productIds: string[]) => Promise<Product[]>
 
 export type ProductsServiceCreate = (tenantId: string, productsData: Product[]) => Promise<number>
 export type ProductsServiceGetAll = (tenantId: string) => Promise<Product[]>
 export type ProductsServiceUpdateMany = (tenantId: string, products: Product[]) => Promise<Product[]>
 export type ProductsServiceDelete = (tenantId: string, ids: string[]) => Promise<Product[]>
+export type ProductsServiceGetManyById = (productIds: string[]) => Promise<Product[]>
+export type ProductsServiceEveryProductBelongToSameTenant = (tenantId: string, productIds: string[]) => Promise<boolean>
 
 export type ProductsCreateRoutes = ({ productsModel }: { productsModel: IProductModel }) => Router
 

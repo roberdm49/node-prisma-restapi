@@ -1,6 +1,6 @@
 import prisma from '@/config/db'
 import { IProductModel } from './products.interfaces'
-import { ProductsModelCreate, ProductsModelDelete, ProductsModelGetAll, ProductsModelUpdateMany } from './products.types'
+import { Product, ProductsModelCreate, ProductsModelDelete, ProductsModelGetAll, ProductsModelUpdateMany } from './products.types'
 
 export default class ProductsModel implements IProductModel {
   create: ProductsModelCreate = async (productsToCreateWithTenantId) => {
@@ -15,6 +15,18 @@ export default class ProductsModel implements IProductModel {
     const products = await prisma.product.findMany({
       where: {
         tenantId
+      }
+    })
+
+    return products
+  }
+
+  getManyById = async (productIds: string[]): Promise<Product[]> => {
+    const products = await prisma.product.findMany({
+      where: {
+        id: {
+          in: productIds
+        }
       }
     })
 
