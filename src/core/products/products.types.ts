@@ -23,12 +23,14 @@ export type ProductControllerConstructor = {
 
 // TODO: issues related with null vs undefined (the id is optional but it doesn't have the null option, because ts throw a warning)
 export type Product = {
-  id?: string
+  id: string
   name: string
   price: number
-  stock?: number | null
-  barCode?: string | null
+  stock: number | null
+  barCode: string | null
   tenantId: string
-  companyId?: string | null
+  companyId: string | null
   currencyId: string
 }
+
+export type ProductEntry = Omit<Product, 'id' | 'currencyId' | 'tenantId' >
