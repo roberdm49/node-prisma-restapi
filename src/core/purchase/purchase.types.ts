@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { IPurchaseModel, IPurchaseService } from './purchase.interfaces'
+import { IProductService } from '../products/products.interfaces'
 
 export type PurchaseModelGetAll = (tenantId: string) => Promise<Purchase[]>
 export type PurchaseModelCreate = (tenantId: string, dailySaleId: string, purchasedItems: PurchasedItem[]) => Promise<unknown>
@@ -7,10 +8,14 @@ export type PurchaseModelCreate = (tenantId: string, dailySaleId: string, purcha
 export type PurchaseServiceGetAll = (tenantId: string) => Promise<Purchase[]>
 export type PurchaseServiceCreate = (tenantId: string, dailySaleId: string, purchasedItems: PurchasedItem[]) => Promise<unknown>
 
-export type PurchaseCreateRoutes = ({ purchaseModel }: { purchaseModel: IPurchaseModel }) => Router
+export type PurchaseCreateRoutes =
+  ({ purchaseModel, productService }:
+  { purchaseModel: IPurchaseModel, productService: IProductService })
+  => Router
 
 export type PurchaseServiceConstructor = {
   purchaseModel: IPurchaseModel
+  productService: IProductService
 }
 
 export type PurchaseControllerConstructor = {

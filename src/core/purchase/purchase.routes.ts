@@ -4,10 +4,10 @@ import PurchaseService from './purchase.service'
 import PurchaseController from './purchase.controller'
 import { PurchaseCreateRoutes } from './purchase.types'
 
-export const createPurchaseRoutes: PurchaseCreateRoutes = ({ purchaseModel }) => {
+export const createPurchaseRoutes: PurchaseCreateRoutes = ({ purchaseModel, productService }) => {
   const router = express.Router()
 
-  const purchaseService = new PurchaseService({ purchaseModel })
+  const purchaseService = new PurchaseService({ purchaseModel, productService })
   const purchaseController = new PurchaseController({ purchaseService })
 
   router.get('/get', [protectedRouteMiddleware], purchaseController.getAll)

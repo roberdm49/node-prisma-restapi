@@ -31,13 +31,10 @@ export default class PurchaseModel implements IPurchaseModel {
   }
 
   create: PurchaseModelCreate = async (tenantId, dailySaleId, purchasedItems) => {
-    // TODO: move ALL the business logic to the service layer
-    const productIds = purchasedItems.map(purchasedItem => purchasedItem.productId)
-
-    const [tenant, dailySale, products] = await Promise.all([
+    // TODO: split all the logic into small functions and move them to the business layer
+    const [tenant, dailySale] = await Promise.all([
       prisma.tenant.findUnique({ where: { id: tenantId } }),
-      prisma.dailySale.findUnique({ where: { tenantId, id: dailySaleId } }),
-      prisma.product.findMany({ where: { id: { in: productIds }, tenantId } })
+      prisma.dailySale.findUnique({ where: { tenantId, id: dailySaleId } })
     ])
 
     if (!tenant) {
@@ -45,14 +42,6 @@ export default class PurchaseModel implements IPurchaseModel {
     }
 
     if (!dailySale) {
-      throw new BadRequestError(ErrorClientMessages.BadRequest)
-    }
-
-    const validProductIds = products.map(product => product.id)
-
-    const invalidProductIds = productIds.filter(productId => !validProductIds.includes(productId))
-
-    if (invalidProductIds.length > 0) {
       throw new BadRequestError(ErrorClientMessages.BadRequest)
     }
 
