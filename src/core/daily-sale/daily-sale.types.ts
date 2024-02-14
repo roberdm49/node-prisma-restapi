@@ -18,8 +18,10 @@ export type DailySaleControllerConstructor = {
 }
 
 export type DailySale = {
-  id?: string
-  saleDate?: Date
-  closed?: boolean
+  id: string
+  saleDate: Date
+  closed: boolean
   tenantId: string
 }
+
+export type DailySaleEntry = Omit<DailySale, 'id' | 'saleDate' | 'closed'>
