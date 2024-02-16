@@ -2,6 +2,7 @@ import { RequestHandler } from 'express'
 import {
   DailySaleModelCreate,
   DailySaleModelGetAll,
+  DailySaleModelGetOneById,
   DailySaleServiceCreate,
   DailySaleServiceGetAll
 } from './daily-sale.types'
@@ -9,6 +10,7 @@ import {
 export interface IDailySaleModel {
   getAll: DailySaleModelGetAll
   create: DailySaleModelCreate
+  getOneById: DailySaleModelGetOneById
 }
 
 export interface IDailySaleService {

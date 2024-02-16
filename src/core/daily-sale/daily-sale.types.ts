@@ -2,7 +2,8 @@ import { Router } from 'express'
 import { IDailySaleModel, IDailySaleService } from './daily-sale.interfaces'
 
 export type DailySaleModelGetAll = (tenantId: string) => Promise<DailySale[]>
-export type DailySaleModelCreate = (tenantId: string) => Promise<unknown>
+export type DailySaleModelCreate = (tenantId: string) => Promise<DailySale>
+export type DailySaleModelGetOneById = (dailySaleId: string) => Promise<DailySale | null>
 
 export type DailySaleServiceGetAll = (tenantId: string) => Promise<DailySale[]>
 export type DailySaleServiceCreate = (tenantId: string) => Promise<unknown>
