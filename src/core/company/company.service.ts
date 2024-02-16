@@ -12,7 +12,7 @@ export default class CompanyService implements ICompanyService {
     return await this.companyModel.getAll(tenantId)
   }
 
-  create: CompanyModelCreate = async (tenantId, company, products) => {
-    return await this.companyModel.create(tenantId, company, products)
+  create: CompanyModelCreate = async (tenantId, company) => {
+    return await this.companyModel.create(tenantId, company)
   }
 }
