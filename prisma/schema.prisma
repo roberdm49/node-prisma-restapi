@@ -35,6 +35,7 @@ model User {
 model Product {
   id String @id @default(uuid())
   name String
+  description String
   price Float
   stock Int? @default(0)
   barCode String?
@@ -44,7 +45,23 @@ model Product {
   company Company? @relation(fields: [companyId], references: [id])
   currencyId String
   currency Currency @relation(fields: [currencyId], references: [id])
+  productHistoryId String
+  productHistory ProductHistory @relation(fields: [productHistoryId], references: [id])
+}
+
+model ProductHistory {
+  id String @id @default(uuid())
+  name String
+  description String
+  price Float
+  stock Int?
+  barCode String?
+  tenantId String
+  companyId String
+  currencyId String
+  modificationTimestamp DateTime @default(now())
   purchasedItems PurchasedItem[]
+  product Product?
 }
 
 model Company {
@@ -79,8 +96,8 @@ model PurchasedItem {
   unitPrice Float
   purchaseId String
   purchase Purchase @relation(fields: [purchaseId], references: [id])
-  productId String
-  product Product @relation(fields: [productId], references: [id])
+  productHistoryId String
+  productHistory ProductHistory @relation(fields: [productHistoryId], references: [id])
   currencySnapshotId String
   currencySnapshot DailyExchangeRate @relation(fields: [currencySnapshotId], references: [id])
 }
