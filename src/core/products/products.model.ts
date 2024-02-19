@@ -1,9 +1,9 @@
 import prisma from '@/config/db'
 import { IProductModel } from './products.interfaces'
-import { Product, ProductsModelCreate, ProductsModelDelete, ProductsModelGetAll, ProductsModelUpdateMany } from './products.types'
+import { Product, ProductsModelCreateMany, ProductsModelDelete, ProductsModelGetAll, ProductsModelUpdateMany } from './products.types'
 
 export default class ProductsModel implements IProductModel {
-  create: ProductsModelCreate = async (productsToCreateWithTenantId) => {
+  createMany: ProductsModelCreateMany = async (productsToCreateWithTenantId) => {
     const products = await prisma.product.createMany({
       data: productsToCreateWithTenantId
     })

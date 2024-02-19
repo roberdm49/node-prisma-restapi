@@ -3,7 +3,7 @@ import { IProductModel, IProductService } from './products.interfaces'
 import {
   Product,
   ProductServiceConstructor,
-  ProductsServiceCreate,
+  ProductsServiceCreateMany,
   ProductsServiceDelete,
   ProductsServiceEveryProductBelongToSameTenant,
   ProductsServiceGetAll,
@@ -18,11 +18,12 @@ export default class ProductsService implements IProductService {
     this.productsModel = productsModel
   }
 
-  create: ProductsServiceCreate = async (tenantId, productsToCreate) => {
+  createMany: ProductsServiceCreateMany = async (tenantId, productsToCreate) => {
     const productsToCreateWithTenantId = productsToCreate.map(productToCreate => {
       return { ...productToCreate, tenantId }
     })
-    return await this.productsModel.create(productsToCreateWithTenantId)
+
+    return await this.productsModel.createMany(productsToCreateWithTenantId)
   }
 
   getAll: ProductsServiceGetAll = async (tenantId) => {

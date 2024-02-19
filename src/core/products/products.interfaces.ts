@@ -1,11 +1,11 @@
 import { RequestHandler } from 'express'
 import {
-  ProductsModelCreate,
+  ProductsModelCreateMany,
   ProductsModelDelete,
   ProductsModelGetAll,
   ProductsModelGetManyById,
   ProductsModelUpdateMany,
-  ProductsServiceCreate,
+  ProductsServiceCreateMany,
   ProductsServiceDelete,
   ProductsServiceEveryProductBelongToSameTenant,
   ProductsServiceGetAll,
@@ -14,7 +14,7 @@ import {
 } from './products.types'
 
 export interface IProductModel {
-  create: ProductsModelCreate
+  createMany: ProductsModelCreateMany
   getAll: ProductsModelGetAll
   updateMany: ProductsModelUpdateMany
   deleteMany: ProductsModelDelete
@@ -22,7 +22,7 @@ export interface IProductModel {
 }
 
 export interface IProductService {
-  create: ProductsServiceCreate
+  createMany: ProductsServiceCreateMany
   getAll: ProductsServiceGetAll
   updateMany: ProductsServiceUpdateMany
   deleteMany: ProductsServiceDelete
