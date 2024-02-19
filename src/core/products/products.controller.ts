@@ -13,7 +13,7 @@ export default class ProductsController implements IProductController {
   create: RequestHandler = async (request, response, next) => {
     try {
       const { tenantId } = request.user
-      const products = await this.productsService.create(tenantId, request.body)
+      const products = await this.productsService.createMany(tenantId, request.body)
       return response.status(HttpStatus.Created).json(products)
     } catch (error) {
       next(error)

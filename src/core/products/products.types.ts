@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { IProductModel, IProductService } from './products.interfaces'
 
-export type ProductsModelCreateMany = (productsDataWithTenantId: ProductWithoutId[], productsHistory: ProductHistoryEntry []) => Promise<number>
+export type ProductsModelCreateMany = (productsDataWithTenantId: ProductWithoutId[]) => Promise<number>
 export type ProductsModelGetAll = (tenantId: string) => Promise<Product[]>
 export type ProductsModelUpdateMany = (tenantId: string, products: Product[]) => Promise<Product[]>
 export type ProductsModelDelete = (tenantId: string, ids: string[]) => Promise<Product[]>
@@ -27,6 +27,7 @@ export type ProductControllerConstructor = {
 export type Product = {
   id: string
   name: string
+  description: string
   price: number
   stock: number | null
   barCode: string | null

@@ -56,7 +56,7 @@ model ProductHistory {
   stock Int?
   barCode String?
   tenantId String
-  companyId String
+  companyId String?
   currencyId String
   modificationTimestamp DateTime @default(now())
   purchasedItems PurchasedItem[]

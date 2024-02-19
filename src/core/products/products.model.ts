@@ -3,12 +3,25 @@ import { IProductModel } from './products.interfaces'
 import { Product, ProductsModelCreateMany, ProductsModelDelete, ProductsModelGetAll, ProductsModelUpdateMany } from './products.types'
 
 export default class ProductsModel implements IProductModel {
-  createMany: ProductsModelCreateMany = async (productsToCreateWithTenantId, productsHistory) => {
-    const products = await prisma.product.createMany({
-      data: productsToCreateWithTenantId
-    })
+  createMany: ProductsModelCreateMany = async (productsToCreateWithTenantId) => {
+    const pendentProducts = []
 
-    return products.count
+    for (const product of productsToCreateWithTenantId) {
+      pendentProducts.push(prisma.product.create({
+        data: {
+          ...product,
+          productsHistory: {
+            create: [
+              { ...product }
+            ]
+          }
+        }
+      }))
+    }
+
+    const createdProducts = await prisma.$transaction(pendentProducts)
+
+    return createdProducts.length
   }
 
   getAll: ProductsModelGetAll = async (tenantId) => {
