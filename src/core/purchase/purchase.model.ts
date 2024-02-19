@@ -56,7 +56,7 @@ export default class PurchaseModel implements IPurchaseModel {
           create: purchasedItems.map(purchasedItem => ({
             quantity: purchasedItem.quantity,
             unitPrice: purchasedItem.unitPrice,
-            product: {
+            productHistory: {
               connect: { id: purchasedItem.productId }
             },
             currencySnapshot: {
