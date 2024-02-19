@@ -45,8 +45,7 @@ model Product {
   company Company? @relation(fields: [companyId], references: [id])
   currencyId String
   currency Currency @relation(fields: [currencyId], references: [id])
-  productHistoryId String
-  productHistory ProductHistory @relation(fields: [productHistoryId], references: [id])
+  productsHistory ProductHistory[]
 }
 
 model ProductHistory {
@@ -61,7 +60,8 @@ model ProductHistory {
   currencyId String
   modificationTimestamp DateTime @default(now())
   purchasedItems PurchasedItem[]
-  product Product?
+  productId String
+  product Product @relation(fields: [productId], references: [id])
 }
 
 model Company {
