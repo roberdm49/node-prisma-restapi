@@ -2,7 +2,9 @@ import { BadRequestError } from '@/errors'
 import { IProductModel, IProductService } from './products.interfaces'
 import {
   Product,
+  ProductHistoryEntry,
   ProductServiceConstructor,
+  ProductWithoutId,
   ProductsServiceCreateMany,
   ProductsServiceDelete,
   ProductsServiceEveryProductBelongToSameTenant,
@@ -19,11 +21,16 @@ export default class ProductsService implements IProductService {
   }
 
   createMany: ProductsServiceCreateMany = async (tenantId, productsToCreate) => {
-    const productsToCreateWithTenantId = productsToCreate.map(productToCreate => {
+    const productsToCreateWithTenantId: ProductWithoutId[] = productsToCreate.map(productToCreate => {
       return { ...productToCreate, tenantId }
     })
 
-    return await this.productsModel.createMany(productsToCreateWithTenantId)
+    const productsHistory: ProductHistoryEntry[] = productsToCreateWithTenantId.map(productWithTenantId => {
+      const { ...productAttributes } = productWithTenantId
+      return { ...productAttributes }
+    })
+
+    return await this.productsModel.createMany(productsToCreateWithTenantId, productsHistory)
   }
 
   getAll: ProductsServiceGetAll = async (tenantId) => {

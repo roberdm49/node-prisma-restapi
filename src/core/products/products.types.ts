@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { IProductModel, IProductService } from './products.interfaces'
 
-export type ProductsModelCreateMany = (productsDataWithTenantId: Product[]) => Promise<number>
+export type ProductsModelCreateMany = (productsDataWithTenantId: ProductWithoutId[], productsHistory: ProductHistoryEntry []) => Promise<number>
 export type ProductsModelGetAll = (tenantId: string) => Promise<Product[]>
 export type ProductsModelUpdateMany = (tenantId: string, products: Product[]) => Promise<Product[]>
 export type ProductsModelDelete = (tenantId: string, ids: string[]) => Promise<Product[]>
@@ -24,7 +24,6 @@ export type ProductControllerConstructor = {
   productsService: IProductService
 }
 
-// TODO: issues related with null vs undefined (the id is optional but it doesn't have the null option, because ts throw a warning)
 export type Product = {
   id: string
   name: string
@@ -37,3 +36,11 @@ export type Product = {
 }
 
 export type ProductEntry = Omit<Product, 'id' | 'currencyId' | 'tenantId' >
+
+export type ProductWithoutId = Omit<Product, 'id'>
+
+export type ProductHistory = Product & {
+  productId: string
+}
+
+export type ProductHistoryEntry = Omit<ProductHistory, 'id' | 'productId'>
