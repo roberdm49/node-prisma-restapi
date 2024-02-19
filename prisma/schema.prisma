@@ -35,7 +35,7 @@ model User {
 model Product {
   id String @id @default(uuid())
   name String
-  description String
+  description String?
   price Float
   stock Int? @default(0)
   barCode String?
@@ -51,7 +51,7 @@ model Product {
 model ProductHistory {
   id String @id @default(uuid())
   name String
-  description String
+  description String?
   price Float
   stock Int?
   barCode String?

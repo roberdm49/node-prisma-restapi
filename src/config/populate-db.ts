@@ -68,6 +68,7 @@ export const populateDB = async (): Promise<void> => {
   await prisma.product.create({
     data: {
       name: 'Block 38g',
+      description: 'A simple block chocolate',
       price: 320,
       tenant: {
         connect: {
