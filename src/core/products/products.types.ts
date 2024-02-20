@@ -24,10 +24,13 @@ export type ProductControllerConstructor = {
   productsService: IProductService
 }
 
+// "DO NOT REMOVE "| null"! Since Prisma returns null when a property does not exist,
+// it is necessary to type explicitly "| null" instead of "?", because
+// this character means 'undefined' in TypeScript
 export type Product = {
   id: string
   name: string
-  description?: string
+  description: string | null
   price: number
   stock: number | null
   barCode: string | null

@@ -1,13 +1,13 @@
 import { BadRequestError } from '@/errors'
 import { IProductModel, IProductService } from './products.interfaces'
 import {
-  Product,
   ProductServiceConstructor,
   ProductWithoutId,
   ProductsServiceCreateMany,
   ProductsServiceDelete,
   ProductsServiceEveryProductBelongToSameTenant,
   ProductsServiceGetAll,
+  ProductsServiceGetManyById,
   ProductsServiceUpdateMany
 } from './products.types'
 import { ErrorClientMessages } from '@/enums/errors'
@@ -58,7 +58,7 @@ export default class ProductsService implements IProductService {
     return true
   }
 
-  getManyById = async (productIds: string[]): Promise<Product[]> => {
+  getManyById: ProductsServiceGetManyById = async (productIds) => {
     const products = await this.productsModel.getManyById(productIds)
     return products
   }
