@@ -6,7 +6,6 @@ import { CookieNames } from '@/enums/cookies'
 import { UnauthorizedError } from '@/errors'
 import { AccessTokenPayload } from '@/types/access-token'
 
-// TODO: modify express.d.ts to make it work correctly
 export const protectedRouteMiddleware: RequestHandler = (request, response, next) => {
   console.log(chalk.cyan.bold.underline('Executing protected route middleware'))
 
