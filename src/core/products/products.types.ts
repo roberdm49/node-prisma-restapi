@@ -7,7 +7,7 @@ export type ProductsModelUpdateMany = (tenantId: string, products: Product[]) =>
 export type ProductsModelDelete = (tenantId: string, ids: string[]) => Promise<Product[]>
 export type ProductsModelGetManyById = (productIds: string[]) => Promise<Product[]>
 
-export type ProductsServiceCreateMany = (tenantId: string, productsData: Product[]) => Promise<number>
+export type ProductsServiceCreateMany = (tenantId: string, productsData: ProductEntry[]) => Promise<number>
 export type ProductsServiceGetAll = (tenantId: string) => Promise<Product[]>
 export type ProductsServiceUpdateMany = (tenantId: string, products: Product[]) => Promise<Product[]>
 export type ProductsServiceDelete = (tenantId: string, ids: string[]) => Promise<Product[]>
@@ -39,7 +39,7 @@ export type Product = {
   currencyId: string
 }
 
-export type ProductEntry = Omit<Product, 'id' | 'currencyId' | 'tenantId' >
+export type ProductEntry = Omit<Product, 'id' | 'tenantId' >
 
 export type ProductWithoutId = Omit<Product, 'id'>
 
