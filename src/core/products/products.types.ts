@@ -36,7 +36,7 @@ export type Product = {
   barCode: string | null
   tenantId: string
   companyId: string | null
-  currencyId: string
+  currencyId: number
 }
 
 export type ProductEntry = Omit<Product, 'id' | 'tenantId' >

@@ -16,7 +16,7 @@ export type CurrencyControllerConstructor = {
 }
 
 export type Currency = {
-  id: string
+  id: number
   name: string
   isoCode?: string | null
   isoNum?: string | null
