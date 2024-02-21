@@ -1,6 +1,6 @@
 import prisma from '@/config/db'
 import { IDailySaleModel } from './daily-sale.interfaces'
-import { DailySaleModelCreate, DailySaleModelGetAll, DailySaleModelGetOneById } from './daily-sale.types'
+import { DailySaleModelCreate, DailySaleModelGetAll, DailySaleModelGetManyByTenantId, DailySaleModelGetOneById } from './daily-sale.types'
 
 export default class DailySaleModel implements IDailySaleModel {
   getAll: DailySaleModelGetAll = async (tenantId) => {
@@ -15,6 +15,14 @@ export default class DailySaleModel implements IDailySaleModel {
     return await prisma.dailySale.findUnique({
       where: {
         id: dailySaleId
+      }
+    })
+  }
+
+  getManyByTenantId: DailySaleModelGetManyByTenantId = async (tenantId) => {
+    return await prisma.dailySale.findMany({
+      where: {
+        tenantId
       }
     })
   }
