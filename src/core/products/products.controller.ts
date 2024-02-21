@@ -1,7 +1,7 @@
 import { HttpStatus } from '@/enums/httpStatus'
 import { RequestHandler } from 'express'
 import { IProductController, IProductService } from './products.interfaces'
-import { Product, ProductControllerConstructor } from './products.types'
+import { Product, ProductControllerConstructor, ProductEntry } from './products.types'
 
 export default class ProductsController implements IProductController {
   private readonly productsService: IProductService
@@ -13,8 +13,9 @@ export default class ProductsController implements IProductController {
   create: RequestHandler = async (request, response, next) => {
     try {
       const { tenantId } = request.user
-      const products = await this.productsService.createMany(tenantId, request.body)
-      return response.status(HttpStatus.Created).json(products)
+      const products: ProductEntry[] = request.body.products
+      const productsCreated = await this.productsService.createMany(tenantId, products)
+      return response.status(HttpStatus.Created).json(productsCreated)
     } catch (error) {
       next(error)
     }
