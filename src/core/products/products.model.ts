@@ -57,7 +57,12 @@ export default class ProductsModel implements IProductModel {
             tenantId
           },
           data: {
-            ...product
+            ...product,
+            productsHistory: {
+              create: [
+                { ...product }
+              ]
+            }
           }
         })
       )
