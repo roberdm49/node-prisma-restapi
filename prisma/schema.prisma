@@ -43,7 +43,7 @@ model Product {
   tenant Tenant @relation(fields: [tenantId], references: [id])
   companyId String?
   company Company? @relation(fields: [companyId], references: [id])
-  currencyId String
+  currencyId Int
   currency Currency @relation(fields: [currencyId], references: [id])
   productsHistory ProductHistory[]
 }
@@ -103,7 +103,7 @@ model PurchasedItem {
 }
 
 model Currency {
-  id String @id @default(uuid())
+  id Int @id @default(autoincrement())
   name String
   isoCode String?
   isoNum String?
@@ -115,7 +115,7 @@ model DailyExchangeRate {
   id String @id @default(uuid())
   currencyValueUsd Float
   timestamp DateTime // should be a timestamp
-  currencySourceId String
+  currencySourceId Int
   currencySource Currency @relation(fields: [currencySourceId], references: [id])
   purchasedItems PurchasedItem[]
 }
