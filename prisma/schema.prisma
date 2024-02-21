@@ -103,12 +103,14 @@ model PurchasedItem {
 }
 
 model Currency {
-  id Int @id @default(autoincrement())
+  id Int @id
   name String
-  isoCode String?
-  isoNum String?
+  isoCode String
+  isoNum String
   products Product[]
   dailyExchangeRates DailyExchangeRate[]
+
+  @@unique([name, isoCode, isoNum])
 }
 
 model DailyExchangeRate {
