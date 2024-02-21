@@ -4,6 +4,8 @@ import chalk from 'chalk'
 import { MissingCredentialsError, UnauthorizedError, WrongCredentialsError } from '@/errors'
 import { HttpStatus } from '@/enums/httpStatus'
 
+const UNIQUE_CONSTRAINT_ERROR_CODE = 'P2002'
+
 export const errorHandlerMiddleware = (
   _error: Error,
   request: Request,
@@ -29,8 +31,15 @@ export const errorHandlerMiddleware = (
   }
 
   if (_error instanceof PrismaClientKnownRequestError) {
-    return response.status(500).json({ error: 'Internal server error' })
+    if (_error.code === UNIQUE_CONSTRAINT_ERROR_CODE) { // @unique contraint error, TODO: move it to a separated file
+      return response.status(HttpStatus.BadGateway).json({
+        error: 'Datos ya existentes',
+        fields: _error.meta?.target
+      })
+    }
+
+    return response.status(HttpStatus.InternalServerError).json({ error: 'Internal server error' })
   }
 
-  return response.status(500).json({ error: 'Internal server error' })
+  return response.status(HttpStatus.InternalServerError).json({ error: 'Internal server error' })
 }
