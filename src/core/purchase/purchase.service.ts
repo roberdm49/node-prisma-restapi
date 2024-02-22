@@ -3,14 +3,18 @@ import { IProductService } from '../products/products.interfaces'
 import { IPurchaseModel, IPurchaseService } from './purchase.interfaces'
 import { PurchaseServiceConstructor, PurchaseServiceCreate, PurchaseServiceGetAll } from './purchase.types'
 import { ErrorClientMessages } from '@/enums/errors'
+import { IDailySaleService } from '../daily-sale/daily-sale.interfaces'
 
 export default class PurchaseService implements IPurchaseService {
-  private readonly productService: IProductService
   private readonly purchaseModel: IPurchaseModel
 
-  constructor ({ purchaseModel, productService }: PurchaseServiceConstructor) {
+  private readonly dailySaleService: IDailySaleService
+  private readonly productService: IProductService
+
+  constructor ({ purchaseModel, productService, dailySaleService }: PurchaseServiceConstructor) {
     this.purchaseModel = purchaseModel
     this.productService = productService
+    this.dailySaleService = dailySaleService
   }
 
   getAll: PurchaseServiceGetAll = async (tenantId) => {
@@ -18,12 +22,22 @@ export default class PurchaseService implements IPurchaseService {
   }
 
   create: PurchaseServiceCreate = async (tenantId, dailySaleId, purchasedItems) => {
+    const foundDailySale = await this.dailySaleService.getOneById(dailySaleId)
+
+    if (!foundDailySale) {
+      throw new BadRequestError(ErrorClientMessages.BadRequest)
+    }
+
+    if (!this.dailySaleService.dailySaleBelongToTenant(tenantId, foundDailySale)) {
+      throw new BadRequestError(ErrorClientMessages.BadRequest)
+    }
+
     const productIds = purchasedItems.map(purchasedItem => purchasedItem.productId)
 
     if (!this.productService.everyProductBelongToSameTenant(tenantId, productIds)) {
       throw new BadRequestError(ErrorClientMessages.BadRequest)
     }
 
-    return await this.purchaseModel.create(tenantId, dailySaleId, purchasedItems)
+    return await this.purchaseModel.create(dailySaleId, purchasedItems)
   }
 }
