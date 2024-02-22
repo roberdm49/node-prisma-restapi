@@ -4,10 +4,10 @@ import { IProductService } from '../products/products.interfaces'
 import { IDailySaleService } from '../daily-sale/daily-sale.interfaces'
 
 export type PurchaseModelGetAll = (tenantId: string) => Promise<Purchase[]>
-export type PurchaseModelCreate = (dailySaleId: string, purchasedItems: PurchasedItem[]) => Promise<unknown>
+export type PurchaseModelCreate = (dailySaleId: string, purchasedItems: PurchasedItem[]) => Promise<number>
 
 export type PurchaseServiceGetAll = (tenantId: string) => Promise<Purchase[]>
-export type PurchaseServiceCreate = (tenantId: string, dailySaleId: string, purchasedItems: PurchasedItem[]) => Promise<unknown>
+export type PurchaseServiceCreate = (tenantId: string, dailySaleId: string, purchasedItems: PurchasedItem[]) => Promise<number>
 
 export type PurchaseCreateRoutes =
   ({ purchaseModel, productService }:

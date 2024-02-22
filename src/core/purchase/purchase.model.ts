@@ -56,6 +56,6 @@ export default class PurchaseModel implements IPurchaseModel {
       }
     })
 
-    return newPurchase
+    return newPurchase.purchasedItems.length
   }
 }
