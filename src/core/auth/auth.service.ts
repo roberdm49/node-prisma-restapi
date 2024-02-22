@@ -3,13 +3,12 @@ import bcrypt from 'bcrypt'
 import { GlobalEnv } from '@/utils/constants'
 import { JwtExpireTime } from '@/enums/expireTime'
 import { ErrorClientMessages } from '@/enums/errors'
-import { WrongCredentialsError } from '@/errors/WrongCredentials'
-import { MissingCredentialsError } from '@/errors/MissingCredentials'
+import { WrongCredentialsError, MissingCredentialsError } from '@/errors'
 import { getMissingCredentials } from '@/utils/getMissingsCredentials'
-import { IAuthModel, IAuthService } from './auth.interfaces'
-import { AuthServiceConstructor, AuthServiceGetUserTokens, AuthServiceLogIn, AuthServiceRefreshTokens, AuthServiceSignUp } from './auth.types'
-import { IUsersModel } from '../users/users.interfaces'
 import { AccessTokenPayload } from '@/types/access-token'
+import { IAuthModel, IAuthService } from './auth.interfaces'
+import { IUsersModel } from '../users/users.interfaces'
+import { AuthServiceConstructor, AuthServiceGetUserTokens, AuthServiceLogIn, AuthServiceRefreshTokens, AuthServiceSignUp } from './auth.types'
 
 export default class AuthService implements IAuthService {
   private readonly authModel: IAuthModel
