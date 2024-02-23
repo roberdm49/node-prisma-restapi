@@ -117,7 +117,7 @@ model DailyExchangeRate {
   id String @id @default(uuid())
   currencyValueUsd Float
   timestamp DateTime // should be a timestamp
-  currencySourceId Int
-  currencySource Currency @relation(fields: [currencySourceId], references: [id])
+  currencyId Int
+  currency Currency @relation(fields: [currencyId], references: [id])
   purchasedItems PurchasedItem[]
 }
