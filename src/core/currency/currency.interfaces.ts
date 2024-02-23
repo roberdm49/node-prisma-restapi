@@ -1,5 +1,10 @@
 import { RequestHandler } from 'express'
-import { CurrencyModelGetAll, CurrencyModelGetLastDailyExchangeRate, CurrencyModelGetLastDailyExchangeRateByCurrencyId, CurrencyServiceGetAll } from './currency.types'
+import {
+  CurrencyModelGetAll,
+  CurrencyModelGetLastDailyExchangeRate,
+  CurrencyModelGetLastDailyExchangeRateByCurrencyId,
+  CurrencyServiceGetAll
+} from './currency.types'
 
 export interface ICurrencyModel {
   getAll: CurrencyModelGetAll

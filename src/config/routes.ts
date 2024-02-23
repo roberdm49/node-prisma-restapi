@@ -17,6 +17,7 @@ import PurchaseModel from '@/core/purchase/purchase.model'
 import CurrencyModel from '@/core/currency/currency.model'
 // Services
 import ProductsService from '@/core/products/products.service'
+import DailySaleService from '@/core/daily-sale/daily-sale.service'
 
 export const configureRoutes = (): Router => {
   const router = express.Router()
@@ -30,13 +31,14 @@ export const configureRoutes = (): Router => {
   const currencyModel = new CurrencyModel()
 
   const productService = new ProductsService({ productsModel })
+  const dailySaleService = new DailySaleService({ dailySaleModel })
 
   router.use('/auth', createAuthRoutes({ authModel, usersModel }))
   router.use('/products', createProductsRoutes({ productsModel }))
   router.use('/users', createUsersRoutes({ usersModel }))
   router.use('/company', createCompanyRoutes({ companyModel }))
   router.use('/daily-sale', createDailySaleRoutes({ dailySaleModel }))
-  router.use('/purchase', createPurchaseRoutes({ purchaseModel, productService }))
+  router.use('/purchase', createPurchaseRoutes({ purchaseModel, productService, dailySaleService, currencyModel }))
   router.use('/currency', createCurrencyRoutes({ currencyModel }))
 
   return router

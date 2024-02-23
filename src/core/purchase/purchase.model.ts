@@ -38,8 +38,8 @@ export default class PurchaseModel implements IPurchaseModel {
             productHistory: {
               connect: { id: purchasedItem.productId }
             },
-            currencySnapshot: {
-              connect: { id: purchasedItem.currencySnapshotId }
+            dailyExchangeRate: {
+              connect: { id: purchasedItem.dailyExchangeRateId }
             }
           }))
         }

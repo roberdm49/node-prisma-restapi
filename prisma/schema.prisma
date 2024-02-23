@@ -98,8 +98,8 @@ model PurchasedItem {
   purchase Purchase @relation(fields: [purchaseId], references: [id])
   productHistoryId String
   productHistory ProductHistory @relation(fields: [productHistoryId], references: [id])
-  currencySnapshotId String
-  currencySnapshot DailyExchangeRate @relation(fields: [currencySnapshotId], references: [id])
+  dailyExchangeRateId String
+  dailyExchangeRate DailyExchangeRate @relation(fields: [dailyExchangeRateId], references: [id])
 }
 
 model Currency {

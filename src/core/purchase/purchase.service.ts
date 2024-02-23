@@ -4,17 +4,20 @@ import { IPurchaseModel, IPurchaseService } from './purchase.interfaces'
 import { PurchaseServiceConstructor, PurchaseServiceCreate, PurchaseServiceGetAll } from './purchase.types'
 import { ErrorClientMessages } from '@/enums/errors'
 import { IDailySaleService } from '../daily-sale/daily-sale.interfaces'
+import { ICurrencyModel } from '../currency/currency.interfaces'
 
 export default class PurchaseService implements IPurchaseService {
   private readonly purchaseModel: IPurchaseModel
+  private readonly currencyModel: ICurrencyModel
 
   private readonly dailySaleService: IDailySaleService
   private readonly productService: IProductService
 
-  constructor ({ purchaseModel, productService, dailySaleService }: PurchaseServiceConstructor) {
+  constructor ({ purchaseModel, productService, dailySaleService, currencyModel }: PurchaseServiceConstructor) {
     this.purchaseModel = purchaseModel
     this.productService = productService
     this.dailySaleService = dailySaleService
+    this.currencyModel = currencyModel
   }
 
   getAll: PurchaseServiceGetAll = async (tenantId) => {
