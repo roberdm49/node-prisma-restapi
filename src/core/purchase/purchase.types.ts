@@ -2,24 +2,25 @@ import { Router } from 'express'
 import { IPurchaseModel, IPurchaseService } from './purchase.interfaces'
 import { IProductService } from '../products/products.interfaces'
 import { IDailySaleService } from '../daily-sale/daily-sale.interfaces'
-import { ICurrencyModel } from '../currency/currency.interfaces'
+import { ICurrencyService } from '../currency/currency.interfaces'
+import { Product } from '../products/products.types'
 
 export type PurchaseModelGetAll = (tenantId: string) => Promise<Purchase[]>
 export type PurchaseModelCreate = (dailySaleId: string, purchasedItems: PurchasedItemEntry[]) => Promise<number>
 
 export type PurchaseServiceGetAll = (tenantId: string) => Promise<Purchase[]>
-export type PurchaseServiceCreate = (tenantId: string, dailySaleId: string, purchasedItems: PurchasedItemEntry[]) => Promise<number>
+export type PurchaseServiceCreate = (tenantId: string, dailySaleId: string, purchasedItems: Product[]) => Promise<number>
 
 export type PurchaseCreateRoutes =
-  ({ purchaseModel, productService, dailySaleService, currencyModel }:
-  { purchaseModel: IPurchaseModel, productService: IProductService, dailySaleService: IDailySaleService, currencyModel: ICurrencyModel })
+  ({ purchaseModel, productService, dailySaleService, currencyService }:
+  { purchaseModel: IPurchaseModel, productService: IProductService, dailySaleService: IDailySaleService, currencyService: ICurrencyService })
   => Router
 
 export type PurchaseServiceConstructor = {
   purchaseModel: IPurchaseModel
   productService: IProductService
   dailySaleService: IDailySaleService
-  currencyModel: ICurrencyModel
+  currencyService: ICurrencyService
 }
 
 export type PurchaseControllerConstructor = {
@@ -43,10 +44,4 @@ export type PurchasedItem = {
   dailyExchangeRateId: string
 }
 
-export type PurchasedItemEntry = Omit<PurchasedItem, 'id' | 'dailyExchangeRateId' | 'productHistoryId'> & {
-  productId: string
-}
-
-export type PurchasedItemEntryWithExchangeRate = PurchasedItemEntry & {
-  dailyExchangeRate: string
-}
+export type PurchasedItemEntry = Omit<PurchasedItem, 'id' | 'purchaseId'>

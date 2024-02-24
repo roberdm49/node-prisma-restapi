@@ -2,11 +2,8 @@ import { Router } from 'express'
 import { ICurrencyModel, ICurrencyService } from './currency.interfaces'
 
 export type CurrencyModelGetAll = () => Promise<Currency[]>
-export type CurrencyModelGetLastDailyExchangeRate = () => Promise<DailyExchangeRate | null>
-export type CurrencyModelGetLastDailyExchangeRateByCurrencyId = (currencyId: number) => Promise<DailyExchangeRate | null>
 
 export type CurrencyServiceGetAll = () => Promise<Currency[]>
-export type CurrencyServiceGetMapMostRecentCurrencyValues = () => Promise<RecentCurrencyValues>
 
 export type CurrencyCreateRoutes = ({ currencyModel }: { currencyModel: ICurrencyModel }) => Router
 
@@ -23,6 +20,7 @@ export type Currency = {
   name: string
   isoCode: string | null
   isoNum: string | null
+  recentExchangeRateId?: string
 }
 
 export type DailyExchangeRate = {
@@ -30,8 +28,4 @@ export type DailyExchangeRate = {
   currencyValueUsd: number
   timestamp: Date
   currencyId: number
-}
-
-export type RecentCurrencyValues = {
-  [currencyId: number]: string
 }

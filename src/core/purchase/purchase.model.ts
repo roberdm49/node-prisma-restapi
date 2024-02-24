@@ -36,7 +36,7 @@ export default class PurchaseModel implements IPurchaseModel {
             quantity: purchasedItem.quantity,
             unitPrice: purchasedItem.unitPrice,
             productHistory: {
-              connect: { id: purchasedItem.productId }
+              connect: { id: purchasedItem.productHistoryId }
             },
             dailyExchangeRate: {
               connect: { id: purchasedItem.dailyExchangeRateId }
