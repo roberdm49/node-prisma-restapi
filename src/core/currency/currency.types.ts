@@ -6,6 +6,7 @@ export type CurrencyModelGetLastDailyExchangeRate = () => Promise<DailyExchangeR
 export type CurrencyModelGetLastDailyExchangeRateByCurrencyId = (currencyId: number) => Promise<DailyExchangeRate | null>
 
 export type CurrencyServiceGetAll = () => Promise<Currency[]>
+export type CurrencyServiceGetMapMostRecentCurrencyValues = () => Promise<RecentCurrencyValues>
 
 export type CurrencyCreateRoutes = ({ currencyModel }: { currencyModel: ICurrencyModel }) => Router
 
@@ -29,4 +30,8 @@ export type DailyExchangeRate = {
   currencyValueUsd: number
   timestamp: Date
   currencyId: number
+}
+
+export type RecentCurrencyValues = {
+  [currencyId: number]: string
 }

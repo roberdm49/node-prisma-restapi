@@ -60,11 +60,11 @@ export default class ProductsService implements IProductService {
   }
 
   getManyById: ProductsServiceGetManyById = async (productIds) => {
-    const products = await this.productsModel.getManyById(productIds)
-    return products
+    return await this.productsModel.getManyById(productIds)
   }
 
   getOneById: ProductsServiceGetOneById = async (productId) => {
-    return await this.productsModel.getOneById(productId)
+    const product = await this.productsModel.getOneById(productId)
+    return product
   }
 }

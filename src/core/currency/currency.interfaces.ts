@@ -3,7 +3,8 @@ import {
   CurrencyModelGetAll,
   CurrencyModelGetLastDailyExchangeRate,
   CurrencyModelGetLastDailyExchangeRateByCurrencyId,
-  CurrencyServiceGetAll
+  CurrencyServiceGetAll,
+  CurrencyServiceGetMapMostRecentCurrencyValues
 } from './currency.types'
 
 export interface ICurrencyModel {
@@ -14,6 +15,7 @@ export interface ICurrencyModel {
 
 export interface ICurrencyService {
   getAll: CurrencyServiceGetAll
+  getMapMostRecentCurrencyValues: CurrencyServiceGetMapMostRecentCurrencyValues
 }
 
 export interface ICurrencyController {

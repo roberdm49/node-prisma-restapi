@@ -46,3 +46,7 @@ export type PurchasedItem = {
 export type PurchasedItemEntry = Omit<PurchasedItem, 'id' | 'dailyExchangeRateId' | 'productHistoryId'> & {
   productId: string
 }
+
+export type PurchasedItemEntryWithExchangeRate = PurchasedItemEntry & {
+  dailyExchangeRate: string
+}
