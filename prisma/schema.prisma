@@ -109,6 +109,7 @@ model Currency {
   isoNum String
   products Product[]
   dailyExchangeRates DailyExchangeRate[]
+  latestExchangeRateId String?
 
   @@unique([name, isoCode, isoNum])
 }
