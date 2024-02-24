@@ -4,12 +4,14 @@ import {
   ProductsModelDelete,
   ProductsModelGetAll,
   ProductsModelGetManyById,
+  ProductsModelGetOneById,
   ProductsModelUpdateMany,
   ProductsServiceCreateMany,
   ProductsServiceDelete,
   ProductsServiceEveryProductBelongToSameTenant,
   ProductsServiceGetAll,
   ProductsServiceGetManyById,
+  ProductsServiceGetOneById,
   ProductsServiceUpdateMany
 } from './products.types'
 
@@ -19,6 +21,7 @@ export interface IProductModel {
   updateMany: ProductsModelUpdateMany
   deleteMany: ProductsModelDelete
   getManyById: ProductsModelGetManyById
+  getOneById: ProductsModelGetOneById
 }
 
 export interface IProductService {
@@ -28,6 +31,7 @@ export interface IProductService {
   deleteMany: ProductsServiceDelete
   getManyById: ProductsServiceGetManyById
   everyProductBelongToSameTenant: ProductsServiceEveryProductBelongToSameTenant
+  getOneById: ProductsServiceGetOneById
 }
 
 export interface IProductController {

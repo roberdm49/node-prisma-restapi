@@ -5,10 +5,10 @@ import { IDailySaleService } from '../daily-sale/daily-sale.interfaces'
 import { ICurrencyModel } from '../currency/currency.interfaces'
 
 export type PurchaseModelGetAll = (tenantId: string) => Promise<Purchase[]>
-export type PurchaseModelCreate = (dailySaleId: string, purchasedItems: PurchasedItem[]) => Promise<number>
+export type PurchaseModelCreate = (dailySaleId: string, purchasedItems: PurchasedItemEntry[]) => Promise<number>
 
 export type PurchaseServiceGetAll = (tenantId: string) => Promise<Purchase[]>
-export type PurchaseServiceCreate = (tenantId: string, dailySaleId: string, purchasedItems: PurchasedItem[]) => Promise<number>
+export type PurchaseServiceCreate = (tenantId: string, dailySaleId: string, purchasedItems: PurchasedItemEntry[]) => Promise<number>
 
 export type PurchaseCreateRoutes =
   ({ purchaseModel, productService, dailySaleService, currencyModel }:
@@ -39,8 +39,10 @@ export type PurchasedItem = {
   quantity: number
   unitPrice: number
   purchaseId: string
-  productId: string
+  productHistoryId: string
   dailyExchangeRateId: string
 }
 
-export type PurchasedItemEntry = Omit<PurchasedItem, 'id' | 'dailyExchangeRateId'>
+export type PurchasedItemEntry = Omit<PurchasedItem, 'id' | 'dailyExchangeRateId' | 'productHistoryId'> & {
+  productId: string
+}

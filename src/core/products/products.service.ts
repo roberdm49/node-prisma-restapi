@@ -8,6 +8,7 @@ import {
   ProductsServiceEveryProductBelongToSameTenant,
   ProductsServiceGetAll,
   ProductsServiceGetManyById,
+  ProductsServiceGetOneById,
   ProductsServiceUpdateMany
 } from './products.types'
 import { ErrorClientMessages } from '@/enums/errors'
@@ -61,5 +62,9 @@ export default class ProductsService implements IProductService {
   getManyById: ProductsServiceGetManyById = async (productIds) => {
     const products = await this.productsModel.getManyById(productIds)
     return products
+  }
+
+  getOneById: ProductsServiceGetOneById = async (productId) => {
+    return await this.productsModel.getOneById(productId)
   }
 }
