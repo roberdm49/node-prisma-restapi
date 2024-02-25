@@ -78,7 +78,7 @@ export default class PurchaseService implements IPurchaseService {
           quantity: 1,
           unitPrice: product.price,
           dailyExchangeRateId: foundCurrency.recentExchangeRateId,
-          productHistoryId: product.latestHistoryProduct
+          productHistoryId: product.latestProductHistoryId
         }
 
         purchasedItemsMap.set(key, purchasedItem)
