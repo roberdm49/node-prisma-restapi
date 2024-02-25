@@ -51,3 +51,7 @@ export type ProductHistory = Product & {
 }
 
 export type ProductHistoryEntry = Omit<ProductHistory, 'id' | 'productId'>
+
+export type ProductWithQuantity = Product & {
+  quantity: number
+}
