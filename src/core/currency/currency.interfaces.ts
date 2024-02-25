@@ -12,19 +12,19 @@ import {
 
 export interface ICurrencyModel {
   getAll: CurrencyModelGetAll
-  createNewCurrencyHistories: CurrencyModelCreateNewCurrencyHistories
   getManyByIsoCodes: CurrencyModelGetManyByIsoCodes
+  createNewCurrencyHistories: CurrencyModelCreateNewCurrencyHistories
   updateCurrencyWithLatestExchangeRates: CurrencyModelUpdateCurrencyWithLatestExchangeRates
 }
 
 export interface ICurrencyService {
   getAll: CurrencyServiceGetAll
-  createNewCurrencyHistories: CurrencyServiceCreateNewCurrencyHistories
   getManyByIsoCodes: CurrencyServiceGetManyByIsoCodes
+  createNewCurrencyHistories: CurrencyServiceCreateNewCurrencyHistories
   updateCurrencyWithLatestExchangeRates: CurrencyServiceUpdateCurrencyWithLatestExchangeRates
 }
 
 export interface ICurrencyController {
   getAll: RequestHandler
-  createNewCurrencyHistories: RequestHandler
+  createNewCurrencyHistoriesAndUpdateCurrenciesTarget: RequestHandler
 }

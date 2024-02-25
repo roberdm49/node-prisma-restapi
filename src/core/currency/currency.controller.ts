@@ -19,11 +19,15 @@ export default class CurrencyController implements ICurrencyController {
     }
   }
 
-  createNewCurrencyHistories: RequestHandler = async (request, response, next) => {
+  createNewCurrencyHistoriesAndUpdateCurrenciesTarget: RequestHandler = async (request, response, next) => {
     try {
       const currencies: CurrencyEntry[] = request.body
-      const newCurrencyHistories = await this.currencyService.createNewCurrencyHistories(currencies)
-      return response.status(HttpStatus.Created).json(newCurrencyHistories)
+      const currenciesWithExchanges = await this.currencyService.createNewCurrencyHistories(currencies)
+      const updatedCurrencies = await this.currencyService.updateCurrencyWithLatestExchangeRates(currenciesWithExchanges)
+
+      return response.status(HttpStatus.Created).json({
+        currenciesUpdated: updatedCurrencies.length
+      })
     } catch (error) {
       next(error)
     }
