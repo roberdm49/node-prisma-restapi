@@ -11,7 +11,7 @@ export const createCurrencyRoutes: CurrencyCreateRoutes = ({ currencyModel }) =>
   const currencyController = new CurrencyController({ currencyService })
 
   router.get('/get', [protectedRouteMiddleware], currencyController.getAll)
-  router.post('/create-new-currency-history', [cronRouteMiddleware], currencyController.createNewCurrencyHistoriesAndUpdateCurrenciesTarget)
+  router.post('/create-and-update-currencies', [cronRouteMiddleware], currencyController.createNewCurrencyHistoriesAndUpdateCurrenciesTarget)
 
   return router
 }
