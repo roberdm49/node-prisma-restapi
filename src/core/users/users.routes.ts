@@ -4,9 +4,9 @@ import UsersService from './users.service'
 import UsersController from './users.controller'
 import { UsersCreateRoutes } from './users.types'
 
-export const createUsersRoutes: UsersCreateRoutes = ({ usersModel }) => {
+export const createUsersRoutes: UsersCreateRoutes = ({ usersRepository }) => {
   const router = express.Router()
-  const usersService = new UsersService({ usersModel })
+  const usersService = new UsersService({ usersRepository })
   const usersController = new UsersController({ usersService })
 
   router.post('/user', [protectedRouteMiddleware], usersController.create)

@@ -1,12 +1,12 @@
 import { Router } from 'express'
-import { IProductModel, IProductService } from './products.interfaces'
+import { IProductRepository, IProductService } from './products.interfaces'
 
-export type ProductsModelCreateMany = (productsDataWithTenantId: ProductWithoutId[]) => Promise<number>
-export type ProductsModelGetAll = (tenantId: string) => Promise<Product[]>
-export type ProductsModelUpdateMany = (tenantId: string, products: Product[]) => Promise<Product[]>
-export type ProductsModelDelete = (tenantId: string, ids: string[]) => Promise<Product[]>
-export type ProductsModelGetManyById = (productIds: string[]) => Promise<Product[]>
-export type ProductsModelGetOneById = (productId: string) => Promise<Product | null>
+export type ProductsRepositoryCreateMany = (productsDataWithTenantId: ProductWithoutId[]) => Promise<number>
+export type ProductsRepositoryGetAll = (tenantId: string) => Promise<Product[]>
+export type ProductsRepositoryUpdateMany = (tenantId: string, products: Product[]) => Promise<Product[]>
+export type ProductsRepositoryDelete = (tenantId: string, ids: string[]) => Promise<Product[]>
+export type ProductsRepositoryGetManyById = (productIds: string[]) => Promise<Product[]>
+export type ProductsRepositoryGetOneById = (productId: string) => Promise<Product | null>
 
 export type ProductsServiceCreateMany = (tenantId: string, productsData: ProductEntry[]) => Promise<number>
 export type ProductsServiceGetAll = (tenantId: string) => Promise<Product[]>
@@ -16,10 +16,10 @@ export type ProductsServiceGetManyById = (productIds: string[]) => Promise<Produ
 export type ProductsServiceEveryProductBelongToSameTenant = (tenantId: string, productIds: string[]) => Promise<boolean>
 export type ProductsServiceGetOneById = (productId: string) => Promise<Product | null>
 
-export type ProductsCreateRoutes = ({ productsModel }: { productsModel: IProductModel }) => Router
+export type ProductsCreateRoutes = ({ productsRepository }: { productsRepository: IProductRepository }) => Router
 
 export type ProductServiceConstructor = {
-  productsModel: IProductModel
+  productsRepository: IProductRepository
 }
 
 export type ProductControllerConstructor = {

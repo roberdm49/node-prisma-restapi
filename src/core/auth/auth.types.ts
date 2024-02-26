@@ -1,11 +1,11 @@
 import { Router } from 'express'
 // Internal
-import { IAuthModel, IAuthService } from './auth.interfaces'
+import { IAuthRepository, IAuthService } from './auth.interfaces'
 // External
-import { IUsersModel } from '../users/users.interfaces'
+import { IUsersRepository } from '../users/users.interfaces'
 import { User } from '../users/users.types'
 
-export type AuthModelCreate = (signUpData: SignUp) => Promise<Tenant>
+export type AuthRepositoryCreate = (signUpData: SignUp) => Promise<Tenant>
 
 export type AuthServiceSignUp = (signUpData: SignUp) => Promise<Tenant>
 export type AuthServiceLogIn = (logInData: LogIn) => Promise<UserTokens>
@@ -14,17 +14,17 @@ export type AuthServiceGetUserTokens = (user: any) => Promise<UserTokens>
 
 export type AuthCreateRoutes =
 ({
-  authModel,
-  usersModel
+  authRepository,
+  usersRepository
 }:
 {
-  authModel: IAuthModel
-  usersModel: IUsersModel
+  authRepository: IAuthRepository
+  usersRepository: IUsersRepository
 }) => Router
 
 export type AuthServiceConstructor = {
-  authModel: IAuthModel
-  usersModel: IUsersModel
+  authRepository: IAuthRepository
+  usersRepository: IUsersRepository
 }
 
 export type AuthControllerConstructor = {

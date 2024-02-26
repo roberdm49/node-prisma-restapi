@@ -1,18 +1,18 @@
-import { ICompanyModel, ICompanyService } from './company.interface'
-import { CompanyServiceConstructor, CompanyModelGetAll, CompanyModelCreate } from './company.types'
+import { ICompanyRepository, ICompanyService } from './company.interface'
+import { CompanyServiceConstructor, CompanyRepositoryGetAll, CompanyRepositoryCreate } from './company.types'
 
 export default class CompanyService implements ICompanyService {
-  private readonly companyModel: ICompanyModel
+  private readonly companyRepository: ICompanyRepository
 
-  constructor ({ companyModel }: CompanyServiceConstructor) {
-    this.companyModel = companyModel
+  constructor ({ companyRepository }: CompanyServiceConstructor) {
+    this.companyRepository = companyRepository
   }
 
-  getAll: CompanyModelGetAll = async (tenantId) => {
-    return await this.companyModel.getAll(tenantId)
+  getAll: CompanyRepositoryGetAll = async (tenantId) => {
+    return await this.companyRepository.getAll(tenantId)
   }
 
-  create: CompanyModelCreate = async (tenantId, company) => {
-    return await this.companyModel.create(tenantId, company)
+  create: CompanyRepositoryCreate = async (tenantId, company) => {
+    return await this.companyRepository.create(tenantId, company)
   }
 }

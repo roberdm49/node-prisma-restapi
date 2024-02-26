@@ -1,9 +1,9 @@
 import prisma from '@/config/db'
-import { CompanyModelCreate, CompanyModelGetAll } from './company.types'
-import { ICompanyModel } from './company.interface'
+import { CompanyRepositoryCreate, CompanyRepositoryGetAll } from './company.types'
+import { ICompanyRepository } from './company.interface'
 
-export default class CompanyModel implements ICompanyModel {
-  getAll: CompanyModelGetAll = async (tenantId) => {
+export default class CompanyRepository implements ICompanyRepository {
+  getAll: CompanyRepositoryGetAll = async (tenantId) => {
     const companies = await prisma.company.findMany({
       where: {
         tenantId
@@ -12,7 +12,7 @@ export default class CompanyModel implements ICompanyModel {
     return companies
   }
 
-  create: CompanyModelCreate = async (tenantId, company) => {
+  create: CompanyRepositoryCreate = async (tenantId, company) => {
     return await prisma.company.create({
       data: {
         name: company.name,
@@ -26,7 +26,7 @@ export default class CompanyModel implements ICompanyModel {
   }
 
   /*
-  createWithNewProducts: CompanyModelCreate = async (tenantId, company, products) => {
+  createWithNewProducts: CompanyRepositoryCreate = async (tenantId, company, products) => {
     const productsToAdd = []
 
     for (const product of products) {

@@ -1,5 +1,5 @@
 import { BadRequestError } from '@/errors'
-import { IProductModel, IProductService } from './products.interfaces'
+import { IProductRepository, IProductService } from './products.interfaces'
 import {
   ProductServiceConstructor,
   ProductWithoutId,
@@ -14,10 +14,10 @@ import {
 import { ErrorClientMessages } from '@/enums/errors'
 
 export default class ProductsService implements IProductService {
-  private readonly productsModel: IProductModel
+  private readonly productsRepository: IProductRepository
 
-  constructor ({ productsModel }: ProductServiceConstructor) {
-    this.productsModel = productsModel
+  constructor ({ productsRepository }: ProductServiceConstructor) {
+    this.productsRepository = productsRepository
   }
 
   createMany: ProductsServiceCreateMany = async (tenantId, productsToCreate) => {
@@ -25,11 +25,11 @@ export default class ProductsService implements IProductService {
       return { ...productToCreate, tenantId }
     })
 
-    return await this.productsModel.createMany(productsToCreateWithTenantId)
+    return await this.productsRepository.createMany(productsToCreateWithTenantId)
   }
 
   getAll: ProductsServiceGetAll = async (tenantId) => {
-    return await this.productsModel.getAll(tenantId)
+    return await this.productsRepository.getAll(tenantId)
   }
 
   updateMany: ProductsServiceUpdateMany = async (tenantId, products) => {
@@ -38,7 +38,7 @@ export default class ProductsService implements IProductService {
       throw new BadRequestError(ErrorClientMessages.BadRequest)
     }
 
-    return await this.productsModel.updateMany(tenantId, products)
+    return await this.productsRepository.updateMany(tenantId, products)
   }
 
   deleteMany: ProductsServiceDelete = async (tenantId, productIds) => {
@@ -46,7 +46,7 @@ export default class ProductsService implements IProductService {
       throw new BadRequestError(ErrorClientMessages.BadRequest)
     }
 
-    return await this.productsModel.deleteMany(tenantId, productIds)
+    return await this.productsRepository.deleteMany(tenantId, productIds)
   }
 
   everyProductBelongToSameTenant: ProductsServiceEveryProductBelongToSameTenant = async (tenantId, productIds) => {
@@ -60,11 +60,11 @@ export default class ProductsService implements IProductService {
   }
 
   getManyById: ProductsServiceGetManyById = async (productIds) => {
-    return await this.productsModel.getManyById(productIds)
+    return await this.productsRepository.getManyById(productIds)
   }
 
   getOneById: ProductsServiceGetOneById = async (productId) => {
-    const product = await this.productsModel.getOneById(productId)
+    const product = await this.productsRepository.getOneById(productId)
     return product
   }
 }

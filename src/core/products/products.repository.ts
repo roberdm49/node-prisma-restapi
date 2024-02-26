@@ -1,9 +1,9 @@
 import prisma from '@/config/db'
-import { IProductModel } from './products.interfaces'
-import { ProductsModelCreateMany, ProductsModelDelete, ProductsModelGetAll, ProductsModelGetManyById, ProductsModelGetOneById, ProductsModelUpdateMany } from './products.types'
+import { IProductRepository } from './products.interfaces'
+import { ProductsRepositoryCreateMany, ProductsRepositoryDelete, ProductsRepositoryGetAll, ProductsRepositoryGetManyById, ProductsRepositoryGetOneById, ProductsRepositoryUpdateMany } from './products.types'
 
-export default class ProductsModel implements IProductModel {
-  createMany: ProductsModelCreateMany = async (productsToCreateWithTenantId) => {
+export default class ProductsRepository implements IProductRepository {
+  createMany: ProductsRepositoryCreateMany = async (productsToCreateWithTenantId) => {
     const pendentProducts = []
 
     for (const product of productsToCreateWithTenantId) {
@@ -24,7 +24,7 @@ export default class ProductsModel implements IProductModel {
     return createdProducts.length
   }
 
-  getAll: ProductsModelGetAll = async (tenantId) => {
+  getAll: ProductsRepositoryGetAll = async (tenantId) => {
     const products = await prisma.product.findMany({
       where: {
         tenantId
@@ -34,7 +34,7 @@ export default class ProductsModel implements IProductModel {
     return products
   }
 
-  getManyById: ProductsModelGetManyById = async (productIds) => {
+  getManyById: ProductsRepositoryGetManyById = async (productIds) => {
     const products = await prisma.product.findMany({
       where: {
         id: {
@@ -46,7 +46,7 @@ export default class ProductsModel implements IProductModel {
     return products
   }
 
-  updateMany: ProductsModelUpdateMany = async (tenantId, products) => {
+  updateMany: ProductsRepositoryUpdateMany = async (tenantId, products) => {
     const productsToUpdate = []
 
     for (const product of products) {
@@ -71,7 +71,7 @@ export default class ProductsModel implements IProductModel {
     return await prisma.$transaction(productsToUpdate)
   }
 
-  deleteMany: ProductsModelDelete = async (tenantId, ids) => {
+  deleteMany: ProductsRepositoryDelete = async (tenantId, ids) => {
     const productsToDelete = []
 
     for (const id of ids) {
@@ -88,7 +88,7 @@ export default class ProductsModel implements IProductModel {
     return await prisma.$transaction(productsToDelete)
   }
 
-  getOneById: ProductsModelGetOneById = async (productId) => {
+  getOneById: ProductsRepositoryGetOneById = async (productId) => {
     return await prisma.product.findUnique({
       where: {
         id: productId

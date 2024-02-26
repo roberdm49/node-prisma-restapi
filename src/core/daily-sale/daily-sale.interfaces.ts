@@ -1,18 +1,18 @@
 import { RequestHandler } from 'express'
 import {
-  DailySaleModelCreate,
-  DailySaleModelGetAll,
-  DailySaleModelGetOneById,
+  DailySaleRepositoryCreate,
+  DailySaleRepositoryGetAll,
+  DailySaleRepositoryGetOneById,
   DailySaleServiceCreate,
   DailySaleServiceDailySaleBelongToTenant,
   DailySaleServiceGetAll,
   DailySaleServiceGetOneById
 } from './daily-sale.types'
 
-export interface IDailySaleModel {
-  getAll: DailySaleModelGetAll
-  create: DailySaleModelCreate
-  getOneById: DailySaleModelGetOneById
+export interface IDailySaleRepository {
+  getAll: DailySaleRepositoryGetAll
+  create: DailySaleRepositoryCreate
+  getOneById: DailySaleRepositoryGetOneById
 }
 
 export interface IDailySaleService {

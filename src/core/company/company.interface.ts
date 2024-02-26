@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express'
-import { CompanyModelCreate, CompanyModelGetAll, CompanyServiceCreate, CompanyServiceGetAll } from './company.types'
+import { CompanyRepositoryCreate, CompanyRepositoryGetAll, CompanyServiceCreate, CompanyServiceGetAll } from './company.types'
 
-export interface ICompanyModel {
-  getAll: CompanyModelGetAll
-  create: CompanyModelCreate
+export interface ICompanyRepository {
+  getAll: CompanyRepositoryGetAll
+  create: CompanyRepositoryCreate
 }
 
 export interface ICompanyService {

@@ -1,18 +1,18 @@
 import prisma from '@/config/db'
-import { ICurrencyModel } from './currency.interfaces'
+import { ICurrencyRepository } from './currency.interfaces'
 import {
-  CurrencyModelCreateNewCurrencyHistories,
-  CurrencyModelGetAll,
-  CurrencyModelGetManyByIsoCodes,
-  CurrencyModelUpdateCurrencyWithLatestExchangeRates
+  CurrencyRepositoryCreateNewCurrencyHistories,
+  CurrencyRepositoryGetAll,
+  CurrencyRepositoryGetManyByIsoCodes,
+  CurrencyRepositoryUpdateCurrencyWithLatestExchangeRates
 } from './currency.types'
 
-export default class CurrencyModel implements ICurrencyModel {
-  getAll: CurrencyModelGetAll = async () => {
+export default class CurrencyRepository implements ICurrencyRepository {
+  getAll: CurrencyRepositoryGetAll = async () => {
     return await prisma.currency.findMany()
   }
 
-  getManyByIsoCodes: CurrencyModelGetManyByIsoCodes = async (isoCodes) => {
+  getManyByIsoCodes: CurrencyRepositoryGetManyByIsoCodes = async (isoCodes) => {
     return await prisma.currency.findMany({
       where: {
         isoCode: {
@@ -22,7 +22,7 @@ export default class CurrencyModel implements ICurrencyModel {
     })
   }
 
-  createNewCurrencyHistories: CurrencyModelCreateNewCurrencyHistories = async (currenciesWithFullData) => {
+  createNewCurrencyHistories: CurrencyRepositoryCreateNewCurrencyHistories = async (currenciesWithFullData) => {
     const newExchangeRatePendents = []
 
     for (const currency of currenciesWithFullData) {
@@ -43,7 +43,7 @@ export default class CurrencyModel implements ICurrencyModel {
     return await prisma.$transaction(newExchangeRatePendents)
   }
 
-  updateCurrencyWithLatestExchangeRates: CurrencyModelUpdateCurrencyWithLatestExchangeRates = async (currenciesWithValues) => {
+  updateCurrencyWithLatestExchangeRates: CurrencyRepositoryUpdateCurrencyWithLatestExchangeRates = async (currenciesWithValues) => {
     const currenciesToUpdate = []
 
     for (const currency of currenciesWithValues) {

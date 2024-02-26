@@ -1,28 +1,28 @@
 import { BadRequestError } from '@/errors'
 import { ErrorClientMessages } from '@/enums/errors'
 import { createPurchasedItemsArrayFromProductsArray, getMergedProductsAndQuantity } from '@/utils/transformationsProductPurchase'
-import { IPurchaseModel, IPurchaseService } from './purchase.interfaces'
+import { IPurchaseRepository, IPurchaseService } from './purchase.interfaces'
 import { PurchaseServiceConstructor, PurchaseServiceCreate, PurchaseServiceGetAll } from './purchase.types'
 import { IProductService } from '../products/products.interfaces'
 import { IDailySaleService } from '../daily-sale/daily-sale.interfaces'
 import { ICurrencyService } from '../currency/currency.interfaces'
 
 export default class PurchaseService implements IPurchaseService {
-  private readonly purchaseModel: IPurchaseModel
+  private readonly purchaseRepository: IPurchaseRepository
 
   private readonly dailySaleService: IDailySaleService
   private readonly productService: IProductService
   private readonly currencyService: ICurrencyService
 
-  constructor ({ purchaseModel, productService, dailySaleService, currencyService }: PurchaseServiceConstructor) {
-    this.purchaseModel = purchaseModel
+  constructor ({ purchaseRepository, productService, dailySaleService, currencyService }: PurchaseServiceConstructor) {
+    this.purchaseRepository = purchaseRepository
     this.productService = productService
     this.dailySaleService = dailySaleService
     this.currencyService = currencyService
   }
 
   getAll: PurchaseServiceGetAll = async (tenantId) => {
-    return await this.purchaseModel.getAll(tenantId)
+    return await this.purchaseRepository.getAll(tenantId)
   }
 
   create: PurchaseServiceCreate = async (tenantId, dailySaleId, products) => {
@@ -50,6 +50,6 @@ export default class PurchaseService implements IPurchaseService {
     const productsWithFullDataAndQuantity = getMergedProductsAndQuantity(productsWithFullData, products)
     const purchasedItemsEntry = createPurchasedItemsArrayFromProductsArray(productsWithFullDataAndQuantity, currencies)
 
-    return await this.purchaseModel.create(dailySaleId, purchasedItemsEntry)
+    return await this.purchaseRepository.create(dailySaleId, purchasedItemsEntry)
   }
 }

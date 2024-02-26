@@ -1,9 +1,9 @@
 import prisma from '@/config/db'
-import { IAuthModel } from './auth.interfaces'
-import { AuthModelCreate } from './auth.types'
+import { IAuthRepository } from './auth.interfaces'
+import { AuthRepositoryCreate } from './auth.types'
 
-export default class AuthModel implements IAuthModel {
-  create: AuthModelCreate = async (signUpData) => {
+export default class AuthRepository implements IAuthRepository {
+  create: AuthRepositoryCreate = async (signUpData) => {
     const { tenantName, username, firstname, lastname, password } = signUpData
 
     const tenant = await prisma.tenant.create({

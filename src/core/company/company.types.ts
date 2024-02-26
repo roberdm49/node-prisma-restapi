@@ -1,16 +1,16 @@
 import { Router } from 'express'
-import { ICompanyModel, ICompanyService } from './company.interface'
+import { ICompanyRepository, ICompanyService } from './company.interface'
 
-export type CompanyModelGetAll = (tenantId: string) => Promise<Company[]>
-export type CompanyModelCreate = (tenantId: string, company: Company) => Promise<Company>
+export type CompanyRepositoryGetAll = (tenantId: string) => Promise<Company[]>
+export type CompanyRepositoryCreate = (tenantId: string, company: Company) => Promise<Company>
 
 export type CompanyServiceGetAll = (tenantId: string) => Promise<Company[]>
 export type CompanyServiceCreate = (tenantId: string, company: Company) => Promise<Company>
 
-export type CompanyCreateRoutes = ({ companyModel }: { companyModel: ICompanyModel }) => Router
+export type CompanyCreateRoutes = ({ companyRepository }: { companyRepository: ICompanyRepository }) => Router
 
 export type CompanyServiceConstructor = {
-  companyModel: ICompanyModel
+  companyRepository: ICompanyRepository
 }
 
 export type CompanyControllerConstructor = {

@@ -7,14 +7,14 @@ import { createCompanyRoutes } from '@/core/company/company.routes'
 import { createDailySaleRoutes } from '@/core/daily-sale/daily-sale.routes'
 import { createPurchaseRoutes } from '@/core/purchase/purchase.routes'
 import { createCurrencyRoutes } from '@/core/currency/currency.routes'
-// Models
-import AuthModel from '@/core/auth/auth.model'
-import ProductsModel from '@/core/products/products.model'
-import UsersModel from '@/core/users/users.model'
-import CompanyModel from '@/core/company/company.model'
-import DailySaleModel from '@/core/daily-sale/daily-sale.model'
-import PurchaseModel from '@/core/purchase/purchase.model'
-import CurrencyModel from '@/core/currency/currency.model'
+// Repositories
+import AuthRepository from '@/core/auth/auth.repository'
+import ProductsRepository from '@/core/products/products.repository'
+import UsersRepository from '@/core/users/users.repository'
+import CompanyRepository from '@/core/company/company.repository'
+import DailySaleRepository from '@/core/daily-sale/daily-sale.repository'
+import PurchaseRepository from '@/core/purchase/purchase.repository'
+import CurrencyRepository from '@/core/currency/currency.repository'
 // Services
 import ProductsService from '@/core/products/products.service'
 import DailySaleService from '@/core/daily-sale/daily-sale.service'
@@ -23,25 +23,25 @@ import CurrencyService from '@/core/currency/currency.service'
 export const configureRoutes = (): Router => {
   const router = express.Router()
 
-  const authModel = new AuthModel()
-  const productsModel = new ProductsModel()
-  const usersModel = new UsersModel()
-  const companyModel = new CompanyModel()
-  const dailySaleModel = new DailySaleModel()
-  const purchaseModel = new PurchaseModel()
-  const currencyModel = new CurrencyModel()
+  const authRepository = new AuthRepository()
+  const productsRepository = new ProductsRepository()
+  const usersRepository = new UsersRepository()
+  const companyRepository = new CompanyRepository()
+  const dailySaleRepository = new DailySaleRepository()
+  const purchaseRepository = new PurchaseRepository()
+  const currencyRepository = new CurrencyRepository()
 
-  const productService = new ProductsService({ productsModel })
-  const dailySaleService = new DailySaleService({ dailySaleModel })
-  const currencyService = new CurrencyService({ currencyModel })
+  const productService = new ProductsService({ productsRepository })
+  const dailySaleService = new DailySaleService({ dailySaleRepository })
+  const currencyService = new CurrencyService({ currencyRepository })
 
-  router.use('/auth', createAuthRoutes({ authModel, usersModel }))
-  router.use('/products', createProductsRoutes({ productsModel }))
-  router.use('/users', createUsersRoutes({ usersModel }))
-  router.use('/company', createCompanyRoutes({ companyModel }))
-  router.use('/daily-sale', createDailySaleRoutes({ dailySaleModel }))
-  router.use('/purchase', createPurchaseRoutes({ purchaseModel, productService, dailySaleService, currencyService }))
-  router.use('/currency', createCurrencyRoutes({ currencyModel }))
+  router.use('/auth', createAuthRoutes({ authRepository, usersRepository }))
+  router.use('/products', createProductsRoutes({ productsRepository }))
+  router.use('/users', createUsersRoutes({ usersRepository }))
+  router.use('/company', createCompanyRoutes({ companyRepository }))
+  router.use('/daily-sale', createDailySaleRoutes({ dailySaleRepository }))
+  router.use('/purchase', createPurchaseRoutes({ purchaseRepository, productService, dailySaleService, currencyService }))
+  router.use('/currency', createCurrencyRoutes({ currencyRepository }))
 
   return router
 }

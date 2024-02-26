@@ -1,18 +1,18 @@
 import { RequestHandler } from 'express'
 import {
-  UsersModelCreate,
-  UsersModelGetOneById,
-  UsersModelGetOneByUsername,
-  UsersModelUpdate,
+  UsersRepositoryCreate,
+  UsersRepositoryGetOneById,
+  UsersRepositoryGetOneByUsername,
+  UsersRepositoryUpdate,
   UsersServiceCreate,
   UsersServiceUpdate
 } from './users.types'
 
-export interface IUsersModel {
-  create: UsersModelCreate
-  update: UsersModelUpdate
-  getOneByUsername: UsersModelGetOneByUsername
-  getOneById: UsersModelGetOneById
+export interface IUsersRepository {
+  create: UsersRepositoryCreate
+  update: UsersRepositoryUpdate
+  getOneByUsername: UsersRepositoryGetOneByUsername
+  getOneById: UsersRepositoryGetOneById
 }
 
 export interface IUsersService {

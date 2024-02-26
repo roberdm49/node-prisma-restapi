@@ -1,20 +1,20 @@
 import { Router } from 'express'
-import { ICurrencyModel, ICurrencyService } from './currency.interfaces'
+import { ICurrencyRepository, ICurrencyService } from './currency.interfaces'
 
-export type CurrencyModelGetAll = () => Promise<Currency[]>
-export type CurrencyModelCreateNewCurrencyHistories = (currencies: CurrencyWithValue[]) => Promise<DailyExchangeRate[]>
-export type CurrencyModelGetManyByIsoCodes = (isoCodes: string[]) => Promise<Currency[]>
-export type CurrencyModelUpdateCurrencyWithLatestExchangeRates = (currencies: CurrencyWithValue[]) => Promise<Currency[]>
+export type CurrencyRepositoryGetAll = () => Promise<Currency[]>
+export type CurrencyRepositoryCreateNewCurrencyHistories = (currencies: CurrencyWithValue[]) => Promise<DailyExchangeRate[]>
+export type CurrencyRepositoryGetManyByIsoCodes = (isoCodes: string[]) => Promise<Currency[]>
+export type CurrencyRepositoryUpdateCurrencyWithLatestExchangeRates = (currencies: CurrencyWithValue[]) => Promise<Currency[]>
 
 export type CurrencyServiceGetAll = () => Promise<Currency[]>
 export type CurrencyServiceCreateNewCurrencyHistories = (currencies: CurrencyEntry[]) => Promise<CurrencyWithValue[]>
 export type CurrencyServiceGetManyByIsoCodes = (isoCodes: string[]) => Promise<Currency[]>
 export type CurrencyServiceUpdateCurrencyWithLatestExchangeRates = (currencies: CurrencyWithValue[]) => Promise<Currency[]>
 
-export type CurrencyCreateRoutes = ({ currencyModel }: { currencyModel: ICurrencyModel }) => Router
+export type CurrencyCreateRoutes = ({ currencyRepository }: { currencyRepository: ICurrencyRepository }) => Router
 
 export type CurrencyServiceConstructor = {
-  currencyModel: ICurrencyModel
+  currencyRepository: ICurrencyRepository
 }
 
 export type CurrencyControllerConstructor = {

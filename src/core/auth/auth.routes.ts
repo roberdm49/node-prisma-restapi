@@ -3,9 +3,9 @@ import AuthController from './auth.controller'
 import AuthService from './auth.service'
 import { AuthCreateRoutes } from './auth.types'
 
-export const createAuthRoutes: AuthCreateRoutes = ({ authModel, usersModel }) => {
+export const createAuthRoutes: AuthCreateRoutes = ({ authRepository, usersRepository }) => {
   const router = express.Router()
-  const authService = new AuthService({ authModel, usersModel })
+  const authService = new AuthService({ authRepository, usersRepository })
   const authController = new AuthController({ authService })
 
   router.post('/sign-up', authController.signUp)

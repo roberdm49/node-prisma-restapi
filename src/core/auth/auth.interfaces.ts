@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express'
 // Internal
-import { AuthModelCreate, AuthServiceLogIn, AuthServiceRefreshTokens, AuthServiceSignUp } from './auth.types'
+import { AuthRepositoryCreate, AuthServiceLogIn, AuthServiceRefreshTokens, AuthServiceSignUp } from './auth.types'
 
-export interface IAuthModel {
-  create: AuthModelCreate
+export interface IAuthRepository {
+  create: AuthRepositoryCreate
 }
 
 export interface IAuthService {

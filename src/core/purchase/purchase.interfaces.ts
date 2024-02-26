@@ -1,14 +1,14 @@
 import { RequestHandler } from 'express'
 import {
-  PurchaseModelCreate,
-  PurchaseModelGetAll,
+  PurchaseRepositoryCreate,
+  PurchaseRepositoryGetAll,
   PurchaseServiceCreate,
   PurchaseServiceGetAll
 } from './purchase.types'
 
-export interface IPurchaseModel {
-  getAll: PurchaseModelGetAll
-  create: PurchaseModelCreate
+export interface IPurchaseRepository {
+  getAll: PurchaseRepositoryGetAll
+  create: PurchaseRepositoryCreate
 }
 
 export interface IPurchaseService {

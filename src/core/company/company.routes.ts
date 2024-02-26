@@ -4,9 +4,9 @@ import CompanyService from './company.service'
 import CompanyController from './company.controller'
 import { CompanyCreateRoutes } from './company.types'
 
-export const createCompanyRoutes: CompanyCreateRoutes = ({ companyModel }) => {
+export const createCompanyRoutes: CompanyCreateRoutes = ({ companyRepository }) => {
   const router = express.Router()
-  const companyService = new CompanyService({ companyModel })
+  const companyService = new CompanyService({ companyRepository })
   const companyController = new CompanyController({ companyService })
 
   router.get('/get', [protectedRouteMiddleware], companyController.getAll)

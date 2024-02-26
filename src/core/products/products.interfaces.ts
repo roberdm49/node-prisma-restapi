@@ -1,11 +1,11 @@
 import { RequestHandler } from 'express'
 import {
-  ProductsModelCreateMany,
-  ProductsModelDelete,
-  ProductsModelGetAll,
-  ProductsModelGetManyById,
-  ProductsModelGetOneById,
-  ProductsModelUpdateMany,
+  ProductsRepositoryCreateMany,
+  ProductsRepositoryDelete,
+  ProductsRepositoryGetAll,
+  ProductsRepositoryGetManyById,
+  ProductsRepositoryGetOneById,
+  ProductsRepositoryUpdateMany,
   ProductsServiceCreateMany,
   ProductsServiceDelete,
   ProductsServiceEveryProductBelongToSameTenant,
@@ -15,13 +15,13 @@ import {
   ProductsServiceUpdateMany
 } from './products.types'
 
-export interface IProductModel {
-  createMany: ProductsModelCreateMany
-  getAll: ProductsModelGetAll
-  updateMany: ProductsModelUpdateMany
-  deleteMany: ProductsModelDelete
-  getManyById: ProductsModelGetManyById
-  getOneById: ProductsModelGetOneById
+export interface IProductRepository {
+  createMany: ProductsRepositoryCreateMany
+  getAll: ProductsRepositoryGetAll
+  updateMany: ProductsRepositoryUpdateMany
+  deleteMany: ProductsRepositoryDelete
+  getManyById: ProductsRepositoryGetManyById
+  getOneById: ProductsRepositoryGetOneById
 }
 
 export interface IProductService {

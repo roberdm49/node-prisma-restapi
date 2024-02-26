@@ -1,20 +1,20 @@
 import { RequestHandler } from 'express'
 import {
-  CurrencyModelCreateNewCurrencyHistories,
-  CurrencyModelGetAll,
-  CurrencyModelGetManyByIsoCodes,
-  CurrencyModelUpdateCurrencyWithLatestExchangeRates,
+  CurrencyRepositoryCreateNewCurrencyHistories,
+  CurrencyRepositoryGetAll,
+  CurrencyRepositoryGetManyByIsoCodes,
+  CurrencyRepositoryUpdateCurrencyWithLatestExchangeRates,
   CurrencyServiceCreateNewCurrencyHistories,
   CurrencyServiceGetAll,
   CurrencyServiceGetManyByIsoCodes,
   CurrencyServiceUpdateCurrencyWithLatestExchangeRates
 } from './currency.types'
 
-export interface ICurrencyModel {
-  getAll: CurrencyModelGetAll
-  getManyByIsoCodes: CurrencyModelGetManyByIsoCodes
-  createNewCurrencyHistories: CurrencyModelCreateNewCurrencyHistories
-  updateCurrencyWithLatestExchangeRates: CurrencyModelUpdateCurrencyWithLatestExchangeRates
+export interface ICurrencyRepository {
+  getAll: CurrencyRepositoryGetAll
+  getManyByIsoCodes: CurrencyRepositoryGetManyByIsoCodes
+  createNewCurrencyHistories: CurrencyRepositoryCreateNewCurrencyHistories
+  updateCurrencyWithLatestExchangeRates: CurrencyRepositoryUpdateCurrencyWithLatestExchangeRates
 }
 
 export interface ICurrencyService {

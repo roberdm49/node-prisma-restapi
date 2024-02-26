@@ -1,9 +1,9 @@
 import prisma from '@/config/db'
-import { IPurchaseModel } from './purchase.interfaces'
-import { Purchase, PurchaseModelCreate, PurchaseModelGetAll } from './purchase.types'
+import { IPurchaseRepository } from './purchase.interfaces'
+import { Purchase, PurchaseRepositoryCreate, PurchaseRepositoryGetAll } from './purchase.types'
 
-export default class PurchaseModel implements IPurchaseModel {
-  getAll: PurchaseModelGetAll = async (tenantId) => {
+export default class PurchaseRepository implements IPurchaseRepository {
+  getAll: PurchaseRepositoryGetAll = async (tenantId) => {
     const dailySales = await prisma.dailySale.findMany({
       where: {
         tenantId
@@ -23,7 +23,7 @@ export default class PurchaseModel implements IPurchaseModel {
     return flatPurchases
   }
 
-  create: PurchaseModelCreate = async (dailySaleId, purchasedItems) => {
+  create: PurchaseRepositoryCreate = async (dailySaleId, purchasedItems) => {
     const newPurchase = await prisma.purchase.create({
       data: {
         dailySale: {

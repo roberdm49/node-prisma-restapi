@@ -1,9 +1,9 @@
 import prisma from '@/config/db'
-import { IUsersModel } from './users.interfaces'
-import { UsersModelCreate, UsersModelGetOneById, UsersModelGetOneByUsername, UsersModelUpdate } from './users.types'
+import { IUsersRepository } from './users.interfaces'
+import { UsersRepositoryCreate, UsersRepositoryGetOneById, UsersRepositoryGetOneByUsername, UsersRepositoryUpdate } from './users.types'
 
-export default class UsersModel implements IUsersModel {
-  create: UsersModelCreate = async (userData) => {
+export default class UsersRepository implements IUsersRepository {
+  create: UsersRepositoryCreate = async (userData) => {
     const { firstname, lastname, username, password, tenantId } = userData
     const user = await prisma.user.create({
       data: {
@@ -22,7 +22,7 @@ export default class UsersModel implements IUsersModel {
     return user
   }
 
-  update: UsersModelUpdate = async (userData) => {
+  update: UsersRepositoryUpdate = async (userData) => {
     const user = await prisma.user.update({
       where: {
         id: userData.id
@@ -35,7 +35,7 @@ export default class UsersModel implements IUsersModel {
     return user
   }
 
-  getOneByUsername: UsersModelGetOneByUsername = async (username) => {
+  getOneByUsername: UsersRepositoryGetOneByUsername = async (username) => {
     const user = await prisma.user.findUnique({
       where: {
         username
@@ -45,7 +45,7 @@ export default class UsersModel implements IUsersModel {
     return user
   }
 
-  getOneById: UsersModelGetOneById = async (id) => {
+  getOneById: UsersRepositoryGetOneById = async (id) => {
     const user = await prisma.user.findUnique({
       where: {
         id
