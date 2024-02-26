@@ -3,6 +3,7 @@ import chalk from 'chalk'
 import { GlobalEnv } from '@/utils/constants'
 import { HttpStatus } from '@/enums/httpStatus'
 
+// TODO: for non-dev environments, create IP whitelist and validate it
 export const cronRouteMiddleware: RequestHandler = (request, response, next) => {
   console.log(chalk.whiteBright.bold.underline('Executing cron route middleware'))
 
