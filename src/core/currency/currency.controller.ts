@@ -26,7 +26,7 @@ export default class CurrencyController implements ICurrencyController {
       const updatedCurrencies = await this.currencyService.updateCurrencyWithLatestExchangeRates(currenciesWithExchanges)
 
       return response.status(HttpStatus.Created).json({
-        currenciesUpdated: updatedCurrencies.length
+        updatedCurrencies
       })
     } catch (error) {
       next(error)
