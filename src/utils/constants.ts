@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export const GlobalEnv = {
-  NODE_ENV: String(process.env.NODE_ENV),
+  APP_RUNTIME_ENV: String(process.env.APP_RUNTIME_ENV),
   APP_PORT: Number(process.env.APP_PORT),
   HASH_ROUNDS: Number(process.env.HASH_ROUNDS),
   ACCESS_TOKEN_SECRET: String(process.env.ACCESS_TOKEN_SECRET),

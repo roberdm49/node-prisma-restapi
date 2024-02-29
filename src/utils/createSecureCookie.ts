@@ -4,7 +4,7 @@ import { GlobalEnv } from '@/utils/constants'
 export const createSecureCookie = (cookieName: string, cookieValue: string, maxAgeInSeconds: number): string => {
   const cookieOptions = {
     httpOnly: true,
-    secure: GlobalEnv.NODE_ENV === 'production',
+    secure: GlobalEnv.APP_RUNTIME_ENV === 'production',
     maxAge: maxAgeInSeconds,
     path: '/'
   }
