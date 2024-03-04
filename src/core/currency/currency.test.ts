@@ -1,15 +1,24 @@
-import { prismaMock } from '../../jest/singleton'
+import prisma from '@/config/db'
 import CurrencyRepository from './currency.repository'
-import CurrencyService from './currency.service'
+import { cleanUpAll, setDummyCurrency } from '@/utils/testing'
 
-test('should create new user ', async () => {
-  const currencyRepository = new CurrencyRepository()
-  const currencyService = new CurrencyService({ currencyRepository })
+describe('Currency', () => {
+  beforeEach(async () => {
+    await cleanUpAll()
+    await setDummyCurrency()
+  })
 
-  await expect(currencyService.getAll()).resolves.toEqual({
-    id: 1,
-    name: 'Rich',
-    email: 'hello@prisma.io',
-    acceptTermsAndConditions: true
+  test('Currency', async () => {
+    const currencyRepository = new CurrencyRepository()
+
+    const after = await currencyRepository.getAll()
+    console.log({ after })
+
+    await expect(currencyRepository.getAll()).resolves.toEqual({
+      id: 1,
+      name: 'Rich',
+      email: 'hello@prisma.io',
+      acceptTermsAndConditions: true
+    })
   })
 })
