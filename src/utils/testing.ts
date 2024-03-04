@@ -31,13 +31,23 @@ export const cleanUpAll = async (): Promise<unknown> => {
   return await prisma.$transaction(pendentTransactions)
 }
 
-export const setDummyCurrency = async (): Promise<unknown> => {
+export const createMockCurrency = async ({
+  id = 123,
+  isoCode = 'DUM',
+  isoNum = '456',
+  name = 'Dummy'
+}: {
+  id?: number
+  isoCode?: string
+  isoNum?: string
+  name?: string
+} = {}): Promise<unknown> => {
   return await prisma.currency.create({
     data: {
-      id: 123,
-      isoCode: 'DUM',
-      isoNum: '456',
-      name: 'Dummy'
+      id,
+      isoCode,
+      isoNum,
+      name
     }
   })
 }

@@ -23,11 +23,11 @@ app.use(configureRoutes())
 app.use(errorHandlerMiddleware)
 app.use(routeNotFoundMiddleware)
 
-const initializeApp = (): void => {
+export const initializeApp = (): void => {
   app.listen(port, () => {
     // TODO: restrict this message only for dev environment
     console.log(`✅ App listening on ${chalk.cyan.bold(`http://localhost:${port}`)}`)
   })
 }
 
-export default initializeApp
+export default app
