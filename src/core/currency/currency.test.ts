@@ -33,18 +33,17 @@ describe('Currency', () => {
 
     console.log({ cookies })
     // TODO: parse headers[...] because it has "string" type implicitily
-    const cookies2 = loginResponse.headers['set-cookie']
+    const cookies2: string[] = JSON.parse(JSON.stringify(loginResponse.headers['set-cookie']))
     console.log({ cookies2 })
     console.log(typeof cookies2)
     console.log('cookies2 is array?', Array.isArray(cookies2))
   })
 
   test('Should retrieve all currencies', async () => {
-    /*
     await api
       // should put cookies right here
       .get('/currency/get')
+      .set('Cookie', cookies)
       .expect(201)
-    */
   })
 })
