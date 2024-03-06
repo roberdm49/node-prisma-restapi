@@ -6,7 +6,6 @@ import {
   CurrencyRepositoryUpdateCurrencyWithLatestExchangeRates,
   CurrencyServiceCreateNewCurrencyHistories,
   CurrencyServiceGetAll,
-  CurrencyServiceGetManyByIsoCodes,
   CurrencyServiceUpdateCurrencyWithLatestExchangeRates
 } from './currency.types'
 
@@ -19,7 +18,6 @@ export interface ICurrencyRepository {
 
 export interface ICurrencyService {
   getAll: CurrencyServiceGetAll
-  getManyByIsoCodes: CurrencyServiceGetManyByIsoCodes
   createNewCurrencyHistories: CurrencyServiceCreateNewCurrencyHistories
   updateCurrencyWithLatestExchangeRates: CurrencyServiceUpdateCurrencyWithLatestExchangeRates
 }
