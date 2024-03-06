@@ -1,12 +1,12 @@
 import supertest from 'supertest'
 import app from '@/app'
 import { cleanUpAll, createMockCurrency } from '@/utils/testing'
-import prisma from '@/config/db'
+// import prisma from '@/config/db'
 
 const api = supertest(app)
 
 describe('Currency', () => {
-  const cookies: any[] = []
+  let cookies: string[] = []
 
   beforeEach(async () => {
     const tenantName = 'tenant'
@@ -18,11 +18,6 @@ describe('Currency', () => {
     await cleanUpAll()
     await createMockCurrency()
 
-    const tenants = await prisma.tenant.findMany()
-    console.log({ tenants })
-    const currencies = await prisma.currency.findMany()
-    console.log({ currencies })
-
     await api
       .post('/auth/sign-up')
       .send({ tenantName, username, firstname, lastname, password })
@@ -31,19 +26,13 @@ describe('Currency', () => {
       .post('/auth/log-in')
       .send({ username, password })
 
-    console.log({ cookies })
-    // TODO: parse headers[...] because it has "string" type implicitily
-    const cookies2: string[] = JSON.parse(JSON.stringify(loginResponse.headers['set-cookie']))
-    console.log({ cookies2 })
-    console.log(typeof cookies2)
-    console.log('cookies2 is array?', Array.isArray(cookies2))
+    cookies = JSON.parse(JSON.stringify(loginResponse.headers['set-cookie']))
   })
 
   test('Should retrieve all currencies', async () => {
     await api
-      // should put cookies right here
       .get('/currency/get')
       .set('Cookie', cookies)
-      .expect(201)
+      .expect(200)
   })
 })

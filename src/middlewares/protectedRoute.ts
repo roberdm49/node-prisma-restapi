@@ -10,7 +10,13 @@ export const protectedRouteMiddleware: RequestHandler = (request, response, next
   console.log(chalk.cyan.bold.underline('Executing protected route middleware'))
 
   const accessToken: string = request.cookies[CookieNames.AccessToken]
+  console.log(request)
+  console.log('################################################')
+  console.log(request.cookies)
+  console.log('################################################')
   const accessTokenExists = Boolean(accessToken)
+  console.log('################################################')
+  console.log(accessTokenExists)
   if (!accessTokenExists) {
     return next(new UnauthorizedError('Access token inválido'))
   }
