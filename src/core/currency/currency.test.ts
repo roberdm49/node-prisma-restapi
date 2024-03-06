@@ -1,6 +1,7 @@
 import supertest from 'supertest'
 import app from '@/app'
 import { cleanUpAll, createMockCurrency } from '@/utils/testing'
+import { GlobalEnv } from '@/utils/constants'
 // import prisma from '@/config/db'
 
 const api = supertest(app)
@@ -37,5 +38,19 @@ describe('Currency', () => {
       .expect(200)
 
     expect(response.body).toHaveLength(2)
+  })
+
+  test('Should not access to the create and update currencies endpoint', async () => {
+    await api
+      .post('/currency/create-and-update-currencies')
+      .set('Cookie', cookies)
+      .expect(403)
+  })
+
+  test('Should have access and create a new daily exchange entry', async () => {
+    await api
+      .post('/currency/create-and-update-currencies')
+      .set({ Authorization: `Bearer ${GlobalEnv.CRON_SECRET}` })
+      .expect(404)
   })
 })
