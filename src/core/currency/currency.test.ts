@@ -16,7 +16,8 @@ describe('Currency', () => {
     const password = 'password'
 
     await cleanUpAll()
-    await createMockCurrency()
+    await createMockCurrency({ id: 123, isoCode: 'ABC', isoNum: '001', name: 'Dummy1' })
+    await createMockCurrency({ id: 456, isoCode: 'DEF', isoNum: '045', name: 'Dummy2' })
 
     await api
       .post('/auth/sign-up')
@@ -30,9 +31,11 @@ describe('Currency', () => {
   })
 
   test('Should retrieve all currencies', async () => {
-    await api
+    const response = await api
       .get('/currency/get')
       .set('Cookie', cookies)
       .expect(200)
+
+    expect(response.body).toHaveLength(2)
   })
 })
