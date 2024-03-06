@@ -6,10 +6,12 @@
   "scripts": {
     "predev": "ts-node src/config/check-env.ts",
     "dev": "cross-env APP_RUNTIME_ENV=development ts-node-dev -r tsconfig-paths/register --files src/index.ts",
-    "db:dev:reset": "prisma migrate reset --force && prisma migrate dev",
     "prisma:ui": "prisma studio",
-    "test": "cross-env APP_RUNTIME_ENV=test jest",
-    "migrations:test": "dotenv -e .env.test -- prisma migrate dev"
+    "db:dev:reset": "prisma migrate reset --force && prisma migrate dev",
+    "db:test:reset": "dotenv -e .env.test -- prisma migrate reset --force && prisma migrate dev",
+    "migrations:test": "dotenv -e .env.test -- prisma migrate dev",
+    "test": "cross-env APP_RUNTIME_ENV=test jest --watchAll",
+    "test:coverage": "cross-env APP_RUNTIME_ENV=test jest --coverage"
   },
   "keywords": [],
   "author": "",
