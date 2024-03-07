@@ -1,7 +1,8 @@
 import { RequestHandler } from 'express'
 import { HttpStatus } from '@/enums/httpStatus'
 import { ICurrencyController, ICurrencyService } from './currency.interfaces'
-import { CurrencyControllerConstructor, CurrencyEntry } from './currency.types'
+import { CurrencyControllerConstructor } from './currency.types'
+import { createNewCurrencyHistoriesAndUpdateCurrenciesTargetSchema } from './currency.zod-schemas'
 
 export default class CurrencyController implements ICurrencyController {
   private readonly currencyService: ICurrencyService
@@ -21,7 +22,7 @@ export default class CurrencyController implements ICurrencyController {
 
   createNewCurrencyHistoriesAndUpdateCurrenciesTarget: RequestHandler = async (request, response, next) => {
     try {
-      const currencies: CurrencyEntry[] = request.body
+      const currencies = createNewCurrencyHistoriesAndUpdateCurrenciesTargetSchema.parse(request.body)
       const currenciesWithExchanges = await this.currencyService.createNewCurrencyHistories(currencies)
       const updatedCurrencies = await this.currencyService.updateCurrencyWithLatestExchangeRates(currenciesWithExchanges)
 
