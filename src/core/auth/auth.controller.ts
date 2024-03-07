@@ -26,7 +26,6 @@ export default class AuthController implements IAuthController {
   logIn: RequestHandler = async (request, response, next) => {
     try {
       const loginData: LogIn = request.body
-      console.log({ loginData })
       const { accessToken, refreshToken } = await this.authService.logIn(loginData)
       response.setHeader('Set-Cookie', [
         createSecureCookie(CookieNames.AccessToken, accessToken, CookieExpireTime.AccessToken),
