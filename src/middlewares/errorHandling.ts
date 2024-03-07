@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 import chalk from 'chalk'
 import { MissingCredentialsError, UnauthorizedError, WrongCredentialsError } from '@/errors'
 import { HttpStatus } from '@/enums/httpStatus'
+import { ZodError } from 'zod'
 
 const UNIQUE_CONSTRAINT_ERROR_CODE = 'P2002'
 
@@ -39,6 +40,10 @@ export const errorHandlerMiddleware = (
     }
 
     return response.status(HttpStatus.InternalServerError).json({ error: 'Internal server error' })
+  }
+
+  if (_error instanceof ZodError) {
+    return response.status(HttpStatus.BadRequest).json({ error: 'Solicitud incorrecta' })
   }
 
   return response.status(HttpStatus.InternalServerError).json({ error: 'Internal server error' })
