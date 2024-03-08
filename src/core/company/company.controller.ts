@@ -1,7 +1,8 @@
 import { RequestHandler } from 'express'
 import { HttpStatus } from '@/enums/httpStatus'
 import { ICompanyController, ICompanyService } from './company.interface'
-import { CompanyControllerConstructor } from './company.types'
+import { CompanyControllerConstructor, CompanyEntry } from './company.types'
+import { companyEntrySchema } from './company.zed-schema'
 
 export default class CompanyController implements ICompanyController {
   private readonly companyService: ICompanyService
@@ -23,7 +24,7 @@ export default class CompanyController implements ICompanyController {
   create: RequestHandler = async (request, response, next) => {
     try {
       const { tenantId } = request.user
-      const { company } = request.body
+      const company: CompanyEntry = companyEntrySchema.parse(request.body)
       const newCompany = await this.companyService.create(tenantId, company)
       return response.status(HttpStatus.Created).json(newCompany)
     } catch (error) {
