@@ -7,26 +7,33 @@ import { GlobalEnv } from '@/utils/constants'
 const api = supertest(app)
 
 describe('Currency', () => {
+  const mockCurrency1 = { id: 123, isoCode: 'ABC', isoNum: '001', name: 'Dummy1' }
+  const mockCurrency2 = { id: 456, isoCode: 'DEF', isoNum: '045', name: 'Dummy2' }
+  const tenantInformation = {
+    tenantName: 'tenant',
+    username: 'username',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    password: 'password'
+
+  }
   let cookies: string[] = []
 
   beforeEach(async () => {
-    const tenantName = 'tenant'
-    const username = 'username'
-    const firstname = 'firstname'
-    const lastname = 'lastname'
-    const password = 'password'
-
     await cleanUpAll()
-    await createMockCurrency({ id: 123, isoCode: 'ABC', isoNum: '001', name: 'Dummy1' })
-    await createMockCurrency({ id: 456, isoCode: 'DEF', isoNum: '045', name: 'Dummy2' })
+    await createMockCurrency({ ...mockCurrency1 })
+    await createMockCurrency({ ...mockCurrency2 })
 
     await api
       .post('/auth/sign-up')
-      .send({ tenantName, username, firstname, lastname, password })
+      .send({ ...tenantInformation })
 
     const loginResponse = await api
       .post('/auth/log-in')
-      .send({ username, password })
+      .send({
+        username: tenantInformation.username,
+        password: tenantInformation.password
+      })
 
     cookies = JSON.parse(JSON.stringify(loginResponse.headers['set-cookie']))
   })
@@ -48,9 +55,20 @@ describe('Currency', () => {
   })
 
   test('Should have access and create a new daily exchange entry', async () => {
+    const valueInUsd = 0.1
+    const payload = [
+      {
+        name: mockCurrency1.name,
+        isoCode: mockCurrency1.isoCode,
+        isoNum: mockCurrency1.isoNum,
+        valueInUsd
+      }
+    ]
+
     await api
       .post('/currency/create-and-update-currencies')
       .set({ Authorization: `Bearer ${GlobalEnv.CRON_SECRET}` })
-      .expect(404)
+      .send(payload)
+      .expect(201)
   })
 })

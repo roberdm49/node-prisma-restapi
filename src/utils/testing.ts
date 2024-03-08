@@ -16,16 +16,16 @@ if (!isEffectivelyTestEnvironment()) {
 
 export const cleanUpAll = async (): Promise<unknown> => {
   const pendentTransactions = [
-    prisma.user.deleteMany(),
-    prisma.tenant.deleteMany(),
-    prisma.company.deleteMany(),
-    prisma.currency.deleteMany(),
+    prisma.purchasedItem.deleteMany(),
+    prisma.purchase.deleteMany(),
     prisma.dailySale.deleteMany(),
     prisma.dailyExchangeRate.deleteMany(),
-    prisma.product.deleteMany(),
     prisma.productHistory.deleteMany(),
-    prisma.purchase.deleteMany(),
-    prisma.purchasedItem.deleteMany()
+    prisma.product.deleteMany(),
+    prisma.company.deleteMany(),
+    prisma.user.deleteMany(),
+    prisma.tenant.deleteMany(),
+    prisma.currency.deleteMany()
   ]
 
   return await prisma.$transaction(pendentTransactions)
