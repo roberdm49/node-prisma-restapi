@@ -7,6 +7,7 @@ import { MissingCredentialsError, UnauthorizedError, WrongCredentialsError } fro
 import { HttpStatus } from '@/enums/httpStatus'
 
 const UNIQUE_CONSTRAINT_ERROR_CODE = 'P2002'
+const FK_CONSTRAINT_ERROR_CODE = 'P2003'
 
 type ErrorCheck<T extends Error> = (error: T, response: Response) => Response
 type ErrorConstructor = new (...args: any[]) => Error
@@ -44,6 +45,10 @@ const handlePrismaClientKnownRequestError: ErrorCheck<PrismaClientKnownRequestEr
       error: 'Datos ya existentes',
       fields: error.meta?.target
     })
+  }
+
+  if (error.code === FK_CONSTRAINT_ERROR_CODE) {
+    return response.status(HttpStatus.BadRequest).json({ error: 'Solicitud malformada' })
   }
 
   return response.status(HttpStatus.InternalServerError).json({ error: 'Internal server error' })
