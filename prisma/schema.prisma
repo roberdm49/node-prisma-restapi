@@ -94,7 +94,6 @@ model Purchase {
 model PurchasedItem {
   id String @id @default(uuid())
   quantity Int
-  unitPrice Float
   purchaseId String
   purchase Purchase @relation(fields: [purchaseId], references: [id])
   productHistoryId String

@@ -51,7 +51,6 @@ export const createPurchasedItemsArrayFromProductsArray = (products: ProductWith
 
       const purchasedItem: PurchasedItemEntry = {
         quantity: 1,
-        unitPrice: product.price,
         dailyExchangeRateId: foundCurrency.recentExchangeRateId,
         productHistoryId: product.latestProductHistoryId
       }

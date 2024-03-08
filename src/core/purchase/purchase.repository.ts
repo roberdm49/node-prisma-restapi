@@ -34,7 +34,6 @@ export default class PurchaseRepository implements IPurchaseRepository {
         purchasedItems: {
           create: purchasedItems.map(purchasedItem => ({
             quantity: purchasedItem.quantity,
-            unitPrice: purchasedItem.unitPrice,
             productHistory: {
               connect: { id: purchasedItem.productHistoryId }
             },

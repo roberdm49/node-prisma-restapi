@@ -37,7 +37,6 @@ export type PurchaseEntry = Omit<Purchase, 'id' | 'createdAt'>
 export type PurchasedItem = {
   id: string
   quantity: number
-  unitPrice: number
   purchaseId: string
   productHistoryId: string
   dailyExchangeRateId: string
