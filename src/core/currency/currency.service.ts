@@ -4,7 +4,6 @@ import {
   CurrencyServiceConstructor,
   CurrencyServiceCreateNewCurrencyHistories,
   CurrencyServiceGetAll,
-  CurrencyServiceGetManyByIsoCodes,
   CurrencyServiceUpdateCurrencyWithLatestExchangeRates
 } from './currency.types'
 
@@ -17,10 +16,6 @@ export default class CurrencyService implements ICurrencyService {
 
   getAll: CurrencyServiceGetAll = async () => {
     return await this.currencyRepository.getAll()
-  }
-
-  getManyByIsoCodes: CurrencyServiceGetManyByIsoCodes = async (isoCodes) => {
-    return await this.currencyRepository.getManyByIsoCodes(isoCodes)
   }
 
   createNewCurrencyHistories: CurrencyServiceCreateNewCurrencyHistories = async (currenciesWithValuesButWithoutIds) => {

@@ -39,7 +39,13 @@ export const createPurchasedItemsArrayFromProductsArray = (products: ProductWith
     if (!existingPurchasedItem) {
       const foundCurrency = currencies.find(currency => currency.id === product.currencyId)
 
+      // TODO: check this, too many conditional for non-null fields
       if (!foundCurrency?.recentExchangeRateId) {
+        throw new Error('Internal server error - system under corrections')
+      }
+
+      // TODO: check this, too many conditional for non-null fields
+      if (!product.latestProductHistoryId) {
         throw new Error('Internal server error - system under corrections')
       }
 

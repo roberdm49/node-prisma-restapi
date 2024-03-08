@@ -1,6 +1,13 @@
 import prisma from '@/config/db'
 import { IProductRepository } from './products.interfaces'
-import { ProductsRepositoryCreateMany, ProductsRepositoryDelete, ProductsRepositoryGetAll, ProductsRepositoryGetManyById, ProductsRepositoryGetOneById, ProductsRepositoryUpdateMany } from './products.types'
+import {
+  ProductsRepositoryCreateMany,
+  ProductsRepositoryDelete,
+  ProductsRepositoryGetAll,
+  ProductsRepositoryGetManyById,
+  ProductsRepositoryGetOneById,
+  ProductsRepositoryUpdateMany
+} from './products.types'
 
 export default class ProductsRepository implements IProductRepository {
   createMany: ProductsRepositoryCreateMany = async (productsToCreateWithTenantId) => {
@@ -15,13 +22,34 @@ export default class ProductsRepository implements IProductRepository {
               { ...product }
             ]
           }
+        },
+        include: {
+          productsHistory: true
         }
       }))
     }
 
-    const createdProducts = await prisma.$transaction(pendentProducts)
+    const partialCreatedProducts = await prisma.$transaction(pendentProducts)
 
-    return createdProducts.length
+    const pendentProductWithHistoryId = []
+
+    for (const partialCreatedProduct of partialCreatedProducts) {
+      const latestProductHistoryId = partialCreatedProduct.productsHistory[0].id
+      pendentProductWithHistoryId.push(
+        prisma.product.update({
+          where: {
+            id: partialCreatedProduct.id
+          },
+          data: {
+            latestProductHistoryId
+          }
+        })
+      )
+    }
+
+    const fullyCreatedProducts = await prisma.$transaction(pendentProductWithHistoryId)
+
+    return fullyCreatedProducts.length
   }
 
   getAll: ProductsRepositoryGetAll = async (tenantId) => {

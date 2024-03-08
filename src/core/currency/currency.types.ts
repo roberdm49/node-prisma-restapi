@@ -8,7 +8,6 @@ export type CurrencyRepositoryUpdateCurrencyWithLatestExchangeRates = (currencie
 
 export type CurrencyServiceGetAll = () => Promise<Currency[]>
 export type CurrencyServiceCreateNewCurrencyHistories = (currencies: CurrencyEntry[]) => Promise<CurrencyWithValue[]>
-export type CurrencyServiceGetManyByIsoCodes = (isoCodes: string[]) => Promise<Currency[]>
 export type CurrencyServiceUpdateCurrencyWithLatestExchangeRates = (currencies: CurrencyWithValue[]) => Promise<Currency[]>
 
 export type CurrencyCreateRoutes = ({ currencyRepository }: { currencyRepository: ICurrencyRepository }) => Router

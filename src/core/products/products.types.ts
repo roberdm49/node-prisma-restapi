@@ -39,7 +39,7 @@ export type Product = {
   tenantId: string
   companyId: string | null
   currencyId: number
-  latestProductHistoryId: string
+  latestProductHistoryId: string | null
 }
 
 export type ProductEntry = Omit<Product, 'id' | 'tenantId' >

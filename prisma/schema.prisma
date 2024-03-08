@@ -46,7 +46,7 @@ model Product {
   currencyId Int
   currency Currency @relation(fields: [currencyId], references: [id])
   productsHistory ProductHistory[]
-  latestProductHistoryId String
+  latestProductHistoryId String?
 }
 
 model ProductHistory {
