@@ -71,4 +71,23 @@ describe('Currency', () => {
       .send(payload)
       .expect(201)
   })
+
+  test('Should throw an error if the payload is malformed', async () => {
+    const valueInUsd = 0.1
+    const payload = [
+      {
+        name: mockCurrency1.name,
+        isoCode: mockCurrency1.isoCode,
+        isoNum: mockCurrency1.isoNum,
+        valueInUsd,
+        extraField: 123
+      }
+    ]
+
+    await api
+      .post('/currency/create-and-update-currencies')
+      .set({ Authorization: `Bearer ${GlobalEnv.CRON_SECRET}` })
+      .send(payload)
+      .expect(400)
+  })
 })
