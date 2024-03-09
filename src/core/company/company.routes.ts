@@ -10,7 +10,7 @@ export const createCompanyRoutes: CompanyCreateRoutes = ({ companyRepository }) 
   const companyController = new CompanyController({ companyService })
 
   router.get('/get', [protectedRouteMiddleware], companyController.getAll)
-  router.get('/create', [protectedRouteMiddleware], companyController.create)
+  router.post('/create', [protectedRouteMiddleware], companyController.create)
 
   return router
 }

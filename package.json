@@ -12,6 +12,7 @@
     "db:test:reset": "dotenv -e .env.test -- prisma migrate reset --force && prisma migrate dev",
     "migrations:test": "dotenv -e .env.test -- prisma migrate dev",
     "test": "cross-env APP_RUNTIME_ENV=test jest --watchAll",
+    "test:silent": "cross-env APP_RUNTIME_ENV=test jest --watchAll --silent",
     "test:coverage": "cross-env APP_RUNTIME_ENV=test jest --coverage"
   },
   "keywords": [],

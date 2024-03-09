@@ -15,8 +15,8 @@ describe('Currency', () => {
     firstname: 'firstname',
     lastname: 'lastname',
     password: 'password'
-
   }
+
   let cookies: string[] = []
 
   beforeEach(async () => {

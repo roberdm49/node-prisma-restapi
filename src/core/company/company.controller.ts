@@ -14,6 +14,7 @@ export default class CompanyController implements ICompanyController {
   getAll: RequestHandler = async (request, response, next) => {
     try {
       const { tenantId } = request.user
+      console.log({ tenantId })
       const companies = await this.companyService.getAll(tenantId)
       return response.status(HttpStatus.OK).json(companies)
     } catch (error) {
