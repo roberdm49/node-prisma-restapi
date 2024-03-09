@@ -1,9 +1,19 @@
+import chalk from 'chalk'
 import dotenv from 'dotenv'
+import { GlobalEnv } from './utils/constants'
 dotenv.config({ path: '.env' })
 
 const main = async (): Promise<void> => {
-  const { initializeApp } = await import('./app')
-  initializeApp()
+  const { createApp } = await import('./app')
+
+  const app = createApp()
+  const port = !isNaN(GlobalEnv.APP_PORT)
+    ? GlobalEnv.APP_PORT
+    : 3000
+
+  app.listen(port, () => {
+    console.log(`✅ App listening on ${chalk.cyan.bold(`http://localhost:${port}`)}`)
+  })
 }
 
 main()
