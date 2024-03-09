@@ -14,7 +14,7 @@
     "test": "npm run test:base -- --watchAll",
     "test:silent": "npm run test:base -- --watchAll --silent",
     "test:coverage": "npm run test:base -- --coverage",
-    "test:base": "cross-env APP_RUNTIME_ENV=test jest"
+    "test:base": "cross-env APP_RUNTIME_ENV=test jest -i"
   },
   "keywords": [],
   "author": "",
