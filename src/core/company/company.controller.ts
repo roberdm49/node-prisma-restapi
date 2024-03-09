@@ -2,7 +2,7 @@ import { RequestHandler } from 'express'
 import { HttpStatus } from '@/enums/httpStatus'
 import { ICompanyController, ICompanyService } from './company.interface'
 import { CompanyControllerConstructor, CompanyEntry } from './company.types'
-import { companyEntrySchema } from './company.zed-schema'
+import { companyEntrySchema } from './company.zod-schema'
 
 export default class CompanyController implements ICompanyController {
   private readonly companyService: ICompanyService
