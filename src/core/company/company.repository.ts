@@ -24,36 +24,4 @@ export default class CompanyRepository implements ICompanyRepository {
       }
     })
   }
-
-  /*
-  createWithNewProducts: CompanyRepositoryCreate = async (tenantId, company, products) => {
-    const productsToAdd = []
-
-    for (const product of products) {
-      productsToAdd.push(
-        prisma.product.create({
-          data: {
-            ...product
-          }
-        })
-      )
-    }
-
-    const newCompany = await prisma.company.create({
-      data: {
-        name: company.name,
-        tenant: {
-          connect: {
-            id: tenantId
-          }
-        },
-        products: {
-          connect: await prisma.$transaction(productsToAdd)
-        }
-      }
-    })
-
-    return newCompany
-  }
-  */
 }
