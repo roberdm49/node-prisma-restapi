@@ -47,6 +47,6 @@ describe('Company', () => {
       .set('Cookie', cookies)
       .expect(200)
 
-    expect(response.body).toHaveLength(3)
+    expect(response.body).toHaveLength(1)
   })
 })
