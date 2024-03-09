@@ -1,9 +1,9 @@
 import supertest from 'supertest'
-import app from '@/app'
+import { createApp } from '@/app'
 import { cleanUpAll, createMockCurrency } from '@/utils/testing'
 import { GlobalEnv } from '@/utils/constants'
-// import prisma from '@/config/db'
 
+const app = createApp()
 const api = supertest(app)
 
 describe('Currency', () => {

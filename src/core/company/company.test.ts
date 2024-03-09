@@ -1,8 +1,8 @@
 import supertest from 'supertest'
-import app from '@/app'
+import { createApp } from '@/app'
 import { cleanUpAll } from '@/utils/testing'
-// import prisma from '@/config/db'
 
+const app = createApp()
 const api = supertest(app)
 
 describe('Company', () => {
