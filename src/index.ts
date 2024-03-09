@@ -1,10 +1,10 @@
 import chalk from 'chalk'
 import dotenv from 'dotenv'
-import { GlobalEnv } from './utils/constants'
 dotenv.config({ path: '.env' })
 
 const main = async (): Promise<void> => {
   const { createApp } = await import('./app')
+  const { GlobalEnv } = await import('@/utils/constants')
 
   const app = createApp()
   const port = !isNaN(GlobalEnv.APP_PORT)

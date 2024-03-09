@@ -4,7 +4,8 @@ import { createSecureCookie } from '@/utils/createSecureCookie'
 import { CookieExpireTime } from '@/enums/expireTime'
 import { CookieNames } from '@/enums/cookies'
 import { IAuthController, IAuthService } from './auth.interfaces'
-import { AuthControllerConstructor, LogIn } from './auth.types'
+import { AuthControllerConstructor, LogIn, SignUp } from './auth.types'
+import { signUpSchema } from './auth.zod-schema'
 
 export default class AuthController implements IAuthController {
   private readonly authService: IAuthService
@@ -15,7 +16,7 @@ export default class AuthController implements IAuthController {
 
   signUp: RequestHandler = async (request, response, next) => {
     try {
-      const tenant = await this.authService.signUp(request.body)
+      const tenant: SignUp = signUpSchema.parse(request.body)
       return response.status(HttpStatus.Created).json(tenant)
     } catch (error) {
       console.log(error)
