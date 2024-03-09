@@ -13,7 +13,7 @@
     "migrations:test": "dotenv -e .env.test -- prisma migrate dev",
     "test": "npm run test:base -- --watch",
     "test:silent": "npm run test:base -- --silent",
-    "test:coverage": "npm run test:base -- --coverage",
+    "test:coverage": "npm run test:base -- --coverage --silent",
     "test:base": "cross-env APP_RUNTIME_ENV=test jest -i"
   },
   "keywords": [],
