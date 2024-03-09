@@ -34,11 +34,10 @@ describe('Company', () => {
 
     cookies = JSON.parse(JSON.stringify(loginResponse.headers['set-cookie']))
 
-    const res = await api
+    await api
       .post('/company/create')
       .send(mockCompany)
       .set('Cookie', cookies)
-    console.log({ res })
   })
 
   test('Should retrieve all companies', async () => {
