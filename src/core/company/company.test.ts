@@ -6,8 +6,6 @@ const app = createApp()
 const api = supertest(app)
 
 describe('Company', () => {
-  const mockCompany = { name: 'Mock Company' }
-
   const tenantInformation1 = {
     tenantName: 'tenant1',
     username: 'username1',
@@ -57,18 +55,18 @@ describe('Company', () => {
 
     await api
       .post('/company/create')
-      .send(mockCompany)
+      .send({ name: 'Mock' })
       .set('Cookie', cookies1)
 
     await api
       .post('/company/create')
-      .send(mockCompany)
+      .send({ name: 'Mock' })
       .set('Cookie', cookies2)
   })
 
   test('Should not have access to the endpoints without credentials', async () => {
     await api.get('/company/get').expect(401)
-    await api.post('/company/create').send(mockCompany).expect(401)
+    await api.post('/company/create').send({ name: 'Mock' }).expect(401)
   })
 
   test('Should retrieve all corresponding companies', async () => {
