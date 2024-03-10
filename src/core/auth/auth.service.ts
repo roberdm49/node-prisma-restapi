@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import { GlobalEnv } from '@/utils/constants'
 import { JwtExpireTime } from '@/enums/expireTime'
 import { ErrorClientMessages } from '@/enums/errors'
-import { WrongCredentialsError } from '@/errors'
+import { RefreshTokenError, WrongCredentialsError } from '@/errors'
 import { AccessTokenPayload } from '@/types/access-token'
 import { IAuthRepository, IAuthService } from './auth.interfaces'
 import { IUsersRepository } from '../users/users.interfaces'
@@ -42,6 +42,10 @@ export default class AuthService implements IAuthService {
   }
 
   getRefreshTokens: AuthServiceRefreshTokens = async (oldRefreshToken) => {
+    if (!oldRefreshToken) {
+      throw new RefreshTokenError('Falta el refresh token')
+    }
+
     const decodedToken = jwt.verify(oldRefreshToken, GlobalEnv.REFRESH_TOKEN_SECRET)
     const userId = (decodedToken as AccessTokenPayload).id
     const foundUser = this.usersRepository.getOneById(userId)

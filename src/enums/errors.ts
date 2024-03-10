@@ -1,5 +1,6 @@
 export enum ErrorNames {
   BadRequest = 'bad-request',
+  RefreshToken = 'refresh-token',
   Unauthorized = 'unauthorized',
   WrongCredentials = 'wrong-credentials'
 }
