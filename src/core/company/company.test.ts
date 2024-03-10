@@ -79,10 +79,7 @@ describe('Company', () => {
   })
 
   test('Should not pass a malformed "create" request', async () => {
-    await api
-      .post('/company/create')
-      .send({ name: 'Mock', script: 'some code' })
-      .set('Cookie', cookies1)
-      .expect(400)
+    await api.post('/company/create').send({ name: 'Mock', script: 'some code' }).set('Cookie', cookies1).expect(400)
+    await api.post('/company/create').set('Cookie', cookies1).expect(400)
   })
 })
