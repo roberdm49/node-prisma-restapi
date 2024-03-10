@@ -3,7 +3,6 @@ import prisma from '@/config/db'
 import { GlobalEnv } from './constants'
 
 const isEffectivelyTestEnvironment = (): boolean => {
-  console.log(GlobalEnv)
   if (GlobalEnv.APP_RUNTIME_ENV !== 'test') return false
   if (!GlobalEnv.DB_NAME.endsWith('test')) return false
 
