@@ -64,22 +64,26 @@ describe('Company', () => {
       .set('Cookie', cookies2)
   })
 
-  test('Should not have access to the endpoints without credentials', async () => {
-    await api.get('/company/get').expect(401)
-    await api.post('/company/create').send({ name: 'Mock' }).expect(401)
+  describe('Happy paths', () => {
+    test('Should retrieve all corresponding companies', async () => {
+      const response = await api
+        .get('/company/get')
+        .set('Cookie', cookies1)
+        .expect(200)
+
+      expect(response.body).toHaveLength(1)
+    })
   })
 
-  test('Should retrieve all corresponding companies', async () => {
-    const response = await api
-      .get('/company/get')
-      .set('Cookie', cookies1)
-      .expect(200)
+  describe('Exception paths', () => {
+    test('Should not have access to the endpoints without credentials', async () => {
+      await api.get('/company/get').expect(401)
+      await api.post('/company/create').send({ name: 'Mock' }).expect(401)
+    })
 
-    expect(response.body).toHaveLength(1)
-  })
-
-  test('Should not pass a malformed "create" request', async () => {
-    await api.post('/company/create').send({ name: 'Mock', script: 'some code' }).set('Cookie', cookies1).expect(400)
-    await api.post('/company/create').set('Cookie', cookies1).expect(400)
+    test('Should not pass a malformed "create" request', async () => {
+      await api.post('/company/create').send({ name: 'Mock', script: 'some code' }).set('Cookie', cookies1).expect(400)
+      await api.post('/company/create').set('Cookie', cookies1).expect(400)
+    })
   })
 })
