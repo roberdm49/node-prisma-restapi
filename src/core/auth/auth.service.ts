@@ -48,7 +48,7 @@ export default class AuthService implements IAuthService {
 
     const decodedToken = jwt.verify(oldRefreshToken, GlobalEnv.REFRESH_TOKEN_SECRET)
     const userId = (decodedToken as AccessTokenPayload).id
-    const foundUser = this.usersRepository.getOneById(userId)
+    const foundUser = await this.usersRepository.getOneById(userId)
     const tokens = await this.getUserTokens(foundUser)
 
     return tokens
