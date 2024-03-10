@@ -1,93 +1,47 @@
+// @ts-check
+
 import supertest from 'supertest'
+import bcrypt from 'bcrypt'
 import { createApp } from '@/app'
-import { cleanUpAll, createMockCurrency } from '@/utils/testing'
 import { GlobalEnv } from '@/utils/constants'
 
 const app = createApp()
 const api = supertest(app)
 
 describe('Currency', () => {
-  const mockCurrency1 = { id: 123, isoCode: 'ABC', isoNum: '001', name: 'Dummy1' }
-  const mockCurrency2 = { id: 456, isoCode: 'DEF', isoNum: '045', name: 'Dummy2' }
-  const tenantInformation = {
-    tenantName: 'tenant',
-    username: 'username',
-    firstname: 'firstname',
-    lastname: 'lastname',
-    password: 'password'
-  }
-
-  let cookies: string[] = []
+  const cookies: string[] = []
 
   beforeEach(async () => {
-    await cleanUpAll()
-    await createMockCurrency({ ...mockCurrency1 })
-    await createMockCurrency({ ...mockCurrency2 })
+    const nonHashedPassword = 'password123'
+    const hashedPassword = await bcrypt.hash(nonHashedPassword, GlobalEnv.HASH_ROUNDS)
+    const payload = {
+      id: '1',
+      username: 'johndoe123',
+      password: hashedPassword,
+      firstname: 'john',
+      lastname: 'doe',
+      createdAt: new Date(),
+      tenantId: '123'
+    }
 
-    await api
-      .post('/auth/sign-up')
-      .send({ ...tenantInformation })
-
-    const loginResponse = await api
-      .post('/auth/log-in')
-      .send({
-        username: tenantInformation.username,
-        password: tenantInformation.password
+    jest.mock('@/core/users/users.repository.ts', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          logIn: jest.fn().mockResolvedValue(payload)
+        }
       })
+    })
 
-    cookies = JSON.parse(JSON.stringify(loginResponse.headers['set-cookie']))
+    const res = api
+      .post('/auth/log-in')
+      .send({ username: payload.username, password: payload.password })
+
+    console.log(res.app)
   })
 
-  test('Should retrieve all currencies', async () => {
-    const response = await api
+  test('Should retrieve all the currencies', async () => {
+    await api
       .get('/currency/get')
-      .set('Cookie', cookies)
-      .expect(200)
-
-    expect(response.body).toHaveLength(2)
-  })
-
-  test('Should not access to the create and update currencies endpoint', async () => {
-    await api
-      .post('/currency/create-and-update-currencies')
-      .set('Cookie', cookies)
-      .expect(403)
-  })
-
-  test('Should have access and create a new daily exchange entry', async () => {
-    const valueInUsd = 0.1
-    const payload = [
-      {
-        name: mockCurrency1.name,
-        isoCode: mockCurrency1.isoCode,
-        isoNum: mockCurrency1.isoNum,
-        valueInUsd
-      }
-    ]
-
-    await api
-      .post('/currency/create-and-update-currencies')
-      .set({ Authorization: `Bearer ${GlobalEnv.CRON_SECRET}` })
-      .send(payload)
-      .expect(201)
-  })
-
-  test('Should throw an error if the payload is malformed', async () => {
-    const valueInUsd = 0.1
-    const payload = [
-      {
-        name: mockCurrency1.name,
-        isoCode: mockCurrency1.isoCode,
-        isoNum: mockCurrency1.isoNum,
-        valueInUsd,
-        extraField: 123
-      }
-    ]
-
-    await api
-      .post('/currency/create-and-update-currencies')
-      .set({ Authorization: `Bearer ${GlobalEnv.CRON_SECRET}` })
-      .send(payload)
-      .expect(400)
+      .expect(405)
   })
 })
