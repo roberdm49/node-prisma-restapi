@@ -2,7 +2,7 @@ import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@pri
 import { Response } from 'express'
 import chalk from 'chalk'
 import { ZodError } from 'zod'
-import { TokenExpiredError } from 'jsonwebtoken'
+import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
 import { UnauthorizedError, WrongCredentialsError } from '@/errors'
 import { HttpStatus } from '@/enums/httpStatus'
 
@@ -65,6 +65,13 @@ export const handleTokenExpiredError: ErrorCheck<TokenExpiredError> = (_error, r
   return response.status(HttpStatus.Unauthorized).json({ error: 'Token expirado' })
 }
 
+export const handleJsonWebTokenError: ErrorCheck<JsonWebTokenError> = (_error, response) => {
+  console.log(chalk.magenta('Handling "JsonWebTokenError"'))
+  console.log(_error)
+
+  return response.status(HttpStatus.Unauthorized).json({ error: 'Token expirado' })
+}
+
 export const handleSyntaxError: ErrorCheck<SyntaxError> = (_error, response) => {
   console.log(chalk.magenta('Handling "SyntaxError"'))
   console.log(_error)
@@ -86,6 +93,7 @@ export const errorHandlers: Array<[ErrorConstructor, ErrorCheck<any>]> = [
   [PrismaClientKnownRequestError, handlePrismaClientKnownRequestError],
   [PrismaClientValidationError, handlePrismaClientValidationError],
   [TokenExpiredError, handleTokenExpiredError],
+  [JsonWebTokenError, handleJsonWebTokenError],
   [SyntaxError, handleSyntaxError],
   [ZodError, handleZodError]
 ]
