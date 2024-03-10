@@ -79,15 +79,38 @@ describe('Currency', () => {
         name: mockCurrency1.name,
         isoCode: mockCurrency1.isoCode,
         isoNum: mockCurrency1.isoNum,
-        valueInUsd,
-        extraField: 123
+        valueInUsd
       }
     ]
 
     await api
       .post('/currency/create-and-update-currencies')
       .set({ Authorization: `Bearer ${GlobalEnv.CRON_SECRET}` })
-      .send(payload)
+      .send({ ...payload, description: 'description' })
+      .expect(400)
+
+    await api
+      .post('/currency/create-and-update-currencies')
+      .set({ Authorization: `Bearer ${GlobalEnv.CRON_SECRET}` })
+      .send({ ...payload, name: 123 })
+      .expect(400)
+
+    await api
+      .post('/currency/create-and-update-currencies')
+      .set({ Authorization: `Bearer ${GlobalEnv.CRON_SECRET}` })
+      .send({ ...payload, valueInUsd: -1.5 })
+      .expect(400)
+
+    await api
+      .post('/currency/create-and-update-currencies')
+      .set({ Authorization: `Bearer ${GlobalEnv.CRON_SECRET}` })
+      .send({ ...payload, valueInUsd: 0 })
+      .expect(400)
+
+    await api
+      .post('/currency/create-and-update-currencies')
+      .set({ Authorization: `Bearer ${GlobalEnv.CRON_SECRET}` })
+      .send({ name: 'name', isoCode: 'ABC', isoNum: '012' })
       .expect(400)
   })
 })
