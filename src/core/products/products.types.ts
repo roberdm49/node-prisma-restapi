@@ -42,9 +42,9 @@ export type Product = {
   latestProductHistoryId: string | null
 }
 
-export type ProductEntry = Omit<Product, 'id' | 'tenantId' >
+export type ProductEntry = Omit<Product, 'id' | 'tenantId' | 'latestProductHistoryId'>
 
-export type ProductWithoutId = Omit<Product, 'id'>
+export type ProductWithoutId = Omit<Product, 'id' | 'latestProductHistoryId'>
 
 export type ProductHistory = Product & {
   productId: string
