@@ -20,11 +20,11 @@ describe('Auth', () => {
   })
 
   test('Should not create an account with a malformed request', async () => {
-    const information = { tenantName: 'My tenant', username: 'Username', password: 123456, firstname: 'Jonh', lastname: 'Doe' }
-    await api
-      .post('/auth/sign-up')
-      .send(information)
-      .expect(400)
+    const information = { tenantName: 'My tenant', username: 'Username', password: 'password123', firstname: 'Jonh', lastname: 'Doe' }
+    await api.post('/auth/sign-up').send({ ...information, password: 123 }).expect(400)
+    await api.post('/auth/sign-up').send({ ...information, tenantName: true }).expect(400)
+    await api.post('/auth/sign-up').send({ ...information, extraField: 'extra-data' }).expect(400)
+    await api.post('/auth/sign-up').send({ tenantName: 'My tenant', username: 'Username', password: 'password123', lastname: 'Doe' }).expect(400)
   })
 
   test('Should be logged correctly', async () => {
@@ -45,15 +45,10 @@ describe('Auth', () => {
       .send(information)
       .expect(201)
 
-    await api
-      .post('/auth/log-in')
-      .send({ username: information.username, password: 'incorrectpassword' })
-      .expect(400)
-
-    await api
-      .post('/auth/log-in')
-      .send({ username: 'unexistinguser', password: information.password })
-      .expect(400)
+    await api.post('/auth/log-in').send({ username: information.username, password: 'incorrectpassword' }).expect(400)
+    await api.post('/auth/log-in').send({ username: 'unexistinguser', password: information.password }).expect(400)
+    await api.post('/auth/log-in').send({ username: information.username }).expect(400)
+    await api.post('/auth/log-in').send({ username: information.username, password: information.password, token: 'example' }).expect(400)
   })
 
   test('Should refresh both tokens', async () => {
