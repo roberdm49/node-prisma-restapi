@@ -1,9 +1,11 @@
 import { RequestHandler } from 'express'
 import {
+  DailySaleRepositoryClose,
   DailySaleRepositoryCreate,
   DailySaleRepositoryGetAll,
   DailySaleRepositoryGetOneByDate,
   DailySaleRepositoryGetOneById,
+  DailySaleServiceClose,
   DailySaleServiceCreate,
   DailySaleServiceDailySaleBelongToTenant,
   DailySaleServiceGetAll,
@@ -15,6 +17,7 @@ export interface IDailySaleRepository {
   create: DailySaleRepositoryCreate
   getOneById: DailySaleRepositoryGetOneById
   getOneByDate: DailySaleRepositoryGetOneByDate
+  close: DailySaleRepositoryClose
 }
 
 export interface IDailySaleService {
@@ -22,9 +25,11 @@ export interface IDailySaleService {
   create: DailySaleServiceCreate
   getOneById: DailySaleServiceGetOneById
   dailySaleBelongToTenant: DailySaleServiceDailySaleBelongToTenant
+  close: DailySaleServiceClose
 }
 
 export interface IDailySaleController {
   getAll: RequestHandler
   create: RequestHandler
+  close: RequestHandler
 }

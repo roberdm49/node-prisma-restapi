@@ -1,6 +1,7 @@
-import { ConflictError } from '@/errors'
+import { BadRequestError, ConflictError } from '@/errors'
 import { IDailySaleRepository, IDailySaleService } from './daily-sale.interfaces'
 import {
+  DailySaleServiceClose,
   DailySaleServiceContructor,
   DailySaleServiceCreate,
   DailySaleServiceDailySaleBelongToTenant,
@@ -38,5 +39,18 @@ export default class DailySaleService implements IDailySaleService {
 
   dailySaleBelongToTenant: DailySaleServiceDailySaleBelongToTenant = async (tenantId, dailySale) => {
     return (dailySale.tenantId === tenantId)
+  }
+
+  close: DailySaleServiceClose = async (tenantId) => {
+    // hardcoded current location timezone (from the server side)
+    // TODO: make it dynamic
+    const currentDate = new Date()
+    const foundDailySale = await this.dailySaleRepository.getOneByDate(tenantId, currentDate)
+
+    if (!foundDailySale) {
+      throw new BadRequestError('Todavía no se ha creado la caja para la fecha actual')
+    }
+
+    return await this.dailySaleRepository.close(foundDailySale)
   }
 }

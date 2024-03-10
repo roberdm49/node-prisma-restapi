@@ -11,6 +11,7 @@ export const createDailySaleRoutes: DailySaleCreateRoutes = ({ dailySaleReposito
 
   router.get('/get', [protectedRouteMiddleware], dailySaleController.getAll)
   router.post('/create', [protectedRouteMiddleware], dailySaleController.create)
+  router.post('/close', [protectedRouteMiddleware], dailySaleController.close)
 
   return router
 }

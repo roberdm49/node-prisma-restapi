@@ -29,4 +29,14 @@ export default class DailySaleController implements IDailySaleController {
       next(error)
     }
   }
+
+  close: RequestHandler = async (request, response, next) => {
+    try {
+      const { tenantId } = request.user
+      const closedDailySale = await this.dailySaleService.close(tenantId)
+      return response.status(HttpStatus.OK).json(closedDailySale)
+    } catch (error) {
+      next(error)
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import prisma from '@/config/db'
 import { IDailySaleRepository } from './daily-sale.interfaces'
-import { DailySaleRepositoryCreate, DailySaleRepositoryGetAll, DailySaleRepositoryGetOneByDate, DailySaleRepositoryGetOneById } from './daily-sale.types'
+import { DailySaleRepositoryClose, DailySaleRepositoryCreate, DailySaleRepositoryGetAll, DailySaleRepositoryGetOneByDate, DailySaleRepositoryGetOneById } from './daily-sale.types'
 
 export default class DailySaleRepository implements IDailySaleRepository {
   getAll: DailySaleRepositoryGetAll = async (tenantId) => {
@@ -43,5 +43,16 @@ export default class DailySaleRepository implements IDailySaleRepository {
     })
 
     return foundDate
+  }
+
+  close: DailySaleRepositoryClose = async (dailySale) => {
+    return await prisma.dailySale.update({
+      where: {
+        id: dailySale.id
+      },
+      data: {
+        closed: true
+      }
+    })
   }
 }
