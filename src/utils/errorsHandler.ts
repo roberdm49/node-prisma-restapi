@@ -3,7 +3,7 @@ import { Response } from 'express'
 import chalk from 'chalk'
 import { ZodError } from 'zod'
 import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
-import { ConflictError, RefreshTokenError, UnauthorizedError, WrongCredentialsError } from '@/errors'
+import { BadRequestError, ConflictError, RefreshTokenError, UnauthorizedError, WrongCredentialsError } from '@/errors'
 import { HttpStatus } from '@/enums/httpStatus'
 
 const UNIQUE_CONSTRAINT_ERROR_CODE = 'P2002'
@@ -11,6 +11,13 @@ const FK_CONSTRAINT_ERROR_CODE = 'P2003'
 
 type ErrorCheck<T extends Error> = (error: T, response: Response) => Response
 type ErrorConstructor = new (...args: any[]) => Error
+
+const handleBadRequestError: ErrorCheck<BadRequestError> = (error, response) => {
+  console.log(chalk.magenta('Handling "BadRequestError"'))
+  console.log(error)
+
+  return response.status(HttpStatus.BadRequest).json({ message: error.message })
+}
 
 const handleWrongCredentialsError: ErrorCheck<WrongCredentialsError> = (error, response) => {
   console.log(chalk.magenta('Handling "WrongCredentialsError"'))
@@ -102,6 +109,7 @@ export const handleDefaultError: ErrorCheck<Error> = (_error, response) => {
 }
 
 export const errorHandlers: Array<[ErrorConstructor, ErrorCheck<any>]> = [
+  [BadRequestError, handleBadRequestError],
   [WrongCredentialsError, handleWrongCredentialsError],
   [UnauthorizedError, handleUnauthorizedError],
   [ConflictError, handleConflictError],

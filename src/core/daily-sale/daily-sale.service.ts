@@ -51,6 +51,10 @@ export default class DailySaleService implements IDailySaleService {
       throw new BadRequestError('Todavía no se ha creado la caja para la fecha actual')
     }
 
+    if (foundDailySale.closed) {
+      throw new BadRequestError('La caja para la fecha actual ya ha sido cerrada')
+    }
+
     return await this.dailySaleRepository.close(foundDailySale)
   }
 }

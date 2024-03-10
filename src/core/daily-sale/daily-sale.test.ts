@@ -54,6 +54,22 @@ describe('Daily sale', () => {
 
       expect(response.body).toHaveLength(1)
     })
+
+    test('Should close a daily sale in a properly way', async () => {
+      const createResponse = await api
+        .post('/daily-sale/create')
+        .set('Cookie', cookies)
+        .expect(201)
+
+      expect(createResponse.body.closed).toBe(false)
+
+      const closeResponse = await api
+        .post('/daily-sale/close')
+        .set('Cookie', cookies)
+        .expect(200)
+
+      expect(closeResponse.body.closed).toBe(true)
+    })
   })
 
   describe('Exception paths', () => {
@@ -65,6 +81,10 @@ describe('Daily sale', () => {
     test('Should not create a new daily saly if it was already created at the same day', async () => {
       await api.post('/daily-sale/create').set('Cookie', cookies).expect(201)
       await api.post('/daily-sale/create').set('Cookie', cookies).expect(409)
+    })
+
+    test('Should throw an error if a "close" request is sent before creating a daily sale', async () => {
+      await api.post('/daily-sale/close').set('Cookie', cookies).expect(400)
     })
   })
 })
