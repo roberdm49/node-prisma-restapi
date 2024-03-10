@@ -1,6 +1,6 @@
 import prisma from '@/config/db'
 import { IDailySaleRepository } from './daily-sale.interfaces'
-import { DailySaleRepositoryCreate, DailySaleRepositoryGetAll, DailySaleRepositoryGetOneById } from './daily-sale.types'
+import { DailySaleRepositoryCreate, DailySaleRepositoryGetAll, DailySaleRepositoryGetOneByDate, DailySaleRepositoryGetOneById } from './daily-sale.types'
 
 export default class DailySaleRepository implements IDailySaleRepository {
   getAll: DailySaleRepositoryGetAll = async (tenantId) => {
@@ -29,5 +29,19 @@ export default class DailySaleRepository implements IDailySaleRepository {
         }
       }
     })
+  }
+
+  getOneByDate: DailySaleRepositoryGetOneByDate = async (tenantId, currentDate) => {
+    const foundDate = await prisma.dailySale.findFirst({
+      where: {
+        tenantId,
+        saleDate: {
+          gte: new Date(new Date(currentDate).setHours(0, 0, 0)),
+          lte: new Date(new Date(currentDate).setHours(23, 59, 59))
+        }
+      }
+    })
+
+    return foundDate
   }
 }

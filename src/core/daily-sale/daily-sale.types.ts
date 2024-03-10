@@ -4,6 +4,7 @@ import { IDailySaleRepository, IDailySaleService } from './daily-sale.interfaces
 export type DailySaleRepositoryGetAll = (tenantId: string) => Promise<DailySale[]>
 export type DailySaleRepositoryCreate = (tenantId: string) => Promise<DailySale>
 export type DailySaleRepositoryGetOneById = (dailySaleId: string) => Promise<DailySale | null>
+export type DailySaleRepositoryGetOneByDate = (tenantId: string, currentDate: Date) => Promise<DailySale | null>
 
 export type DailySaleServiceGetAll = (tenantId: string) => Promise<DailySale[]>
 export type DailySaleServiceCreate = (tenantId: string) => Promise<unknown>

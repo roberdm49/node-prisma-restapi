@@ -10,6 +10,7 @@ export const createDailySaleRoutes: DailySaleCreateRoutes = ({ dailySaleReposito
   const dailySaleController = new DailySaleController({ dailySaleService })
 
   router.get('/get', [protectedRouteMiddleware], dailySaleController.getAll)
+  router.post('/create', [protectedRouteMiddleware], dailySaleController.create)
 
   return router
 }
