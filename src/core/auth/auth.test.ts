@@ -78,4 +78,20 @@ describe('Auth', () => {
 
     expect(refreshTokenCookies).toHaveLength(2)
   })
+
+  test('Should reject the refresh token request if the token is missing', async () => {
+    await api
+      .post('/auth/sign-up')
+      .send(information)
+      .expect(201)
+
+    await api
+      .post('/auth/log-in')
+      .send({ username: information.username, password: information.password })
+      .expect(202)
+
+    await api
+      .get('/auth/refresh-token')
+      .expect(401)
+  })
 })
