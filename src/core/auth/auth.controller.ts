@@ -5,7 +5,7 @@ import { CookieExpireTime } from '@/enums/expireTime'
 import { CookieNames } from '@/enums/cookies'
 import { IAuthController, IAuthService } from './auth.interfaces'
 import { AuthControllerConstructor, LogIn, SignUp } from './auth.types'
-import { signUpSchema } from './auth.zod-schema'
+import { logInSchema, signUpSchema } from './auth.zod-schema'
 
 export default class AuthController implements IAuthController {
   private readonly authService: IAuthService
@@ -16,7 +16,8 @@ export default class AuthController implements IAuthController {
 
   signUp: RequestHandler = async (request, response, next) => {
     try {
-      const tenant: SignUp = signUpSchema.parse(request.body)
+      const tenantData: SignUp = signUpSchema.parse(request.body)
+      const tenant = await this.authService.signUp(tenantData)
       return response.status(HttpStatus.Created).json(tenant)
     } catch (error) {
       console.log(error)
@@ -26,7 +27,7 @@ export default class AuthController implements IAuthController {
 
   logIn: RequestHandler = async (request, response, next) => {
     try {
-      const loginData: LogIn = request.body
+      const loginData: LogIn = logInSchema.parse(request.body)
       const { accessToken, refreshToken } = await this.authService.logIn(loginData)
       response.setHeader('Set-Cookie', [
         createSecureCookie(CookieNames.AccessToken, accessToken, CookieExpireTime.AccessToken),

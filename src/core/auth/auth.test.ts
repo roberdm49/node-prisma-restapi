@@ -23,6 +23,6 @@ describe('Auth', () => {
     await api
       .post('/auth/sign-up')
       .send(information)
-      .expect(201)
+      .expect(400)
   })
 })

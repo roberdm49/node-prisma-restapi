@@ -3,7 +3,7 @@ import { Response } from 'express'
 import chalk from 'chalk'
 import { ZodError } from 'zod'
 import { TokenExpiredError } from 'jsonwebtoken'
-import { MissingCredentialsError, UnauthorizedError, WrongCredentialsError } from '@/errors'
+import { UnauthorizedError, WrongCredentialsError } from '@/errors'
 import { HttpStatus } from '@/enums/httpStatus'
 
 const UNIQUE_CONSTRAINT_ERROR_CODE = 'P2002'
@@ -11,16 +11,6 @@ const FK_CONSTRAINT_ERROR_CODE = 'P2003'
 
 type ErrorCheck<T extends Error> = (error: T, response: Response) => Response
 type ErrorConstructor = new (...args: any[]) => Error
-
-const handleMissingCredentialsError: ErrorCheck<MissingCredentialsError> = (error, response) => {
-  console.log(chalk.magenta('Handling "MissingCredentialsError"'))
-  console.log(error)
-
-  return response.status(HttpStatus.BadRequest).json({
-    message: error.message,
-    missingCredentials: error.missingCredentials
-  })
-}
 
 const handleWrongCredentialsError: ErrorCheck<WrongCredentialsError> = (error, response) => {
   console.log(chalk.magenta('Handling "WrongCredentialsError"'))
@@ -91,7 +81,6 @@ export const handleDefaultError: ErrorCheck<Error> = (_error, response) => {
 }
 
 export const errorHandlers: Array<[ErrorConstructor, ErrorCheck<any>]> = [
-  [MissingCredentialsError, handleMissingCredentialsError],
   [WrongCredentialsError, handleWrongCredentialsError],
   [UnauthorizedError, handleUnauthorizedError],
   [PrismaClientKnownRequestError, handlePrismaClientKnownRequestError],

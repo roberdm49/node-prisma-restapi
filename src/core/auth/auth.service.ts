@@ -3,8 +3,7 @@ import bcrypt from 'bcrypt'
 import { GlobalEnv } from '@/utils/constants'
 import { JwtExpireTime } from '@/enums/expireTime'
 import { ErrorClientMessages } from '@/enums/errors'
-import { WrongCredentialsError, MissingCredentialsError } from '@/errors'
-import { getMissingCredentials } from '@/utils/getMissingsCredentials'
+import { WrongCredentialsError } from '@/errors'
 import { AccessTokenPayload } from '@/types/access-token'
 import { IAuthRepository, IAuthService } from './auth.interfaces'
 import { IUsersRepository } from '../users/users.interfaces'
@@ -20,13 +19,6 @@ export default class AuthService implements IAuthService {
   }
 
   signUp: AuthServiceSignUp = async (signUpData) => {
-    const credentials: string[] = ['tenantName', 'username', 'firstname', 'lastname', 'password']
-    const missingCredentials = getMissingCredentials(credentials, signUpData)
-
-    if (missingCredentials.length > 0) {
-      throw new MissingCredentialsError(ErrorClientMessages.MissingCredentials, missingCredentials)
-    }
-
     const hashedPassword = await bcrypt.hash(signUpData.password, GlobalEnv.HASH_ROUNDS)
 
     const tenant = await this.authRepository.create({
@@ -38,13 +30,6 @@ export default class AuthService implements IAuthService {
   }
 
   logIn: AuthServiceLogIn = async (logInData) => {
-    const credentials: string[] = ['username', 'password']
-    const missingCredentials = getMissingCredentials(credentials, logInData)
-
-    if (missingCredentials.length > 0) {
-      throw new MissingCredentialsError(ErrorClientMessages.MissingCredentials, missingCredentials)
-    }
-
     const foundUser = await this.usersRepository.getOneByUsername(logInData.username)
     if (!foundUser) throw new WrongCredentialsError(ErrorClientMessages.WrongCredentials)
 
