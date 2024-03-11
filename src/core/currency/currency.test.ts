@@ -39,7 +39,7 @@ describe('Currency', () => {
   })
 
   describe('Happy paths', () => {
-    test('Should retrieve all currencies', async () => {
+    it('Should retrieve all currencies', async () => {
       const response = await api
         .get('/currency/get')
         .set('Cookie', cookies)
@@ -48,7 +48,7 @@ describe('Currency', () => {
       expect(response.body).toHaveLength(2)
     })
 
-    test('Should have access and create a new daily exchange entry', async () => {
+    it('Should have access and create a new daily exchange entry', async () => {
       const valueInUsd = 0.1
       const payload = [
         {
@@ -68,14 +68,14 @@ describe('Currency', () => {
   })
 
   describe('Exception paths', () => {
-    test('Should not access to the create and update currencies endpoint', async () => {
+    it('Should not access to the create and update currencies endpoint', async () => {
       await api
         .post('/currency/create-and-update-currencies')
         .set('Cookie', cookies)
         .expect(403)
     })
 
-    test('Should throw an error if the payload is malformed', async () => {
+    it('Should throw an error if the payload is malformed', async () => {
       const valueInUsd = 0.1
       const payload = [
         {

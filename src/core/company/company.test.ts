@@ -65,7 +65,7 @@ describe('Company', () => {
   })
 
   describe('Happy paths', () => {
-    test('Should retrieve all corresponding companies', async () => {
+    it('Should retrieve all corresponding companies', async () => {
       const response = await api
         .get('/company/get')
         .set('Cookie', cookies1)
@@ -76,12 +76,12 @@ describe('Company', () => {
   })
 
   describe('Exception paths', () => {
-    test('Should not have access to the endpoints without credentials', async () => {
+    it('Should not have access to the endpoints without credentials', async () => {
       await api.get('/company/get').expect(401)
       await api.post('/company/create').send({ name: 'Mock' }).expect(401)
     })
 
-    test('Should not pass a malformed "create" request', async () => {
+    it('Should not pass a malformed "create" request', async () => {
       await api.post('/company/create').send({ name: 'Mock', script: 'some code' }).set('Cookie', cookies1).expect(400)
       await api.post('/company/create').set('Cookie', cookies1).expect(400)
     })

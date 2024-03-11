@@ -13,14 +13,14 @@ describe('Auth', () => {
   })
 
   describe('Happy paths', () => {
-    test('Should create an account with a properly request', async () => {
+    it('Should create an account with a properly request', async () => {
       await api
         .post('/auth/sign-up')
         .send(information)
         .expect(201)
     })
 
-    test('Should be logged correctly', async () => {
+    it('Should be logged correctly', async () => {
       await api
         .post('/auth/sign-up')
         .send(information)
@@ -32,7 +32,7 @@ describe('Auth', () => {
         .expect(202)
     })
 
-    test('Should refresh both tokens', async () => {
+    it('Should refresh both tokens', async () => {
       await api
         .post('/auth/sign-up')
         .send(information)
@@ -57,7 +57,7 @@ describe('Auth', () => {
   })
 
   describe('Exception paths', () => {
-    test('Should not create an account with a malformed request', async () => {
+    it('Should not create an account with a malformed request', async () => {
       const information = { tenantName: 'My tenant', username: 'Username', password: 'password123', firstname: 'Jonh', lastname: 'Doe' }
       await api.post('/auth/sign-up').send({ ...information, password: 123 }).expect(400)
       await api.post('/auth/sign-up').send({ ...information, tenantName: true }).expect(400)
@@ -65,7 +65,7 @@ describe('Auth', () => {
       await api.post('/auth/sign-up').send({ tenantName: 'My tenant', username: 'Username', password: 'password123', lastname: 'Doe' }).expect(400)
     })
 
-    test('Should fail at log in', async () => {
+    it('Should fail at log in', async () => {
       await api
         .post('/auth/sign-up')
         .send(information)
@@ -77,7 +77,7 @@ describe('Auth', () => {
       await api.post('/auth/log-in').send({ username: information.username, password: information.password, token: 'example' }).expect(400)
     })
 
-    test('Should reject the refresh token request if the token is missing', async () => {
+    it('Should reject the refresh token request if the token is missing', async () => {
       await api
         .post('/auth/sign-up')
         .send(information)

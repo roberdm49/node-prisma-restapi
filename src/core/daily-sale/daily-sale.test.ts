@@ -34,14 +34,14 @@ describe('Daily sale', () => {
   })
 
   describe('Happy paths', () => {
-    test('Should create a new daily sale properly', async () => {
+    it('Should create a new daily sale properly', async () => {
       await api
         .post('/daily-sale/create')
         .set('Cookie', cookies)
         .expect(201)
     })
 
-    test('Should retrieve all daily sales for a specific tenant', async () => {
+    it('Should retrieve all daily sales for a specific tenant', async () => {
       await api
         .post('/daily-sale/create')
         .set('Cookie', cookies)
@@ -55,7 +55,7 @@ describe('Daily sale', () => {
       expect(response.body).toHaveLength(1)
     })
 
-    test('Should close a daily sale in a properly way', async () => {
+    it('Should close a daily sale in a properly way', async () => {
       const createResponse = await api
         .post('/daily-sale/create')
         .set('Cookie', cookies)
@@ -73,17 +73,17 @@ describe('Daily sale', () => {
   })
 
   describe('Exception paths', () => {
-    test('Should not access to the endpoints without credentials', async () => {
+    it('Should not access to the endpoints without credentials', async () => {
       await api.get('/daily-sale/get').expect(401)
       await api.post('/daily-sale/create').expect(401)
     })
 
-    test('Should not create a new daily saly if it was already created at the same day', async () => {
+    it('Should not create a new daily saly if it was already created at the same day', async () => {
       await api.post('/daily-sale/create').set('Cookie', cookies).expect(201)
       await api.post('/daily-sale/create').set('Cookie', cookies).expect(409)
     })
 
-    test('Should throw an error if a "close" request is sent before creating a daily sale', async () => {
+    it('Should throw an error if a "close" request is sent before creating a daily sale', async () => {
       await api.post('/daily-sale/close').set('Cookie', cookies).expect(400)
     })
   })
