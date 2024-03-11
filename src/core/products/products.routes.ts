@@ -12,6 +12,7 @@ export const createProductsRoutes: ProductsCreateRoutes = ({ productsRepository 
   router.get('/get', [protectedRouteMiddleware], productsController.getAll)
   router.post('/create', [protectedRouteMiddleware], productsController.create)
   router.patch('/update', [protectedRouteMiddleware], productsController.updateMany)
+  router.delete('/delete', [protectedRouteMiddleware], productsController.deleteMany)
 
   return router
 }

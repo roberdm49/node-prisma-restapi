@@ -8,6 +8,7 @@ import { HttpStatus } from '@/enums/httpStatus'
 
 const UNIQUE_CONSTRAINT_ERROR_CODE = 'P2002'
 const FK_CONSTRAINT_ERROR_CODE = 'P2003'
+const RECORD_TO_DELETE_NOT_EXISTS_ERROR_CODE = 'P2025'
 
 type ErrorCheck<T extends Error> = (error: T, response: Response) => Response
 type ErrorConstructor = new (...args: any[]) => Error
@@ -59,6 +60,10 @@ const handlePrismaClientKnownRequestError: ErrorCheck<PrismaClientKnownRequestEr
   }
 
   if (error.code === FK_CONSTRAINT_ERROR_CODE) {
+    return response.status(HttpStatus.BadRequest).json({ error: 'Solicitud malformada' })
+  }
+
+  if (error.code === RECORD_TO_DELETE_NOT_EXISTS_ERROR_CODE) {
     return response.status(HttpStatus.BadRequest).json({ error: 'Solicitud malformada' })
   }
 
