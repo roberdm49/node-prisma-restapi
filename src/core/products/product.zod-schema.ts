@@ -32,3 +32,5 @@ const productUpdateSchema = object({
 }).strict({ message: 'Solicitud no válida' })
 
 export const updateSchema = array(productUpdateSchema)
+
+export const deleteSchema = array(string().min(1, { message: 'El id es requerido' }))

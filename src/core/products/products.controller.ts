@@ -2,7 +2,7 @@ import { HttpStatus } from '@/enums/httpStatus'
 import { RequestHandler } from 'express'
 import { IProductController, IProductService } from './products.interfaces'
 import { ProductControllerConstructor, ProductEntryWithNull, ProductEntryWithUndefined, ProductUpdate } from './products.types'
-import { createSchema, updateSchema } from './product.zod-schema'
+import { createSchema, deleteSchema, updateSchema } from './product.zod-schema'
 import { parseProductsEntryFromUndefinedToNull } from '@/utils/parseProducts'
 
 export default class ProductsController implements IProductController {
@@ -48,7 +48,7 @@ export default class ProductsController implements IProductController {
   deleteMany: RequestHandler = async (request, response, next) => {
     try {
       const { tenantId } = request.user
-      const ids: string[] = request.body
+      const ids = deleteSchema.parse(request.body)
       const removedProduct = await this.productsService.deleteMany(tenantId, ids)
       return response.status(HttpStatus.OK).json(removedProduct)
     } catch (error) {
