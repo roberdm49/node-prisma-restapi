@@ -41,7 +41,7 @@ export default class ProductsService implements IProductService {
 
   updateMany: ProductsServiceUpdateMany = async (tenantId, productsUpdateEntry) => {
     const productIds = productsUpdateEntry.map(productUpdateEntry => productUpdateEntry.id)
-    if (!this.everyProductBelongToSameTenant(tenantId, productIds)) {
+    if (!(await this.everyProductBelongToSameTenant(tenantId, productIds))) {
       throw new BadRequestError(ErrorClientMessages.BadRequest)
     }
 
@@ -55,7 +55,7 @@ export default class ProductsService implements IProductService {
   }
 
   deleteMany: ProductsServiceDelete = async (tenantId, productIds) => {
-    if (!this.everyProductBelongToSameTenant(tenantId, productIds)) {
+    if (!(await this.everyProductBelongToSameTenant(tenantId, productIds))) {
       throw new BadRequestError(ErrorClientMessages.BadRequest)
     }
 
@@ -67,6 +67,10 @@ export default class ProductsService implements IProductService {
 
     for (const product of products) {
       if (product.tenantId !== tenantId) return false
+    }
+
+    if (products.length !== productIds.length) {
+      return false
     }
 
     return true
