@@ -28,7 +28,7 @@ export const mergeProductsAndProductsToUpdate = (dbProducts: Product[], products
       name: rest.name ?? product.name,
       price: rest.price ?? product.price,
       tenantId: product.tenantId,
-      currencyId: rest.price ?? product.price,
+      currencyId: rest.currencyId ?? product.currencyId,
       description: rest.description ?? product.description,
       stock: rest.stock ?? product.stock,
       barCode: rest.barCode ?? product.barCode,

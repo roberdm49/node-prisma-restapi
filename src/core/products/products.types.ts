@@ -58,11 +58,11 @@ export type ProductWithQuantity = Product & {
 
 export type ProductUpdate = {
   id: string
-  name: string | null
-  price: number | null
-  currencyId: number | null
-  description: string | null
-  stock: number | null
-  barCode: string | null
-  companyId: string | null
+  name?: string
+  price?: number
+  currencyId?: number
+  description?: string
+  stock?: number
+  barCode?: string
+  companyId?: string
 }

@@ -88,7 +88,16 @@ export default class ProductsRepository implements IProductRepository {
             ...product,
             productsHistory: {
               create: [
-                { ...product }
+                {
+                  name: product.name,
+                  price: product.price,
+                  tenantId: product.tenantId,
+                  currencyId: product.currencyId,
+                  description: product.description,
+                  stock: product.stock,
+                  barCode: product.barCode,
+                  companyId: product.companyId
+                }
               ]
             }
           }
