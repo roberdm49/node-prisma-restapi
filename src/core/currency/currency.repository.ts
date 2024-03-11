@@ -51,7 +51,7 @@ export default class CurrencyRepository implements ICurrencyRepository {
         prisma.currency.update({
           where: { id: currency.id },
           data: {
-            latestExchangeRateId: currency.recentExchangeRateId
+            // TODO: MODIFY!!!
           }
         })
       )

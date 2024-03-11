@@ -1,4 +1,4 @@
-import { ProductUpdate } from '@/core/products/products.types'
+import { ProductUpdate, ProductWithHistoryMetadataArray, ProductWithSingleHistoryMetadata } from '@/core/products/products.types'
 import { Product } from '@prisma/client'
 
 export const mergeProductsAndProductsToUpdate = (dbProducts: Product[], productsToUpdate: ProductUpdate[]): Product[] => {
@@ -32,10 +32,37 @@ export const mergeProductsAndProductsToUpdate = (dbProducts: Product[], products
       description: rest.description ?? product.description,
       stock: rest.stock ?? product.stock,
       barCode: rest.barCode ?? product.barCode,
-      companyId: rest.companyId ?? product.companyId,
-      latestProductHistoryId: product.latestProductHistoryId
+      companyId: rest.companyId ?? product.companyId
     })
   }
 
   return mergedProducts
+}
+
+export const transformProductsToFlatProductHistory = (products: ProductWithHistoryMetadataArray[]): ProductWithSingleHistoryMetadata[] => {
+  const productsWithFlatProductHistory = products.map(product => {
+    const { productsHistory: productsHistoryAsArray, ...rest } = product
+    const safetyProductHistory = productsHistoryAsArray[0] ?? null
+
+    return {
+      ...rest,
+      latestProductHistory: safetyProductHistory
+    }
+  })
+
+  return productsWithFlatProductHistory
+}
+
+export const transformSingleProductToFlatProduct = (product: ProductWithHistoryMetadataArray | null): ProductWithSingleHistoryMetadata | null => {
+  if (!product) return null
+
+  const { productsHistory: productsHistoryAsArray, ...rest } = product
+  const safetyProductHistory = productsHistoryAsArray[0] ?? null
+
+  const transformedProduct = {
+    ...rest,
+    latestProductHistory: safetyProductHistory
+  }
+
+  return transformedProduct
 }

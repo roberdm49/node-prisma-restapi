@@ -44,15 +44,11 @@ export const createPurchasedItemsArrayFromProductsArray = (products: ProductWith
         throw new Error('Internal server error - system under corrections')
       }
 
-      // TODO: check this, too many conditional for non-null fields
-      if (!product.latestProductHistoryId) {
-        throw new Error('Internal server error - system under corrections')
-      }
-
       const purchasedItem: PurchasedItemEntry = {
         quantity: 1,
         dailyExchangeRateId: foundCurrency.recentExchangeRateId,
-        productHistoryId: product.latestProductHistoryId
+        // TODO MODIFY!!!
+        productHistoryId: '123'
       }
 
       purchasedItemsMap.set(key, purchasedItem)

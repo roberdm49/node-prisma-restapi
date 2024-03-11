@@ -12,7 +12,7 @@ import {
   ProductsServiceUpdateMany
 } from './products.types'
 import { ErrorClientMessages } from '@/enums/errors'
-import { mergeProductsAndProductsToUpdate } from '@/utils/transformationsProductsUpdate'
+import { mergeProductsAndProductsToUpdate, transformProductsToFlatProductHistory, transformSingleProductToFlatProduct } from '@/utils/transformationsProducts'
 
 export default class ProductsService implements IProductService {
   private readonly productsRepository: IProductRepository
@@ -30,7 +30,10 @@ export default class ProductsService implements IProductService {
   }
 
   getAll: ProductsServiceGetAll = async (tenantId) => {
-    return await this.productsRepository.getAll(tenantId)
+    const productsWithHistoryMetadataArray = await this.productsRepository.getAll(tenantId)
+    const productsWithFlatHistoryMetadata = transformProductsToFlatProductHistory(productsWithHistoryMetadataArray)
+
+    return productsWithFlatHistoryMetadata
   }
 
   updateMany: ProductsServiceUpdateMany = async (tenantId, productsUpdateEntry) => {
@@ -42,7 +45,10 @@ export default class ProductsService implements IProductService {
     const dbProducts = await this.getManyById(productIds)
     const productsToUpdate = mergeProductsAndProductsToUpdate(dbProducts, productsUpdateEntry)
 
-    return await this.productsRepository.updateMany(tenantId, productsToUpdate)
+    const updatedProductsWithMetadataArray = await this.productsRepository.updateMany(tenantId, productsToUpdate)
+    const productsWithFlatHistoryMetadata = transformProductsToFlatProductHistory(updatedProductsWithMetadataArray)
+
+    return productsWithFlatHistoryMetadata
   }
 
   deleteMany: ProductsServiceDelete = async (tenantId, productIds) => {
@@ -64,11 +70,16 @@ export default class ProductsService implements IProductService {
   }
 
   getManyById: ProductsServiceGetManyById = async (productIds) => {
-    return await this.productsRepository.getManyById(productIds)
+    const productsWithHistoryMetadataArray = await this.productsRepository.getManyById(productIds)
+    const productsWithFlatHistoryMetadata = transformProductsToFlatProductHistory(productsWithHistoryMetadataArray)
+
+    return productsWithFlatHistoryMetadata
   }
 
   getOneById: ProductsServiceGetOneById = async (productId) => {
     const product = await this.productsRepository.getOneById(productId)
-    return product
+    const productWithHistoryMetadata = transformSingleProductToFlatProduct(product)
+
+    return productWithHistoryMetadata
   }
 }
