@@ -2,6 +2,7 @@ import { HttpStatus } from '@/enums/httpStatus'
 import { RequestHandler } from 'express'
 import { IProductController, IProductService } from './products.interfaces'
 import { Product, ProductControllerConstructor, ProductEntry } from './products.types'
+import { createSchema } from './product.zod-schema'
 
 export default class ProductsController implements IProductController {
   private readonly productsService: IProductService
@@ -13,7 +14,7 @@ export default class ProductsController implements IProductController {
   create: RequestHandler = async (request, response, next) => {
     try {
       const { tenantId } = request.user
-      const products: ProductEntry[] = request.body.products
+      const products: ProductEntry[] = createSchema.parse(request.body)
       const productsCreated = await this.productsService.createMany(tenantId, products)
       return response.status(HttpStatus.Created).json(productsCreated)
     } catch (error) {

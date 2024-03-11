@@ -1,4 +1,4 @@
-import { array, number, object, optional, string } from 'zod'
+import { array, number, object, string } from 'zod'
 
 // create
 // getAll
@@ -8,14 +8,14 @@ import { array, number, object, optional, string } from 'zod'
 const productEntrySchema = object({
   name: string({ required_error: 'El nombre es requerido' })
     .min(1, { message: 'El nombre es requerido' }),
-  valueInUsd: number({ required_error: 'El precio es requerido' })
+  price: number({ required_error: 'El precio es requerido' })
     .gt(0, { message: 'El precio debe ser mayor a 0' }),
   currencyId: number({ required_error: 'El currencyId es requerido' }),
-  description: optional(string().min(1, { message: 'La descripción es opcional pero no puede ser una cadena vacía' })),
-  stock: optional(number().gte(0, { message: 'El stock es opcional pero de enviarse debe ser mayor o igual a 0' })),
+  description: string().min(1, { message: 'La descripción es opcional pero no puede ser una cadena vacía' }).nullable(),
+  stock: number().gte(0, { message: 'El stock es opcional pero de enviarse debe ser mayor o igual a 0' }).nullable(),
   // TODO: check logic related with optional barCode
-  barCode: optional(string().min(1, { message: 'El código de barra es opcional pero no puede ser una cadena vacía' })),
-  companyId: optional(string().min(1, { message: 'El companyId es opcional pero no puede ser una cadena vacía' }))
-})
+  barCode: string().min(1, { message: 'El código de barra es opcional pero no puede ser una cadena vacía' }).nullable(),
+  companyId: string().min(1, { message: 'El companyId es opcional pero no puede ser una cadena vacía' }).nullable()
+}).strict({ message: 'Solicitud no válida' })
 
 export const createSchema = array(productEntrySchema)
