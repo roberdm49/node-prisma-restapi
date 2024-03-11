@@ -12,6 +12,7 @@ import {
   ProductsServiceUpdateMany
 } from './products.types'
 import { ErrorClientMessages } from '@/enums/errors'
+import { mergeProductsAndProductsToUpdate } from '@/utils/transformationsProductsUpdate'
 
 export default class ProductsService implements IProductService {
   private readonly productsRepository: IProductRepository
@@ -32,13 +33,16 @@ export default class ProductsService implements IProductService {
     return await this.productsRepository.getAll(tenantId)
   }
 
-  updateMany: ProductsServiceUpdateMany = async (tenantId, products) => {
-    const productIds = products.map(product => product.id)
+  updateMany: ProductsServiceUpdateMany = async (tenantId, productsUpdateEntry) => {
+    const productIds = productsUpdateEntry.map(productUpdateEntry => productUpdateEntry.id)
     if (!this.everyProductBelongToSameTenant(tenantId, productIds)) {
       throw new BadRequestError(ErrorClientMessages.BadRequest)
     }
 
-    return await this.productsRepository.updateMany(tenantId, products)
+    const dbProducts = await this.getManyById(productIds)
+    const productsToUpdate = mergeProductsAndProductsToUpdate(dbProducts, productsUpdateEntry)
+
+    return await this.productsRepository.updateMany(tenantId, productsToUpdate)
   }
 
   deleteMany: ProductsServiceDelete = async (tenantId, productIds) => {

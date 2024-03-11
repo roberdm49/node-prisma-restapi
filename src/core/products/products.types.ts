@@ -10,7 +10,7 @@ export type ProductsRepositoryGetOneById = (productId: string) => Promise<Produc
 
 export type ProductsServiceCreateMany = (tenantId: string, productsData: ProductEntry[]) => Promise<number>
 export type ProductsServiceGetAll = (tenantId: string) => Promise<Product[]>
-export type ProductsServiceUpdateMany = (tenantId: string, products: Product[]) => Promise<Product[]>
+export type ProductsServiceUpdateMany = (tenantId: string, products: ProductUpdate[]) => Promise<Product[]>
 export type ProductsServiceDelete = (tenantId: string, ids: string[]) => Promise<Product[]>
 export type ProductsServiceGetManyById = (productIds: string[]) => Promise<Product[]>
 export type ProductsServiceEveryProductBelongToSameTenant = (tenantId: string, productIds: string[]) => Promise<boolean>

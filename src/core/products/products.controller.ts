@@ -1,8 +1,8 @@
 import { HttpStatus } from '@/enums/httpStatus'
 import { RequestHandler } from 'express'
 import { IProductController, IProductService } from './products.interfaces'
-import { Product, ProductControllerConstructor, ProductEntry } from './products.types'
-import { createSchema } from './product.zod-schema'
+import { ProductControllerConstructor, ProductEntry, ProductUpdate } from './products.types'
+import { createSchema, updateSchema } from './product.zod-schema'
 
 export default class ProductsController implements IProductController {
   private readonly productsService: IProductService
@@ -35,7 +35,7 @@ export default class ProductsController implements IProductController {
   updateMany: RequestHandler = async (request, response, next) => {
     try {
       const { tenantId } = request.user
-      const products: Product[] = request.body
+      const products: ProductUpdate[] = updateSchema.parse(request.body)
       const updatedProducts = await this.productsService.updateMany(tenantId, products)
       return response.status(HttpStatus.OK).json(updatedProducts)
     } catch (error) {
