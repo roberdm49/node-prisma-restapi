@@ -91,6 +91,19 @@ describe('Products', () => {
       expect(createdProduct.body[0].name).toBe(products1[0].name)
       expect(updatedProduct.body[0].name).toBe(updatedProduct.body[0].name)
     })
+
+    it('Should delete an existing product', async () => {
+      const createdResponse = await api.post('/products/create').set('Cookie', cookies1).send(products1).expect(201)
+      await api.post('/products/create').set('Cookie', cookies1).send(products2).expect(201)
+      const getResponse1 = await api.get('/products/get').set('Cookie', cookies1).expect(200)
+
+      expect(getResponse1.body).toHaveLength(3)
+
+      await api.delete('/products/delete').set('Cookie', cookies1).send([createdResponse.body[0].id]).expect(200)
+      const getResponse2 = await api.get('/products/get').set('Cookie', cookies1).expect(200)
+
+      expect(getResponse2.body).toHaveLength(2)
+    })
   })
 
   describe('Exception paths', () => {
@@ -115,7 +128,20 @@ describe('Products', () => {
         .patch('/products/update')
         .set('Cookie', cookies1)
         .send([{ id: 'id123', name: 'Other name' }])
-        .expect(200)
+        .expect(400)
+    })
+
+    it('Should throw an error if an empty array is passed as payload', async () => {
+      await api.post('/products/create').set('Cookie', cookies1).send([]).expect(400)
+      await api.patch('/products/update').set('Cookie', cookies1).send([]).expect(400)
+      await api.delete('/products/delete').set('Cookie', cookies1).send([]).expect(400)
+    })
+
+    it('Should throw an error if an invalid id is passed in each operation', async () => {
+      await api.post('/products/create').set('Cookie', cookies1).send(products1).expect(201)
+
+      await api.patch('/products/update').set('Cookie', cookies1).send([{ id: '123', name: 'Other name' }]).expect(400)
+      await api.delete('/products/delete').set('Cookie', cookies1).send(['123']).expect(400)
     })
   })
 })
