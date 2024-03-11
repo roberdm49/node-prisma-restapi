@@ -24,38 +24,39 @@ export default class ProductsRepository implements IProductRepository {
           }
         },
         include: {
-          productsHistory: true
+          productsHistory: {
+            select: {
+              id: true,
+              modificationTimestamp: true
+            },
+            orderBy: {
+              modificationTimestamp: 'desc'
+            },
+            take: 1
+          }
         }
       }))
     }
 
-    const partialCreatedProducts = await prisma.$transaction(pendentProducts)
-
-    const pendentProductWithHistoryId = []
-
-    for (const partialCreatedProduct of partialCreatedProducts) {
-      const latestProductHistoryId = partialCreatedProduct.productsHistory[0].id
-      pendentProductWithHistoryId.push(
-        prisma.product.update({
-          where: {
-            id: partialCreatedProduct.id
-          },
-          data: {
-            latestProductHistoryId
-          }
-        })
-      )
-    }
-
-    const fullyCreatedProducts = await prisma.$transaction(pendentProductWithHistoryId)
-
-    return fullyCreatedProducts
+    return await prisma.$transaction(pendentProducts)
   }
 
   getAll: ProductsRepositoryGetAll = async (tenantId) => {
     const products = await prisma.product.findMany({
       where: {
         tenantId
+      },
+      include: {
+        productsHistory: {
+          select: {
+            id: true,
+            modificationTimestamp: true
+          },
+          orderBy: {
+            modificationTimestamp: 'desc'
+          },
+          take: 1
+        }
       }
     })
 
@@ -67,6 +68,18 @@ export default class ProductsRepository implements IProductRepository {
       where: {
         id: {
           in: productIds
+        }
+      },
+      include: {
+        productsHistory: {
+          select: {
+            id: true,
+            modificationTimestamp: true
+          },
+          orderBy: {
+            modificationTimestamp: 'desc'
+          },
+          take: 1
         }
       }
     })
@@ -100,6 +113,18 @@ export default class ProductsRepository implements IProductRepository {
                 }
               ]
             }
+          },
+          include: {
+            productsHistory: {
+              select: {
+                id: true,
+                modificationTimestamp: true
+              },
+              orderBy: {
+                modificationTimestamp: 'desc'
+              },
+              take: 1
+            }
           }
         })
       )
@@ -129,6 +154,18 @@ export default class ProductsRepository implements IProductRepository {
     return await prisma.product.findUnique({
       where: {
         id: productId
+      },
+      include: {
+        productsHistory: {
+          select: {
+            id: true,
+            modificationTimestamp: true
+          },
+          orderBy: {
+            modificationTimestamp: 'desc'
+          },
+          take: 1
+        }
       }
     })
   }
