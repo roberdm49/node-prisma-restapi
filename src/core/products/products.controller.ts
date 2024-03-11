@@ -1,8 +1,9 @@
 import { HttpStatus } from '@/enums/httpStatus'
 import { RequestHandler } from 'express'
 import { IProductController, IProductService } from './products.interfaces'
-import { ProductControllerConstructor, ProductEntry, ProductUpdate } from './products.types'
+import { ProductControllerConstructor, ProductEntryWithNull, ProductEntryWithUndefined, ProductUpdate } from './products.types'
 import { createSchema, updateSchema } from './product.zod-schema'
+import { parseProductsEntryFromUndefinedToNull } from '@/utils/parseProducts'
 
 export default class ProductsController implements IProductController {
   private readonly productsService: IProductService
@@ -14,8 +15,9 @@ export default class ProductsController implements IProductController {
   create: RequestHandler = async (request, response, next) => {
     try {
       const { tenantId } = request.user
-      const products: ProductEntry[] = createSchema.parse(request.body)
-      const productsCreated = await this.productsService.createMany(tenantId, products)
+      const productsWithUndefined: ProductEntryWithUndefined[] = createSchema.parse(request.body)
+      const productsWithNull: ProductEntryWithNull[] = parseProductsEntryFromUndefinedToNull(productsWithUndefined)
+      const productsCreated = await this.productsService.createMany(tenantId, productsWithNull)
       return response.status(HttpStatus.Created).json(productsCreated)
     } catch (error) {
       next(error)

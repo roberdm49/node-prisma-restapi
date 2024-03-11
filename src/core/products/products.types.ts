@@ -8,7 +8,7 @@ export type ProductsRepositoryDelete = (tenantId: string, ids: string[]) => Prom
 export type ProductsRepositoryGetManyById = (productIds: string[]) => Promise<Product[]>
 export type ProductsRepositoryGetOneById = (productId: string) => Promise<Product | null>
 
-export type ProductsServiceCreateMany = (tenantId: string, productsData: ProductEntry[]) => Promise<Product[]>
+export type ProductsServiceCreateMany = (tenantId: string, productsData: ProductEntryWithNull[]) => Promise<Product[]>
 export type ProductsServiceGetAll = (tenantId: string) => Promise<Product[]>
 export type ProductsServiceUpdateMany = (tenantId: string, products: ProductUpdate[]) => Promise<Product[]>
 export type ProductsServiceDelete = (tenantId: string, ids: string[]) => Promise<Product[]>
@@ -42,7 +42,13 @@ export type Product = {
   latestProductHistoryId: string | null
 }
 
-export type ProductEntry = Omit<Product, 'id' | 'tenantId' | 'latestProductHistoryId'>
+export type ProductEntryWithNull = Omit<Product, 'id' | 'tenantId' | 'latestProductHistoryId'>
+export type ProductEntryWithUndefined = Omit<ProductEntryWithNull, 'description' | 'stock' | 'barCode' | 'companyId'> & {
+  description?: string
+  stock?: number
+  barCode?: string
+  companyId?: string
+}
 
 export type ProductWithoutId = Omit<Product, 'id' | 'latestProductHistoryId'>
 
