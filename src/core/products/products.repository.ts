@@ -5,7 +5,6 @@ import {
   ProductsRepositoryDelete,
   ProductsRepositoryGetAll,
   ProductsRepositoryGetManyById,
-  ProductsRepositoryGetOneById,
   ProductsRepositoryUpdateMany
 } from './products.types'
 
@@ -148,25 +147,5 @@ export default class ProductsRepository implements IProductRepository {
     }
 
     return await prisma.$transaction(productsToDelete)
-  }
-
-  getOneById: ProductsRepositoryGetOneById = async (productId) => {
-    return await prisma.product.findUnique({
-      where: {
-        id: productId
-      },
-      include: {
-        productsHistory: {
-          select: {
-            id: true,
-            modificationTimestamp: true
-          },
-          orderBy: {
-            modificationTimestamp: 'desc'
-          },
-          take: 1
-        }
-      }
-    })
   }
 }

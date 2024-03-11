@@ -6,7 +6,6 @@ export type ProductsRepositoryGetAll = (tenantId: string) => Promise<ProductWith
 export type ProductsRepositoryUpdateMany = (tenantId: string, products: Product[]) => Promise<ProductWithHistoryMetadataArray[]>
 export type ProductsRepositoryDelete = (tenantId: string, ids: string[]) => Promise<Product[]>
 export type ProductsRepositoryGetManyById = (productIds: string[]) => Promise<ProductWithHistoryMetadataArray[]>
-export type ProductsRepositoryGetOneById = (productId: string) => Promise<ProductWithHistoryMetadataArray | null>
 
 export type ProductsServiceCreateMany = (tenantId: string, productsData: ProductEntryWithNull[]) => Promise<ProductWithSingleHistoryMetadata[]>
 export type ProductsServiceGetAll = (tenantId: string) => Promise<ProductWithSingleHistoryMetadata[]>
@@ -14,7 +13,6 @@ export type ProductsServiceUpdateMany = (tenantId: string, products: ProductUpda
 export type ProductsServiceDelete = (tenantId: string, ids: string[]) => Promise<Product[]>
 export type ProductsServiceGetManyById = (productIds: string[]) => Promise<ProductWithSingleHistoryMetadata[]>
 export type ProductsServiceEveryProductBelongToSameTenant = (tenantId: string, productIds: string[]) => Promise<boolean>
-export type ProductsServiceGetOneById = (productId: string) => Promise<Product | null>
 
 export type ProductsCreateRoutes = ({ productsRepository }: { productsRepository: IProductRepository }) => Router
 

@@ -52,17 +52,3 @@ export const transformProductsToFlatProductHistory = (products: ProductWithHisto
 
   return productsWithFlatProductHistory
 }
-
-export const transformSingleProductToFlatProduct = (product: ProductWithHistoryMetadataArray | null): ProductWithSingleHistoryMetadata | null => {
-  if (!product) return null
-
-  const { productsHistory: productsHistoryAsArray, ...rest } = product
-  const safetyProductHistory = productsHistoryAsArray[0] ?? null
-
-  const transformedProduct = {
-    ...rest,
-    latestProductHistory: safetyProductHistory
-  }
-
-  return transformedProduct
-}

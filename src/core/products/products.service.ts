@@ -8,11 +8,10 @@ import {
   ProductsServiceEveryProductBelongToSameTenant,
   ProductsServiceGetAll,
   ProductsServiceGetManyById,
-  ProductsServiceGetOneById,
   ProductsServiceUpdateMany
 } from './products.types'
 import { ErrorClientMessages } from '@/enums/errors'
-import { mergeProductsAndProductsToUpdate, transformProductsToFlatProductHistory, transformSingleProductToFlatProduct } from '@/utils/transformationsProducts'
+import { mergeProductsAndProductsToUpdate, transformProductsToFlatProductHistory } from '@/utils/transformationsProducts'
 
 export default class ProductsService implements IProductService {
   private readonly productsRepository: IProductRepository
@@ -81,12 +80,5 @@ export default class ProductsService implements IProductService {
     const productsWithFlatHistoryMetadata = transformProductsToFlatProductHistory(productsWithHistoryMetadataArray)
 
     return productsWithFlatHistoryMetadata
-  }
-
-  getOneById: ProductsServiceGetOneById = async (productId) => {
-    const product = await this.productsRepository.getOneById(productId)
-    const productWithHistoryMetadata = transformSingleProductToFlatProduct(product)
-
-    return productWithHistoryMetadata
   }
 }
