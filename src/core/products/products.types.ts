@@ -1,14 +1,14 @@
 import { Router } from 'express'
 import { IProductRepository, IProductService } from './products.interfaces'
 
-export type ProductsRepositoryCreateMany = (productsDataWithTenantId: ProductWithoutId[]) => Promise<number>
+export type ProductsRepositoryCreateMany = (productsDataWithTenantId: ProductWithoutId[]) => Promise<Product[]>
 export type ProductsRepositoryGetAll = (tenantId: string) => Promise<Product[]>
 export type ProductsRepositoryUpdateMany = (tenantId: string, products: Product[]) => Promise<Product[]>
 export type ProductsRepositoryDelete = (tenantId: string, ids: string[]) => Promise<Product[]>
 export type ProductsRepositoryGetManyById = (productIds: string[]) => Promise<Product[]>
 export type ProductsRepositoryGetOneById = (productId: string) => Promise<Product | null>
 
-export type ProductsServiceCreateMany = (tenantId: string, productsData: ProductEntry[]) => Promise<number>
+export type ProductsServiceCreateMany = (tenantId: string, productsData: ProductEntry[]) => Promise<Product[]>
 export type ProductsServiceGetAll = (tenantId: string) => Promise<Product[]>
 export type ProductsServiceUpdateMany = (tenantId: string, products: ProductUpdate[]) => Promise<Product[]>
 export type ProductsServiceDelete = (tenantId: string, ids: string[]) => Promise<Product[]>

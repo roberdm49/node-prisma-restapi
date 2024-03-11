@@ -49,7 +49,7 @@ export default class ProductsRepository implements IProductRepository {
 
     const fullyCreatedProducts = await prisma.$transaction(pendentProductWithHistoryId)
 
-    return fullyCreatedProducts.length
+    return fullyCreatedProducts
   }
 
   getAll: ProductsRepositoryGetAll = async (tenantId) => {
