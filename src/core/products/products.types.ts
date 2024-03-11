@@ -57,6 +57,7 @@ export type ProductWithQuantity = Product & {
 }
 
 export type ProductUpdate = {
+  id: string
   name: string | null
   price: number | null
   currencyId: number | null

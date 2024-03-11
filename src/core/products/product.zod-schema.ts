@@ -21,6 +21,7 @@ const productEntrySchema = object({
 export const createSchema = array(productEntrySchema)
 
 export const updateSchema = object({
+  id: string({ required_error: 'El id es requerido' }).min(1, { message: 'El id es requerido' }),
   name: string().min(1, { message: 'El nombre es opcional pero no puede ser una cadena vacía' }).nullable(),
   price: number().gt(0, { message: 'El precio es opcional pero debe ser mayor a 0' }).nullable(),
   currencyId: number().min(1, { message: 'El currencyId es opcional pero debe ser un valor válido' }).nullable(),
@@ -28,4 +29,4 @@ export const updateSchema = object({
   stock: number().min(1, { message: 'El stock es opcional pero debe ser un valor mayor o igual a 0' }).nullable(),
   barCode: string().min(1, { message: 'El código de barras es opcional pero no puede ser una cadena vacía' }).nullable(),
   companyId: string().min(1, { message: 'El companyId es opcional pero no puede ser una cadena vacía' }).nullable()
-})
+}).strict({ message: 'Solicitud no válida' })
