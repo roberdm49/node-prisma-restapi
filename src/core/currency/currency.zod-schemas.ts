@@ -11,4 +11,4 @@ export const currencyEntrySchema = object({
     .gt(0, { message: 'El valor en usd debe ser mayor a 0' })
 }).strict({ message: 'Solicitud no válida' })
 
-export const createNewCurrencyHistoriesAndUpdateCurrenciesTargetSchema = array(currencyEntrySchema)
+export const createNewCurrencyHistoriesAndUpdateCurrenciesTargetSchema = array(currencyEntrySchema).nonempty({ message: 'Debe enviarse al menos 1 elemento' })

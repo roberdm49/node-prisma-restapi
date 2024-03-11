@@ -18,7 +18,7 @@ const productEntrySchema = object({
   companyId: string().min(1, { message: 'El companyId es opcional pero no puede ser una cadena vacía' }).optional()
 }).strict({ message: 'Solicitud no válida' })
 
-export const createSchema = array(productEntrySchema)
+export const createSchema = array(productEntrySchema).nonempty({ message: 'Debe enviarse al menos 1 elemento' })
 
 const productUpdateSchema = object({
   id: string({ required_error: 'El id es requerido' }).min(1, { message: 'El id es requerido' }),
@@ -31,6 +31,6 @@ const productUpdateSchema = object({
   companyId: string().min(1, { message: 'El companyId es opcional pero no puede ser una cadena vacía' }).optional()
 }).strict({ message: 'Solicitud no válida' })
 
-export const updateSchema = array(productUpdateSchema)
+export const updateSchema = array(productUpdateSchema).nonempty({ message: 'Debe enviarse al menos 1 elemento' })
 
-export const deleteSchema = array(string().min(1, { message: 'El id es requerido' }))
+export const deleteSchema = array(string().min(1, { message: 'El id es requerido' })).nonempty({ message: 'Debe enviarse al menos 1 elemento' })

@@ -100,5 +100,22 @@ describe('Products', () => {
       await api.post('/products/create').set('Cookie', cookies1).send({ name: 'Test', price: 123, currencyId: 1, query: 'A query' }).expect(400)
       await api.post('/products/create').set('Cookie', cookies1).expect(400)
     })
+
+    it('Should throw an error if someone tries to update a non-owned product', async () => {
+      const createdProduct = await api.post('/products/create').set('Cookie', cookies1).send(products1).expect(201)
+      await api
+        .patch('/products/update')
+        .set('Cookie', cookies2)
+        .send([{ id: createdProduct.body[0].id, name: 'Other name' }])
+        .expect(400)
+    })
+
+    it('Should throw an error if someone tries to update an unexisting product', async () => {
+      await api
+        .patch('/products/update')
+        .set('Cookie', cookies1)
+        .send([{ id: 'id123', name: 'Other name' }])
+        .expect(200)
+    })
   })
 })
