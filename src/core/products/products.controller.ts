@@ -45,6 +45,7 @@ export default class ProductsController implements IProductController {
     }
   }
 
+  // TODO: replace it by a logical delete, instead of physical delete
   deleteMany: RequestHandler = async (request, response, next) => {
     try {
       const { tenantId } = request.user
