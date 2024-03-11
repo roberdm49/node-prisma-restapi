@@ -32,13 +32,13 @@ export type ProductControllerConstructor = {
 export type Product = {
   id: string
   name: string
-  description: string | null
   price: number
+  tenantId: string
+  currencyId: number
+  description: string | null
   stock: number | null
   barCode: string | null
-  tenantId: string
   companyId: string | null
-  currencyId: number
   latestProductHistoryId: string | null
 }
 
@@ -54,4 +54,14 @@ export type ProductHistoryEntry = Omit<ProductHistory, 'id' | 'productId'>
 
 export type ProductWithQuantity = Product & {
   quantity: number
+}
+
+export type ProductUpdate = {
+  name: string | null
+  price: number | null
+  currencyId: number | null
+  description: string | null
+  stock: number | null
+  barCode: string | null
+  companyId: string | null
 }
