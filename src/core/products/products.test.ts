@@ -78,6 +78,19 @@ describe('Products', () => {
       expect(getResponseTenant1.body).toHaveLength(products1.length)
       expect(getResponseTenant2.body).toHaveLength(products2.length)
     })
+
+    it('Should update an existing product', async () => {
+      const createdProduct = await api.post('/products/create').set('Cookie', cookies1).send(products1).expect(201)
+      const updatedProduct = await api
+        .patch('/products/update')
+        .set('Cookie', cookies1)
+        .send([{ id: createdProduct.body[0].id, name: 'UpdatedName' }])
+        .expect(200)
+
+      expect(createdProduct.body[0].id).toBe(updatedProduct.body[0].id)
+      expect(createdProduct.body[0].name).toBe(products1[0].name)
+      expect(updatedProduct.body[0].name).toBe(updatedProduct.body[0].name)
+    })
   })
 
   describe('Exception paths', () => {
