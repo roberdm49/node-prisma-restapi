@@ -26,7 +26,10 @@ export default class ProductsService implements IProductService {
       return { ...productToCreate, tenantId }
     })
 
-    return await this.productsRepository.createMany(productsToCreateWithTenantId)
+    const createdProductsWithMetadataArray = await this.productsRepository.createMany(productsToCreateWithTenantId)
+    const productsWithFlatHistoryMetadata = transformProductsToFlatProductHistory(createdProductsWithMetadataArray)
+
+    return productsWithFlatHistoryMetadata
   }
 
   getAll: ProductsServiceGetAll = async (tenantId) => {
