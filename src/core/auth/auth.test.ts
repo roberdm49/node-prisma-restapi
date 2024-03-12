@@ -92,5 +92,10 @@ describe('Auth', () => {
         .get('/auth/refresh-token')
         .expect(401)
     })
+
+    it('Should throw an error if a new request send an existing username', async () => {
+      await api.post('/auth/sign-up').send(information).expect(201)
+      await api.post('/auth/sign-up').send(information).expect(400)
+    })
   })
 })
