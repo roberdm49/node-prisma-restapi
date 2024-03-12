@@ -1,20 +1,16 @@
 import { RequestHandler } from 'express'
 import {
-  UsersRepositoryCreate,
   UsersRepositoryGetOneById,
-  UsersRepositoryGetOneByUsername,
-  UsersServiceCreate
+  UsersRepositoryGetOneByUsername
 } from './users.types'
 
 export interface IUsersRepository {
-  create: UsersRepositoryCreate
   getOneByUsername: UsersRepositoryGetOneByUsername
   getOneById: UsersRepositoryGetOneById
 }
 
-export interface IUsersService {
-  create: UsersServiceCreate
-}
+// eslint-disable-next-line
+export interface IUsersService {}
 
 export interface IUsersController {
   create: RequestHandler
