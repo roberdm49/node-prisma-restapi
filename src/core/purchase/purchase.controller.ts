@@ -2,6 +2,7 @@ import { RequestHandler } from 'express'
 import { HttpStatus } from '@/enums/httpStatus'
 import { IPurchaseController, IPurchaseService } from './purchase.interfaces'
 import { PurchaseControllerConstructor } from './purchase.types'
+import { createSchema } from './purchase.zod-schema'
 
 export default class PurchaseController implements IPurchaseController {
   private readonly purchaseService: IPurchaseService
@@ -23,7 +24,7 @@ export default class PurchaseController implements IPurchaseController {
   create: RequestHandler = async (request, response, next) => {
     try {
       const { tenantId } = request.user
-      const { dailySaleId, purchasedItems } = request.body
+      const { dailySaleId, purchasedItems } = createSchema.parse(request.body)
       const newPurchase = await this.purchaseService.create(tenantId, dailySaleId, purchasedItems)
       return response.status(HttpStatus.Created).json(newPurchase)
     } catch (error) {
