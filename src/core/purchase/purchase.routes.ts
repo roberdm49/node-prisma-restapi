@@ -11,7 +11,7 @@ export const createPurchaseRoutes: PurchaseCreateRoutes = ({ purchaseRepository,
   const purchaseController = new PurchaseController({ purchaseService })
 
   router.get('/get', [protectedRouteMiddleware], purchaseController.getAll)
-  router.get('/create', [protectedRouteMiddleware], purchaseController.create)
+  router.post('/create', [protectedRouteMiddleware], purchaseController.create)
 
   return router
 }
