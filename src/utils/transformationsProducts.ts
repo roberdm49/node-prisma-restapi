@@ -17,11 +17,7 @@ export const mergeProductsAndProductsToUpdate = (dbProducts: Product[], products
       throw new Error('Petición malformada')
     }
 
-    const { id, ...rest } = targetProductToUpdate
-
-    if (Object.prototype.hasOwnProperty.call(rest, id)) {
-      throw new Error('Petición malformada')
-    }
+    const { id: skippedId, ...rest } = targetProductToUpdate
 
     mergedProducts.push({
       id: product.id,
