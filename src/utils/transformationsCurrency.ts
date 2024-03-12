@@ -46,7 +46,7 @@ export const getMergedCurrenciesWithTargetDailyExchanges = (currencies: Currency
 export const transformCurrenciesToSingleHistory = (currenciesWithHistoryMetadataArray: CurrencyWithHistoryMetadataArray[]): CurrencyWithSingleHistoryMetadata[] => {
   const currenciesWithSingleHistoryMetadata = currenciesWithHistoryMetadataArray.map(currency => {
     const { dailyExchangeRates, ...rest } = currency
-    const safetyLastExchangeRate = dailyExchangeRates[0] ?? null
+    const safetyLastExchangeRate = dailyExchangeRates[0]
 
     return { ...rest, lastExchangeRate: safetyLastExchangeRate }
   })
