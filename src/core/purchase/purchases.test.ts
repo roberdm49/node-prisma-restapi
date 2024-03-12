@@ -141,6 +141,12 @@ describe('Purchases', () => {
       await api
         .post('/purchase/create')
         .set('Cookie', cookies1)
+        .send({ dailySaleId: '123', purchasedItems: [{ id: createProductsResponse.body[0].id, quantity: 2 }] })
+        .expect(400)
+
+      await api
+        .post('/purchase/create')
+        .set('Cookie', cookies1)
         .expect(400)
     })
   })
