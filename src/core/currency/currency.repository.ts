@@ -9,7 +9,20 @@ import {
 
 export default class CurrencyRepository implements ICurrencyRepository {
   getAll: CurrencyRepositoryGetAll = async () => {
-    return await prisma.currency.findMany()
+    return await prisma.currency.findMany({
+      include: {
+        dailyExchangeRates: {
+          select: {
+            id: true,
+            timestamp: true
+          },
+          orderBy: {
+            timestamp: 'desc'
+          },
+          take: 1
+        }
+      }
+    })
   }
 
   getManyByIsoCodes: CurrencyRepositoryGetManyByIsoCodes = async (isoCodes) => {
@@ -17,6 +30,18 @@ export default class CurrencyRepository implements ICurrencyRepository {
       where: {
         isoCode: {
           in: isoCodes
+        }
+      },
+      include: {
+        dailyExchangeRates: {
+          select: {
+            id: true,
+            timestamp: true
+          },
+          orderBy: {
+            timestamp: 'desc'
+          },
+          take: 1
         }
       }
     })

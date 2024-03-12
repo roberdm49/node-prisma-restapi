@@ -1,4 +1,4 @@
-import { Currency, CurrencyEntry, CurrencyWithValue } from '@/core/currency/currency.types'
+import { CurrencyEntry, CurrencyWithHistoryMetadataArray, CurrencyWithSingleHistoryMetadata, CurrencyWithValue } from '@/core/currency/currency.types'
 import { DailyExchangeRate } from '@prisma/client'
 
 interface CurrencyObj {
@@ -9,14 +9,14 @@ interface ExchangeObj {
   [currencyId: number]: string
 }
 
-export const getMergedCurrenciesWithValues = (currenciesWithIdsButWithoutValues: Currency[], currenciesWithValuesButWithoutIds: CurrencyEntry[]): CurrencyWithValue[] => {
+export const getMergedCurrenciesWithValues = (currenciesWithIdsAndMetadataButWithoutValues: CurrencyWithSingleHistoryMetadata[], currenciesWithValuesButWithoutIds: CurrencyEntry[]): CurrencyWithValue[] => {
   const currencyByIsoCodeObj: CurrencyObj = {}
 
   for (const currency of currenciesWithValuesButWithoutIds) {
     currencyByIsoCodeObj[currency.isoCode] = currency.valueInUsd
   }
 
-  const currenciesWithFullData = currenciesWithIdsButWithoutValues.map(currency => {
+  const currenciesWithFullData = currenciesWithIdsAndMetadataButWithoutValues.map(currency => {
     return {
       ...currency,
       valueInUsd: currencyByIsoCodeObj[currency.isoCode]
@@ -41,4 +41,15 @@ export const getMergedCurrenciesWithTargetDailyExchanges = (currencies: Currency
   })
 
   return currenciesWithDailyExchangeRateId
+}
+
+export const transformCurrenciesToSingleHistory = (currenciesWithHistoryMetadataArray: CurrencyWithHistoryMetadataArray[]): CurrencyWithSingleHistoryMetadata[] => {
+  const currenciesWithSingleHistoryMetadata = currenciesWithHistoryMetadataArray.map(currency => {
+    const { dailyExchangeRates, ...rest } = currency
+    const safetyLastExchangeRate = dailyExchangeRates[0] ?? null
+
+    return { ...rest, lastExchangeRate: safetyLastExchangeRate }
+  })
+
+  return currenciesWithSingleHistoryMetadata
 }

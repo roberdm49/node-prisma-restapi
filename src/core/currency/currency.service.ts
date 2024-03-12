@@ -1,4 +1,4 @@
-import { getMergedCurrenciesWithTargetDailyExchanges, getMergedCurrenciesWithValues } from '@/utils/transformationsCurrency'
+import { getMergedCurrenciesWithTargetDailyExchanges, getMergedCurrenciesWithValues, transformCurrenciesToSingleHistory } from '@/utils/transformationsCurrency'
 import { ICurrencyRepository, ICurrencyService } from './currency.interfaces'
 import {
   CurrencyServiceConstructor,
@@ -15,19 +15,23 @@ export default class CurrencyService implements ICurrencyService {
   }
 
   getAll: CurrencyServiceGetAll = async () => {
-    return await this.currencyRepository.getAll()
+    const currenciesWithHistoryMetadataArray = await this.currencyRepository.getAll()
+    const currenciesWithSingleHistoryMetadata = transformCurrenciesToSingleHistory(currenciesWithHistoryMetadataArray)
+
+    return currenciesWithSingleHistoryMetadata
   }
 
   createNewCurrencyHistories: CurrencyServiceCreateNewCurrencyHistories = async (currenciesWithValuesButWithoutIds) => {
     const currenciesIsoCodes = currenciesWithValuesButWithoutIds.map(currency => currency.isoCode)
-    const currenciesWithIdsButWithoutValues = await this.currencyRepository.getManyByIsoCodes(currenciesIsoCodes)
-    const currenciesWithIdsAndValues = getMergedCurrenciesWithValues(currenciesWithIdsButWithoutValues, currenciesWithValuesButWithoutIds)
+    const currenciesWithHistoryMetadataArray = await this.currencyRepository.getManyByIsoCodes(currenciesIsoCodes)
+    const currenciesWithSingleHistoryMetadata = transformCurrenciesToSingleHistory(currenciesWithHistoryMetadataArray)
+    const currenciesWithIdsValuesAndMetadata = getMergedCurrenciesWithValues(currenciesWithSingleHistoryMetadata, currenciesWithValuesButWithoutIds)
 
-    const createdDailyExchanges = await this.currencyRepository.createNewCurrencyHistories(currenciesWithIdsAndValues)
+    const createdDailyExchanges = await this.currencyRepository.createNewCurrencyHistories(currenciesWithIdsValuesAndMetadata)
 
     // The currencies above do not have the dailyexchangerateid, it's optional so the good practice should be create a new type (maybe)
     // TODO: refactor the types to make it more understandable
-    const currenciesWithDailyExchange = getMergedCurrenciesWithTargetDailyExchanges(currenciesWithIdsAndValues, createdDailyExchanges)
+    const currenciesWithDailyExchange = getMergedCurrenciesWithTargetDailyExchanges(currenciesWithIdsValuesAndMetadata, createdDailyExchanges)
     return currenciesWithDailyExchange
   }
 
