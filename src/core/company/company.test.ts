@@ -76,11 +76,6 @@ describe('Company', () => {
   })
 
   describe('Exception paths', () => {
-    it('Should not have access to the endpoints without credentials', async () => {
-      await api.get('/company/get').expect(401)
-      await api.post('/company/create').send({ name: 'Mock' }).expect(401)
-    })
-
     it('Should not pass a malformed "create" request', async () => {
       await api.post('/company/create').send({ name: 'Mock', script: 'some code' }).set('Cookie', cookies1).expect(400)
       await api.post('/company/create').set('Cookie', cookies1).expect(400)

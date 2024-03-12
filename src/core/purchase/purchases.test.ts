@@ -37,21 +37,7 @@ describe('Purchases', () => {
     }
   ]
 
-  const products2 = [
-    {
-      name: 'Test',
-      price: 10,
-      currencyId: currency.id
-    },
-    {
-      name: 'Coffee',
-      price: 15,
-      currencyId: currency.id
-    }
-  ]
-
   let cookies1: string[] = []
-  let cookies2: string[] = []
 
   beforeEach(async () => {
     await cleanUpAll()
@@ -61,10 +47,8 @@ describe('Purchases', () => {
     await api.post('/auth/sign-up').send(tenantInformation2)
 
     const loginResponse1 = await api.post('/auth/log-in').send({ username: tenantInformation1.username, password: tenantInformation1.password })
-    const loginResponse2 = await api.post('/auth/log-in').send({ username: tenantInformation2.username, password: tenantInformation2.password })
 
     cookies1 = JSON.parse(JSON.stringify(loginResponse1.headers['set-cookie']))
-    cookies2 = JSON.parse(JSON.stringify(loginResponse2.headers['set-cookie']))
   })
 
   describe('Happy paths', () => {

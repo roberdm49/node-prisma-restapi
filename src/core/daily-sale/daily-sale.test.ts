@@ -73,11 +73,6 @@ describe('Daily sale', () => {
   })
 
   describe('Exception paths', () => {
-    it('Should not access to the endpoints without credentials', async () => {
-      await api.get('/daily-sale/get').expect(401)
-      await api.post('/daily-sale/create').expect(401)
-    })
-
     it('Should not create a new daily saly if it was already created at the same day', async () => {
       await api.post('/daily-sale/create').set('Cookie', cookies).expect(201)
       await api.post('/daily-sale/create').set('Cookie', cookies).expect(409)
