@@ -26,6 +26,15 @@ export default class PurchaseService implements IPurchaseService {
   }
 
   create: PurchaseServiceCreate = async (tenantId, dailySaleId, products) => {
+    /*
+      fullproducts = getmanybyids(purchasedItems.map(purchasedItem => purchasedItem.id))
+
+      validdailysale = check if is a valid daily sale
+      validproducts = check if products ids are valid
+
+      productswithquantity = merge fullproducts with purchasedItems(they have the quantity)
+
+    */
     const productIds = products.map(product => product.id)
 
     const [foundDailySale, currencies, productsWithFullData] = await Promise.all([
