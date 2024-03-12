@@ -86,5 +86,11 @@ describe('Daily sale', () => {
     it('Should throw an error if a "close" request is sent before creating a daily sale', async () => {
       await api.post('/daily-sale/close').set('Cookie', cookies).expect(400)
     })
+
+    it('Should throw an error if you try to close an already closed daily sale', async () => {
+      await api.post('/daily-sale/create').set('Cookie', cookies).expect(201)
+      await api.post('/daily-sale/close').set('Cookie', cookies).expect(200)
+      await api.post('/daily-sale/close').set('Cookie', cookies).expect(400)
+    })
   })
 })
