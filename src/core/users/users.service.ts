@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { GlobalEnv } from '@/utils/constants'
 import { IUsersRepository, IUsersService } from './users.interfaces'
-import { UsersServiceConstructor, UsersServiceCreate, UsersServiceUpdate } from './users.types'
+import { UsersServiceConstructor, UsersServiceCreate } from './users.types'
 
 export default class UsersService implements IUsersService {
   private readonly usersRepository: IUsersRepository
@@ -16,9 +16,5 @@ export default class UsersService implements IUsersService {
       ...userData,
       password: hashedPassword
     })
-  }
-
-  update: UsersServiceUpdate = async (userData) => {
-    return await this.usersRepository.update(userData)
   }
 }

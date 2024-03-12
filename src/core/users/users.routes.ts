@@ -9,7 +9,7 @@ export const createUsersRoutes: UsersCreateRoutes = ({ usersRepository }) => {
   const usersService = new UsersService({ usersRepository })
   const usersController = new UsersController({ usersService })
 
-  router.post('/user', [protectedRouteMiddleware], usersController.create)
+  router.post('/create', [protectedRouteMiddleware], usersController.create)
 
   return router
 }
