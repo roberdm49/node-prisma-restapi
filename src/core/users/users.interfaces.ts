@@ -1,4 +1,3 @@
-import { RequestHandler } from 'express'
 import {
   UsersRepositoryGetOneById,
   UsersRepositoryGetOneByUsername
@@ -12,6 +11,5 @@ export interface IUsersRepository {
 // eslint-disable-next-line
 export interface IUsersService {}
 
-export interface IUsersController {
-  create: RequestHandler
-}
+// eslint-disable-next-line
+export interface IUsersController {}
