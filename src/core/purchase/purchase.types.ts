@@ -5,10 +5,10 @@ import { IDailySaleService } from '../daily-sale/daily-sale.interfaces'
 import { ICurrencyService } from '../currency/currency.interfaces'
 
 export type PurchaseRepositoryGetAll = (tenantId: string) => Promise<Purchase[]>
-export type PurchaseRepositoryCreate = (dailySaleId: string, purchasedItems: PurchasedItemEntry[]) => Promise<number>
+export type PurchaseRepositoryCreate = (dailySaleId: string, purchasedItems: PurchasedItemEntry[]) => Promise<PurchasedItem[]>
 
 export type PurchaseServiceGetAll = (tenantId: string) => Promise<Purchase[]>
-export type PurchaseServiceCreate = (tenantId: string, dailySaleId: string, purchasedItems: ProductToPurchaseEntry[]) => Promise<number>
+export type PurchaseServiceCreate = (tenantId: string, dailySaleId: string, purchasedItems: ProductToPurchaseEntry[]) => Promise<PurchasedItem[]>
 
 export type PurchaseCreateRoutes =
   ({ purchaseRepository, productService, dailySaleService, currencyService }:
