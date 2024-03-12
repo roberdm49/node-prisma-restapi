@@ -48,6 +48,6 @@ export default class PurchaseRepository implements IPurchaseRepository {
       }
     })
 
-    return newPurchase.purchasedItems.length
+    return newPurchase.purchasedItems
   }
 }

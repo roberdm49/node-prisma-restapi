@@ -63,7 +63,7 @@ export type ProductHistory = Product & {
 
 export type ProductHistoryEntry = Omit<ProductHistory, 'id' | 'productId'>
 
-export type ProductWithQuantity = Product & {
+export type ProductWithQuantity = ProductWithSingleHistoryMetadata & {
   quantity: number
 }
 

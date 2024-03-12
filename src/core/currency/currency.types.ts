@@ -1,12 +1,12 @@
 import { Router } from 'express'
 import { ICurrencyRepository, ICurrencyService } from './currency.interfaces'
 
-export type CurrencyRepositoryGetAll = () => Promise<Currency[]>
+export type CurrencyRepositoryGetAll = () => Promise<CurrencyWithHistoryMetadataArray[]>
+export type CurrencyRepositoryGetManyByIsoCodes = (isoCodes: string[]) => Promise<CurrencyWithHistoryMetadataArray[]>
 export type CurrencyRepositoryCreateNewCurrencyHistories = (currencies: CurrencyWithValue[]) => Promise<DailyExchangeRate[]>
-export type CurrencyRepositoryGetManyByIsoCodes = (isoCodes: string[]) => Promise<Currency[]>
 export type CurrencyRepositoryUpdateCurrencyWithLatestExchangeRates = (currencies: CurrencyWithValue[]) => Promise<Currency[]>
 
-export type CurrencyServiceGetAll = () => Promise<Currency[]>
+export type CurrencyServiceGetAll = () => Promise<CurrencyWithSingleHistoryMetadata[]>
 export type CurrencyServiceCreateNewCurrencyHistories = (currencies: CurrencyEntry[]) => Promise<CurrencyWithValue[]>
 export type CurrencyServiceUpdateCurrencyWithLatestExchangeRates = (currencies: CurrencyWithValue[]) => Promise<Currency[]>
 
@@ -20,12 +20,24 @@ export type CurrencyControllerConstructor = {
   currencyService: ICurrencyService
 }
 
+export type HistoryMetadata = {
+  id: string
+  timestamp: Date
+}
+
 export type Currency = {
   id: number
   name: string
   isoCode: string
   isoNum: string
-  recentExchangeRateId?: string
+}
+
+export type CurrencyWithHistoryMetadataArray = Currency & {
+  dailyExchangeRates: HistoryMetadata[]
+}
+
+export type CurrencyWithSingleHistoryMetadata = Currency & {
+  lastExchangeRate: HistoryMetadata | null
 }
 
 export type CurrencyEntry = Omit<Currency, 'id' | 'recentExchangeRateId'> & {
