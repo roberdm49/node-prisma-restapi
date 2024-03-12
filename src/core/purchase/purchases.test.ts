@@ -84,11 +84,64 @@ describe('Purchases', () => {
             }
           ]
         })
-        .expect(400)
+        .expect(201)
+
+      const getResponse = await api
+        .get('/purchase/get')
+        .set('Cookie', cookies1)
+        .expect(200)
+
+      expect(getResponse.body).toHaveLength(1)
     })
   })
 
   describe('Exception paths', () => {
+    it('Should throw an error if credetianls are missins', async () => {
+      const createProductsResponse = await api.post('/products/create').set('Cookie', cookies1).send(products1).expect(201)
+      const dailySaleResponse = await api.post('/daily-sale/create').set('Cookie', cookies1).expect(201)
 
+      await api
+        .post('/purchase/create')
+        .send({ dailySaleId: dailySaleResponse.body.id, purchasedItems: [{ id: createProductsResponse.body[0].id, quantity: 2 }] })
+        .expect(401)
+
+      await api
+        .get('/purchase/get')
+        .expect(401)
+    })
+
+    it('Should not create a new purchase if the request is malformed', async () => {
+      const createProductsResponse = await api.post('/products/create').set('Cookie', cookies1).send(products1).expect(201)
+      const dailySaleResponse = await api.post('/daily-sale/create').set('Cookie', cookies1).expect(201)
+
+      await api
+        .post('/purchase/create')
+        .set('Cookie', cookies1)
+        .send({ dailySaleId: dailySaleResponse.body.id, purchasedItems: [{ id: createProductsResponse.body[0].id, quantity: '2' }] })
+        .expect(400)
+
+      await api
+        .post('/purchase/create')
+        .set('Cookie', cookies1)
+        .send({ dailySaleId: dailySaleResponse.body.id, purchasedItems: { id: createProductsResponse.body[0].id, quantity: 2 } })
+        .expect(400)
+
+      await api
+        .post('/purchase/create')
+        .set('Cookie', cookies1)
+        .send({ dailySaleId: dailySaleResponse.body.id, purchasedItems: [{ id: '123', quantity: 2 }] })
+        .expect(400)
+
+      await api
+        .post('/purchase/create')
+        .set('Cookie', cookies1)
+        .send({ dailySaleId: dailySaleResponse.body.id, purchasedItems: [{ id: '123', quantity: 2 }], extraField: 123 })
+        .expect(400)
+
+      await api
+        .post('/purchase/create')
+        .set('Cookie', cookies1)
+        .expect(400)
+    })
   })
 })

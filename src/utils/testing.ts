@@ -47,7 +47,12 @@ export const createMockCurrency = async ({
       id,
       isoCode,
       isoNum,
-      name
+      name,
+      dailyExchangeRates: {
+        create: {
+          currencyValueUsd: 0.5
+        }
+      }
     }
   })
 }
