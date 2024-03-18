@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "Tenant" (
-    "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "id" VARCHAR(60) NOT NULL,
+    "name" VARCHAR(120) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Tenant_pkey" PRIMARY KEY ("id")
@@ -9,105 +9,105 @@ CREATE TABLE "Tenant" (
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" TEXT NOT NULL,
+    "id" VARCHAR(60) NOT NULL,
     "username" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "firstname" TEXT NOT NULL,
-    "lastname" TEXT NOT NULL,
+    "password" VARCHAR(120) NOT NULL,
+    "firstname" VARCHAR(120) NOT NULL,
+    "lastname" VARCHAR(120) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "tenantId" TEXT NOT NULL,
+    "tenantId" VARCHAR(60) NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Product" (
-    "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "description" TEXT,
+    "id" VARCHAR(60) NOT NULL,
+    "name" VARCHAR(120) NOT NULL,
+    "description" VARCHAR(120),
     "price" DOUBLE PRECISION NOT NULL,
     "stock" INTEGER DEFAULT 0,
-    "barCode" TEXT,
-    "tenantId" TEXT NOT NULL,
-    "companyId" TEXT,
-    "currencyId" INTEGER NOT NULL,
+    "barCode" VARCHAR(120),
+    "tenantId" VARCHAR(60) NOT NULL,
+    "companyId" VARCHAR(60),
+    "currencyId" SMALLINT NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "ProductHistory" (
-    "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "description" TEXT,
+    "id" VARCHAR(60) NOT NULL,
+    "name" VARCHAR(120) NOT NULL,
+    "description" VARCHAR(120),
     "price" DOUBLE PRECISION NOT NULL,
     "stock" INTEGER,
-    "barCode" TEXT,
-    "tenantId" TEXT NOT NULL,
-    "companyId" TEXT,
-    "currencyId" INTEGER NOT NULL,
+    "barCode" VARCHAR(120),
+    "tenantId" VARCHAR(60) NOT NULL,
+    "companyId" VARCHAR(60),
+    "currencyId" SMALLINT NOT NULL,
     "modificationTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "productId" TEXT NOT NULL,
+    "productId" VARCHAR(60) NOT NULL,
 
     CONSTRAINT "ProductHistory_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Company" (
-    "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "id" VARCHAR(60) NOT NULL,
+    "name" VARCHAR(120) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "tenantId" TEXT NOT NULL,
+    "tenantId" VARCHAR(60) NOT NULL,
 
     CONSTRAINT "Company_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "DailySale" (
-    "id" TEXT NOT NULL,
+    "id" VARCHAR(60) NOT NULL,
     "saleDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "closed" BOOLEAN NOT NULL DEFAULT false,
-    "tenantId" TEXT NOT NULL,
+    "tenantId" VARCHAR(60) NOT NULL,
 
     CONSTRAINT "DailySale_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Purchase" (
-    "id" TEXT NOT NULL,
+    "id" VARCHAR(60) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "dailySaleId" TEXT NOT NULL,
+    "dailySaleId" VARCHAR(60) NOT NULL,
 
     CONSTRAINT "Purchase_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "PurchasedItem" (
-    "id" TEXT NOT NULL,
+    "id" VARCHAR(60) NOT NULL,
     "quantity" INTEGER NOT NULL,
-    "purchaseId" TEXT NOT NULL,
-    "productHistoryId" TEXT NOT NULL,
-    "dailyExchangeRateId" TEXT NOT NULL,
+    "purchaseId" VARCHAR(60) NOT NULL,
+    "productHistoryId" VARCHAR(60) NOT NULL,
+    "dailyExchangeRateId" VARCHAR(60) NOT NULL,
 
     CONSTRAINT "PurchasedItem_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Currency" (
-    "id" INTEGER NOT NULL,
-    "name" TEXT NOT NULL,
-    "isoCode" TEXT NOT NULL,
-    "isoNum" TEXT NOT NULL,
+    "id" SMALLINT NOT NULL,
+    "name" VARCHAR(60) NOT NULL,
+    "isoCode" VARCHAR(60) NOT NULL,
+    "isoNum" VARCHAR(60) NOT NULL,
 
     CONSTRAINT "Currency_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "DailyExchangeRate" (
-    "id" TEXT NOT NULL,
+    "id" VARCHAR(60) NOT NULL,
     "currencyValueUsd" DOUBLE PRECISION NOT NULL,
     "timestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "currencyId" INTEGER NOT NULL,
+    "currencyId" SMALLINT NOT NULL,
 
     CONSTRAINT "DailyExchangeRate_pkey" PRIMARY KEY ("id")
 );
